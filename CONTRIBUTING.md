@@ -47,7 +47,7 @@ Keep `widgetApi: 1` and `runtime: studio-native-v1`.
 README.md must describe what the widget does, every setting, supported hardware,
 what you tested and any limitations. LICENSE must actually permit store users to
 download/use the package and the owner to redistribute it. Submit only files you
-have permission to share. No keys, passwords, personal device addresses or IDs.
+have permission to share. No keys, passwords, personal device addresses or IDs. Save JSON as UTF-8 with LF line endings; checksums apply to these exact bytes.
 For declarative JSON, widget.json itself is the source; no build tool is needed.
 
 Commit the widget files first. Open that commit and copy its full 40-character
