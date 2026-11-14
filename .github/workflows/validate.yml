@@ -41,11 +41,13 @@ jobs:
       - name: Record reviewed commit
         run: echo "REVIEW_SHA=$(git -C submitted rev-parse HEAD)" >> "$GITHUB_ENV"
       - name: Install trusted image validator
-        run: python3 -I -m pip install Pillow==12.3.0
+        run: |
+          python3 -m venv .validator-env
+          .validator-env/bin/python -I -m pip install Pillow==12.3.0
       - name: Test trusted validator
-        run: python3 -I -m unittest discover -s trusted/scripts -p test_validator.py
+        run: .validator-env/bin/python -I -m unittest discover -s trusted/scripts -p test_validator.py
       - name: Check submission files and published artifacts
-        run: python3 -I trusted/scripts/validate.py submitted --verify-assets
+        run: .validator-env/bin/python -I trusted/scripts/validate.py submitted --verify-assets
       - name: Update PR review comment
         if: always()
         env:
