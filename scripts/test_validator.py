@@ -12,8 +12,8 @@ class Checks(unittest.TestCase):
   self.manifest=dict(schemaVersion=1,id='test.clock',name='Test clock',description='Test clock widget',version='1.0.0',type='corebar-widget',license='Test',source='https://github.com/test/repo/blob/'+'a'*40+'/widget.json',permissions=[],compatibility=dict(minStudioVersion='0.20.0',hostApi=1,models=['CB01'],abis=['armeabi-v7a'],lineosVersions=['1.0.9']))
   self.save()
  def save(self): (self.folder/'manifest.json').write_text(json.dumps(self.manifest))
- def test_draft_submission_can_pass_without_publication(self):
-  errors,notes=validate_tree(self.root);self.assertEqual(errors,[]);self.assertIn('owner must publish',notes[0])
+ def test_draft_submission_needs_owner_publication(self):
+  errors,notes=validate_tree(self.root);self.assertTrue(errors);self.assertIn('owner must publish',notes[0])
  def test_catalog_cannot_publish_unreleased_submission(self):
   (self.root/'catalog.json').write_text(json.dumps(dict(schemaVersion=1,packages=[self.manifest])))
   self.assertTrue(validate_tree(self.root)[0])
