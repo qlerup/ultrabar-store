@@ -8,7 +8,7 @@ class ApkReviewTests(unittest.TestCase):
  def test_metadata_and_signature_required(self):
   entry=dict(version='1.0.0',permissions=['android.permission.INTERNET'],android=dict(packageId='dk.test.app',versionCode=1,minSdk=26,signerSha256='a'*64))
   info="package: name='dk.test.app' versionCode='1' versionName='1.0.0'\nsdkVersion:'26'\nuses-permission: name='android.permission.INTERNET'\n"
-  signature='Verified using v2 scheme (APK Signature Scheme v2): true\nSigner #1 certificate SHA-256 digest: '+'a'*64+'\n'
+  signature='Verified using v2 scheme (APK Signature Scheme v2): true\r\nSigner #1 certificate SHA-256 digest: '+'a'*64+'\r\n'
   def result(text,code=0):return SimpleNamespace(returncode=code,stdout=text.encode())
   with patch.dict('os.environ',ANDROID_BUILD_TOOLS='/sdk'),patch.object(apk_check.subprocess,'run',side_effect=[result(info),result(signature)]):apk_check.inspect(Path('app.apk'),entry)
   for bad in (info+'application-debuggable\n',info.replace("versionCode='1'","versionCode='2'"),info.replace('android.permission.INTERNET','android.permission.CAMERA')):
