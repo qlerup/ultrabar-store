@@ -2,7 +2,7 @@
 
 One integrated Core widget for PC drive usage. Install this package once in Studio, drag Drive usage onto the bar, choose a drive in the right panel and Deploy. Add multiple copies to show different drives. It uses the same Studio disk renderer as the former System C:, Data D: and All drives cards; these are settings of one widget, not separate apps.
 
-Settings: display name, background color, text color, accent color and Drive (an available PC drive or All drives). A single drive shows percent used, used/total GB and free GB. All drives shows up to the first two available drives; it does not aggregate all drives into one total. Defaults to All drives. Drive names and values come from the connected PC, not Core's internal storage.
+Settings: display name, background color, text color, accent color and Drive (an available PC drive or All drives). A single drive shows percent used, used/total GB and free GB. All drives shows two drives at a time and rotates to the next pair every six seconds on Core when more are available. The Studio preview shows the first pair. It does not aggregate all drives into one total. Defaults to All drives. Drive names and values come from the connected PC, not Core's internal storage.
 
 Requires Studio 0.24.0+, root-enabled ARM32 CB01 and LineOS 1.0.8 or 1.0.9. Keep Studio connected for live PC readings; reconnect Studio after Core restarts. No separate APK or executable is installed by this package. widget.json is the complete declarative source; the shared runtime supplies rendering and collection.
 

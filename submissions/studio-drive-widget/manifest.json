@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "studio.drive.widget",
+  "name": "Studio Drive Usage",
+  "description": "PC drive usage on Core. Install once, add cards, choose one drive or All drives, then Deploy.",
+  "version": "1.0.0",
+  "type": "corebar-widget",
+  "license": "Proprietary; unmodified official releases may be used",
+  "source": "https://github.com/qlerup/ultrabar-store/blob/490d327e1926a0e7c9a92bc42cb3a4d741083743/submissions/studio-drive-widget/widget.json",
+  "compatibility": {
+    "minStudioVersion": "0.24.0",
+    "hostApi": 1,
+    "models": [
+      "CB01"
+    ],
+    "abis": [
+      "armeabi-v7a"
+    ],
+    "lineosVersions": [
+      "1.0.8",
+      "1.0.9"
+    ]
+  },
+  "permissions": [],
+  "artifact": {
+    "url": "https://github.com/qlerup/ultrabar-store/releases/download/review-drive-widget-1.0.0/widget.json",
+    "size": 265,
+    "sha256": "43741d0a2042d820f5c0f57dcd2eb101eb07d7b7c4c5846db7a85c07c6f5a458"
+  },
+  "icon": {
+    "url": "https://github.com/qlerup/ultrabar-store/releases/download/review-drive-widget-1.0.0/icon.png",
+    "size": 19568,
+    "sha256": "eae058e43679f58a59bea91d743069609b2a4152030c36aa3d9ebc1ab0a05836"
+  }
+}
