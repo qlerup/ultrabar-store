@@ -37,3 +37,12 @@ class Checks(unittest.TestCase):
   (self.folder/'LICENSE').write_text('License text permitting distribution of this test.')
   self.manifest['source']='https://github.com/test/repo/tree/main/widget.json';self.save();self.assertTrue(validate_tree(self.root)[0])
 if __name__=='__main__':unittest.main()
+
+class MeasurementOptions(unittest.TestCase):
+ def test_supported_options_and_invalid_choices(self):
+  from validate import widget_package, StoreError
+  w=dict(id='system',name='System',kind='cpu',kindOptions=['cpu','memory','gpu'])
+  def parse(row):return widget_package(json.dumps(dict(widgetApi=1,runtime='studio-native-v1',widgets=[row])).encode())
+  self.assertEqual(parse(w)[0]['kindOptions'],w['kindOptions'])
+  for options in ([],['cpu'],['cpu','cpu'],['clock','cpu'],['memory','gpu'],'cpu'):
+   with self.assertRaises(StoreError):parse(dict(w,kindOptions=options))
