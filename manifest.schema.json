@@ -1,0 +1,170 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "UltraBar package manifest v1 (proposed)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "id",
+    "name",
+    "version",
+    "type",
+    "license",
+    "source",
+    "compatibility",
+    "permissions",
+    "artifact"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9]*(\\.[a-z][a-z0-9-]*)+$"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 100
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$"
+    },
+    "type": {
+      "enum": [
+        "corebar-app",
+        "corebar-widget",
+        "studio-plugin"
+      ]
+    },
+    "license": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source": {
+      "type": "string",
+      "pattern": "^https://github.com/"
+    },
+    "compatibility": {
+      "type": "object",
+      "required": [
+        "minStudioVersion",
+        "hostApi"
+      ],
+      "properties": {
+        "minStudioVersion": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$"
+        },
+        "hostApi": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "models": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "lineosVersions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "abis": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "permissions": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "artifact": {
+      "type": "object",
+      "required": [
+        "url",
+        "size",
+        "sha256"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "url": {
+          "type": "string",
+          "pattern": "^https://github.com/[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+/releases/download/[^/]+/[^/]+$"
+        },
+        "size": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 268435456
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      }
+    },
+    "android": {
+      "type": "object",
+      "required": [
+        "packageId",
+        "versionCode",
+        "minSdk",
+        "signerSha256"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "packageId": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_]*(\\.[A-Za-z][A-Za-z0-9_]*)+$"
+        },
+        "versionCode": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "minSdk": {
+          "type": "integer",
+          "minimum": 26
+        },
+        "signerSha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "corebar-app"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "android"
+        ]
+      },
+      "else": {
+        "not": {
+          "required": [
+            "android"
+          ]
+        }
+      }
+    }
+  ]
+}
