@@ -34,7 +34,7 @@ def run(root,trusted,pr):
    manifest=json.loads((folder/'manifest.json').read_text(encoding='utf-8'))
    if not (folder/'repository.json').exists():
     # Existing first-party submissions remain compatible. Third parties cannot edit them.
-    if old.exists() and author.lower()=='qlerup' and not (old/'repository.json').exists():
+    if author.lower()=='qlerup' and not (old/'repository.json').exists():
      notes.append(folder.name+': legacy first-party package; maintainer submission.');continue
     raise ValueError('Add repository.json linking your own public GitHub repository and release.')
    if old.exists() and not (old/'repository.json').exists():
