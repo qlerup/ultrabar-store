@@ -1,0 +1,17 @@
+{
+  "widgetApi": 1,
+  "runtime": "studio-native-v1",
+  "widgets": [
+    {
+      "id": "clock",
+      "name": "Clock & date",
+      "kind": "clock",
+      "background": "#192325",
+      "textColor": "#eef6f2",
+      "accent": "#b8adff",
+      "hourFormat": "24",
+      "showSeconds": true,
+      "showDate": true
+    }
+  ]
+}
