@@ -23,9 +23,9 @@
   },
   "permissions": [],
   "artifact": {
-    "url": "https://github.com/qlerup/ultrabar-store/releases/download/review-drive-widget-1.0.0/widget.json",
-    "size": 265,
-    "sha256": "43741d0a2042d820f5c0f57dcd2eb101eb07d7b7c4c5846db7a85c07c6f5a458"
+    "url": "https://github.com/qlerup/ultrabar-store/releases/download/review-drive-widget-1.0.0-lf/widget.json",
+    "size": 251,
+    "sha256": "66b46108e7fe1e646935ef19c6f6a9e142c4163bda5bb6c3111b2b12a0e22f6a"
   },
   "icon": {
     "url": "https://github.com/qlerup/ultrabar-store/releases/download/review-drive-widget-1.0.0/icon.png",
