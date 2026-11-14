@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Store package repository registration",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["repository", "commit", "release", "type"],
+  "properties": {
+    "repository": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*/[A-Za-z0-9][A-Za-z0-9_.-]*$"},
+    "commit": {"type": "string", "pattern": "^[a-f0-9]{40}$"},
+    "release": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,99}$"},
+    "type": {"enum": ["corebar-app", "corebar-widget", "studio-plugin"]}
+  }
+}

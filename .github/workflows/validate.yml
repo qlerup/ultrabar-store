@@ -44,6 +44,10 @@ jobs:
         run: |
           python3 -m venv .validator-env
           .validator-env/bin/python -I -m pip install Pillow==12.3.0
+      - name: Prepare trusted Android APK inspection tools
+        run: |
+          sdkmanager 'build-tools;35.0.0' >/dev/null
+          echo "ANDROID_BUILD_TOOLS=$ANDROID_HOME/build-tools/35.0.0" >> "$GITHUB_ENV"
       - name: Test trusted validator
         run: .validator-env/bin/python -I -m unittest discover -s trusted/scripts -p 'test_*.py'
       - name: Check submission files and published artifacts

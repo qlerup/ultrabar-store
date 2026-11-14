@@ -1,4 +1,17 @@
-# Publish or update an UltraBar Store widget
+# Publish or update an UltraBar Store package
+
+**Detailed Danish walkthrough:** [Fra egen app til Store](INDSEND-EN-APP.md).
+
+## Package types and files
+
+All types use `submissions/<package-name>/`. Declare the same `type` in repository.json and manifest.json: `corebar-widget` (integrated drag-and-deploy widget), `corebar-app` (standalone Android APK on Core), or `studio-plugin` (declarative presets, not executable PC plugins). New registrations require type; older approved registrations remain compatible.
+
+Every package includes icon.png, README.md, LICENSE and the two manifests. Widgets include widget.json; presets include plugin.json (`pluginApi: 1`, a widgets list of name/kind/colors). APKs include app.apk and source.zip. APK upstream repositories contain AndroidManifest.xml at root, complete source and build instructions. Publish app.apk and a root-level git archive source.zip as stable release assets. The archive must exactly match every tracked file at the pinned commit (maximum 256 files/16 MiB, no symlinks/submodules).
+
+APK Actions inspect package ID, versionName/versionCode, minimum SDK, exact permissions, non-debuggable status and a cryptographically verified v2 signature. APK updates preserve signing key and Android ID and increase versionCode. Binary/source equivalence is not automatically proven: source review and physical testing remain the maintainer's responsibility. SDK tools inspect data; submitted code is never executed.
+
+The app receives a prebuilt APK at Install; it never compiles contributor source on the user's PC. Custom installation scripts are unsupported. Special provisioning must already be implemented by the app or by a trusted Studio version.
+
 
 ## Ownership model
 
@@ -17,7 +30,7 @@ README.md
 LICENSE
 ```
 
-Copy examples/clock/widget.json as a starting point. widgetApi is 1; runtime is studio-native-v1. Supported kinds: clock, cpu, memory, gpu, disk. Studio 0.24+ supports kindOptions containing two or three distinct cpu/memory/gpu values including the default kind. Each block then gets its own Show selector. Disk already has a per-block drive selector. Name/background/text/accent settings are supplied by Studio. The JSON is the complete source: arbitrary executable code and new renderer kinds are not supported by this format. Standalone APK submissions require separate review.
+Copy examples/clock/widget.json as a starting point. widgetApi is 1; runtime is studio-native-v1. Supported kinds: clock, cpu, memory, gpu, disk. Studio 0.24+ supports kindOptions containing two or three distinct cpu/memory/gpu values including the default kind. Each block then gets its own Show selector. Disk already has a per-block drive selector. Name/background/text/accent settings are supplied by Studio. The JSON is the complete source: arbitrary executable code and new renderer kinds are not supported by this format. Standalone APKs use the separate format above and require source/permission review.
 
 icon.png must be static, square 256x256 or 512x512, maximum 256 KiB. Supply square artwork; Studio applies the rounded mask. Include redistribution rights for the icon and package in LICENSE. README describes settings, hardware, data collected, testing and limitations. Never include credentials or personal device identifiers.
 
@@ -33,7 +46,8 @@ Copy this into repository.json and replace the values:
 {
   "repository": "YOURNAME/YOUR-WIDGET",
   "commit": "REPLACE_WITH_FULL_40_CHARACTER_COMMIT_SHA",
-  "release": "v1.0.0"
+  "release": "v1.0.0",
+  "type": "corebar-widget"
 }
 ```
 
@@ -65,4 +79,4 @@ The repository owner can delegate development using GitHub collaborators, but un
 
 ## One package per PR
 
-Each PR may change only one submission folder, including additions and removals. Submit separate PRs for separate plugins. In that folder, repository.json is the registration file: repository is YOUR_GITHUB_NAME/YOUR_REPOSITORY, commit is the full source SHA and release is the release tag. The bot checks this against the author and previously approved registration.
+Each PR may change only one submission folder, including additions and removals. Submit separate PRs for separate plugins. In that folder, repository.json is the registration file: repository is YOUR_GITHUB_NAME/YOUR_REPOSITORY, commit is the full source SHA, release is the release tag, and type declares the package category. The bot checks this against the author and previously approved registration.
