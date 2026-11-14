@@ -40,7 +40,7 @@ submissions/my-clock/
   LICENSE
 ```
 
-An **icon.png is mandatory**: static PNG, square 256x256 or 512x512 pixels, maximum 256 KiB (262144 bytes). Use your own original or licensed app icon; it is shown on the store card. SVG, animated PNG and other dimensions are rejected. Transparency is allowed. Include rights for the icon in LICENSE.
+An **icon.png is mandatory**: static PNG, square 256x256 or 512x512 pixels, maximum 256 KiB (262144 bytes). Use your own original or licensed app icon; it is shown on the store card. SVG, animated PNG and other dimensions are rejected. Upload the square artwork without baking rounded corners into it. Studio applies the same rounded mask to every icon on its app card. Transparency is allowed. Include rights for the icon in LICENSE.
 
 Copy `examples/clock/widget.json` and `examples/clock/manifest.json` as a starting
 point. Use your own stable package ID, name, description and license. Widget IDs
