@@ -91,7 +91,7 @@ def widget_package(raw):
     if not isinstance(widgets,list) or not 1<=len(widgets)<=32:raise StoreError('A package must contain 1-32 widgets.')
     result=[];ids=set()
     for w in widgets:
-        if not isinstance(w,dict) or set(w)-{'id','name','kind','background','textColor','accent','hourFormat','showSeconds','showDate'}:raise StoreError('Unsupported widget field. Executable code is not supported.')
+        if not isinstance(w,dict) or set(w)-{'id','name','kind','background','textColor','accent','hourFormat','showSeconds','showDate','kindOptions'}:raise StoreError('Unsupported widget field. Executable code is not supported.')
         key=w.get('id')
         if not isinstance(key,str) or not re.fullmatch(r'[a-z][a-z0-9-]{0,63}',key) or key in ids:raise StoreError('Widget IDs must be unique.')
         ids.add(key)
@@ -99,6 +99,10 @@ def widget_package(raw):
         plugin_templates(json.dumps(dict(pluginApi=1,widgets=[base])).encode())
         if w.get('hourFormat','24') not in ('12','24') or any(type(w[k]) is not bool for k in ('showSeconds','showDate') if k in w):raise StoreError('Invalid clock settings.')
         if w['kind']!='clock' and any(k in w for k in ('hourFormat','showSeconds','showDate')):raise StoreError('Clock settings require a clock widget.')
+        if 'kindOptions' in w:
+            options=w['kindOptions']
+            if not isinstance(options,list) or not 2<=len(options)<=3 or any(k not in ('cpu','memory','gpu') for k in options) or len(set(options))!=len(options) or w['kind'] not in options:
+                raise StoreError('Choose 2-3 distinct CPU, RAM or GPU kinds including the default kind.')
         result.append(dict(w,_widgetPackage=True))
     return result
 
@@ -126,13 +130,14 @@ def validate_tree(root,verify_assets=False):
                 if field not in manifest:raise ValueError('Missing manifest field '+field)
             if not re.fullmatch(r'https://github.com/[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+/(tree|blob)/[a-f0-9]{40}/[^\s]+',manifest['source']):raise ValueError('source must link to an exact GitHub source commit (40 hex digits)')
             if manifest['type']!='corebar-widget':raise ValueError('This submission validator currently accepts integrated corebar-widget packages only; request a separate review for APKs.')
-            raw=read(folder/'widget.json');widget_package(raw)
+            raw=read(folder/'widget.json');widgets=widget_package(raw)
             icon_raw=read(folder/'icon.png',262144)
             icon_meta=manifest.get('icon',dict(url=ASSET_PREFIX+'pending/icon.png',size=len(icon_raw),sha256=hashlib.sha256(icon_raw).hexdigest()))
             validate_icon_metadata(icon_meta);validate_icon_bytes(icon_raw,icon_meta)
             compat=manifest['compatibility']
             if compat.get('hostApi')!=1 or valid_version(compat['minStudioVersion'])<(0,20,0):raise ValueError('Widget packages require hostApi 1 and Studio 0.20.0+')
             if compat.get('abis')!=['armeabi-v7a'] or compat.get('models')!=['CB01'] or not compat.get('lineosVersions') or not set(compat['lineosVersions'])<= {'1.0.8','1.0.9'}:raise ValueError('Declare tested CB01/ARM32/LineOS 1.0.8 or 1.0.9 compatibility')
+            if any('kindOptions' in w for w in widgets) and valid_version(compat['minStudioVersion'])<(0,24,0):raise ValueError('Selectable measurements require Studio 0.24.0+')
             effective=copy.deepcopy(manifest)
             if 'artifact' not in effective:
                 effective['artifact']=dict(url=ASSET_PREFIX+'pending/widget.json',size=len(raw),sha256=hashlib.sha256(raw).hexdigest())

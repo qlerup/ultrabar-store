@@ -14,7 +14,7 @@ You do not submit a separate PC program or APK for these widgets.
 The `studio-native-v1` runtime supports `clock`, `cpu`, `memory`, `gpu` and `disk`.
 It supplies the editor controls, data collection and Core rendering. Clock
 options are 12/24 hours, seconds and date; disk has a drive selector. All have
-name/background/text/accent controls. Core clock time/locale may differ from the
+name/background/text/accent controls. Studio 0.24 also supports `kindOptions` on a widget: a list of two or three distinct values from `cpu`, `memory`, `gpu`, including its default `kind`. It adds a per-block Show selector; each placed block stores its own choice. Packages using it must require Studio 0.24.0 or later. Core clock time/locale may differ from the
 PC preview. Hardware metrics need Studio connected. Native integration requires
 root-enabled CB01, ARM32 and LineOS 1.0.8 or 1.0.9. Studio must reconnect to restore
 widgets after a Core restart. Installing a package does not deploy it.
