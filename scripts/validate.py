@@ -1,5 +1,5 @@
 """Trusted data-only validator. Never imports or executes submitted code."""
-import copy,hashlib,json,re,sys,os
+import copy,hashlib,json,re,sys,os,io
 from pathlib import Path
 from types import SimpleNamespace
 from urllib.request import Request,build_opener,HTTPRedirectHandler
@@ -22,6 +22,24 @@ def valid_version(value):
     if not isinstance(value,str) or not re.fullmatch(r'(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)',value): raise StoreError('Invalid package version.')
     try: return updates.version_tuple(value)
     except updates.UpdateError as exc: raise StoreError('Invalid package version.') from exc
+
+def validate_icon_metadata(icon):
+    if not isinstance(icon,dict) or set(icon)!={'url','size','sha256'}:raise StoreError('An icon needs url, size and sha256.')
+    url=icon['url']
+    if not isinstance(url,str) or not url.startswith(ASSET_PREFIX) or not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_.-]*/[A-Za-z0-9][A-Za-z0-9_.-]*\.png',url[len(ASSET_PREFIX):]):raise StoreError('Icon must be a PNG asset in the official store repository.')
+    if type(icon['size']) is not int or not 0<icon['size']<=262144 or not HEX.fullmatch(str(icon['sha256'])):raise StoreError('Invalid icon size or checksum.')
+
+def validate_icon_bytes(raw,icon):
+    from PIL import Image
+    if len(raw)!=icon['size'] or hashlib.sha256(raw).hexdigest()!=icon['sha256']:raise StoreError('Icon checksum or size mismatch.')
+    try:
+        with Image.open(io.BytesIO(raw)) as im:
+            if im.format!='PNG' or im.size not in ((256,256),(512,512)) or getattr(im,'n_frames',1)!=1:raise StoreError('Icon must be a static 256x256 or 512x512 PNG.')
+            im.verify()
+        with Image.open(io.BytesIO(raw)) as im:im.load()
+    except StoreError:raise
+    except Exception as exc:raise StoreError('Invalid PNG icon.') from exc
+    return raw
 
 def validate_entry(entry):
     if not isinstance(entry, dict): raise StoreError('Invalid catalog entry.')
@@ -109,6 +127,9 @@ def validate_tree(root,verify_assets=False):
             if not re.fullmatch(r'https://github.com/[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+/(tree|blob)/[a-f0-9]{40}/[^\s]+',manifest['source']):raise ValueError('source must link to an exact GitHub source commit (40 hex digits)')
             if manifest['type']!='corebar-widget':raise ValueError('This submission validator currently accepts integrated corebar-widget packages only; request a separate review for APKs.')
             raw=read(folder/'widget.json');widget_package(raw)
+            icon_raw=read(folder/'icon.png',262144)
+            icon_meta=manifest.get('icon',dict(url=ASSET_PREFIX+'pending/icon.png',size=len(icon_raw),sha256=hashlib.sha256(icon_raw).hexdigest()))
+            validate_icon_metadata(icon_meta);validate_icon_bytes(icon_raw,icon_meta)
             compat=manifest['compatibility']
             if compat.get('hostApi')!=1 or valid_version(compat['minStudioVersion'])<(0,20,0):raise ValueError('Widget packages require hostApi 1 and Studio 0.20.0+')
             if compat.get('abis')!=['armeabi-v7a'] or compat.get('models')!=['CB01'] or not compat.get('lineosVersions') or not set(compat['lineosVersions'])<= {'1.0.8','1.0.9'}:raise ValueError('Declare tested CB01/ARM32/LineOS 1.0.8 or 1.0.9 compatibility')
@@ -119,7 +140,7 @@ def validate_tree(root,verify_assets=False):
             validate_entry(effective)
             if effective['artifact']['size']!=len(raw) or effective['artifact']['sha256']!=hashlib.sha256(raw).hexdigest():raise ValueError('Artifact hash/size does not match widget.json')
             if manifest['id'] in packages:raise ValueError('Duplicate package ID')
-            packages[manifest['id']]=(manifest,raw)
+            packages[manifest['id']]=(manifest,raw,icon_raw)
         except Exception as exc:errors.append(folder.name+': '+str(exc))
     seen=set()
     for entry in catalog['packages']:
@@ -128,13 +149,19 @@ def validate_tree(root,verify_assets=False):
             if entry['id'] in seen:raise ValueError('Duplicate catalog ID')
             seen.add(entry['id'])
             if entry['id'] not in packages:raise ValueError('Catalog entry has no valid submission')
-            manifest,raw=packages[entry['id']]
+            manifest,raw,icon_raw=packages[entry['id']]
+            if 'icon' not in manifest:raise ValueError('Owner must publish icon.png and add its icon URL, size and SHA-256 before approval')
+            validate_icon_metadata(manifest['icon'])
             if manifest!=entry or 'artifact' not in manifest:raise ValueError('Catalog must exactly match the published manifest')
             if verify_assets:
                 req=Request(entry['artifact']['url'],headers={'User-Agent':'UltraBar-Store-Validator'})
                 with build_opener(SafeRedirect).open(req,timeout=20) as response:
                     remote=response.read(65537)
                 if remote!=raw:raise ValueError('Published GitHub asset differs from reviewed widget.json')
+                req=Request(manifest['icon']['url'],headers={'User-Agent':'UltraBar-Store-Validator'})
+                with build_opener(SafeRedirect).open(req,timeout=20) as response:remote_icon=response.read(262145)
+                if remote_icon!=icon_raw:raise ValueError('Published icon differs from reviewed icon.png')
+                validate_icon_bytes(remote_icon,manifest['icon'])
             notes.append(entry['id']+': catalog and package checks passed; owner review and physical testing still required.')
         except Exception as exc:errors.append('catalog: '+str(exc))
     for package_id in packages:
@@ -145,7 +172,7 @@ if __name__=='__main__':
     try:errors,notes=validate_tree(Path(sys.argv[1]),'--verify-assets' in sys.argv)
     except Exception as exc:errors=[str(exc)];notes=[]
     ready=not errors and bool(notes)
-    checks=['Required files: widget.json, manifest.json, README.md and LICENSE','Manifest identity, semantic version, source commit and compatibility','Widget runtime, supported settings and rejection of executable fields','Unique package/widget IDs and exact catalog/manifest match','Local SHA-256 and byte size','Published GitHub release bytes match reviewed package (when catalogued)']
+    checks=['Required files: widget.json, manifest.json, icon.png, README.md and LICENSE','Manifest identity, semantic version, source commit and compatibility','Widget runtime, supported settings and rejection of executable fields','Unique package/widget IDs and exact catalog/manifest match','Static PNG icon: 256x256 or 512x512, at most 256 KiB, valid image data','Local SHA-256 and byte size','Published GitHub release bytes match reviewed package (when catalogued)']
     result=dict(ready=ready,errors=errors,notes=notes,checks=checks)
     if os.environ.get('STORE_RESULT'):Path(os.environ['STORE_RESULT']).write_text(json.dumps(result),encoding='utf-8')
     report='Store submission checks\n\n'+'\n'.join(['ERROR: '+e for e in errors]+notes or ['No packages submitted yet.'])+'\n'

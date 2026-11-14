@@ -13,7 +13,9 @@
     "source",
     "compatibility",
     "permissions",
-    "artifact"
+    "artifact",
+    "description",
+    "icon"
   ],
   "properties": {
     "schemaVersion": {
@@ -138,6 +140,30 @@
           "minimum": 26
         },
         "signerSha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      }
+    },
+    "icon": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "url",
+        "size",
+        "sha256"
+      ],
+      "properties": {
+        "url": {
+          "type": "string",
+          "pattern": "^https://github.com/qlerup/ultrabar-store/releases/download/[A-Za-z0-9][A-Za-z0-9_.-]*/[A-Za-z0-9][A-Za-z0-9_.-]*\\.png$"
+        },
+        "size": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 262144
+        },
+        "sha256": {
           "type": "string",
           "pattern": "^[a-f0-9]{64}$"
         }
