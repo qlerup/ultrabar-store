@@ -100,8 +100,8 @@ def verify_apk_source(folder,repo,commit,tag):
  archive=folder/'source.zip'
  if archive.is_symlink() or archive.stat().st_size>16*1024*1024:raise ValueError('Invalid source.zip.')
  with zipfile.ZipFile(archive) as z:
-  names=z.namelist()
-  if len(names)!=len(set(names)) or set(names)!=set(expected) or sum(i.file_size for i in z.infolist())>16*1024*1024:raise ValueError('source.zip must contain every tracked source file at repository root, exactly once, within 16 MiB.')
+  names=[i.filename for i in z.infolist() if not i.is_dir()]
+  if len(z.infolist())>512 or len(names)!=len(set(names)) or set(names)!=set(expected) or sum(i.file_size for i in z.infolist())>16*1024*1024:raise ValueError('source.zip must contain every tracked source file at repository root, exactly once, within 16 MiB.')
   for name in names:
    raw=z.read(name)
    if hashlib.sha1(b'blob '+str(len(raw)).encode()+b'\0'+raw).hexdigest()!=expected[name]['sha']:raise ValueError('Source archive differs from pinned Git commit: '+name)
