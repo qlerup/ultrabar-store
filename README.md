@@ -1,39 +1,40 @@
-# UltraBar Store - catalog foundation
+# UltraBar Store
 
-Community package catalog for [UltraBar Studio](https://github.com/qlerup/ultrabar-studio).
-**Not live yet:** Studio 0.14 has app update checks, but does not install store packages.
-No test APKs, device credentials or signing keys are published here.
+Reviewed apps and plugins for [UltraBar Studio](https://github.com/qlerup/ultrabar-studio).
+Studio 0.18+ reads `catalog.json` from **main** when the Store opens, on Refresh,
+and once per minute while visible. Merging an approved catalog entry makes it
+available without a Studio update. Installation remains the user's choice.
 
-## Distribution
+## Submitting a package
 
-CoreBAR applications are **prebuilt, release-signed APKs** on GitHub Releases.
-The user's PC does not compile Android code. The catalog pins exact release
-URLs, sizes, checksums, Android package IDs, versionCodes and signer fingerprints.
-Each app retains its own license. Apps do not inherit the Studio license.
+1. Fork this repository and create a branch for your submission.
+2. Add a folder under `submissions/` with source/build instructions, README,
+   license, permissions, compatibility information and `manifest.json`.
+3. Supply a prebuilt release-signed APK, or a declarative Studio plugin JSON.
+   The maintainer publishes reviewed binaries as versioned assets in this
+   repository's Releases. Do not commit binaries or signing keys to Git.
+4. Add the manifest to `catalog.json` with the real asset URL, size and SHA-256.
+   APKs also require package ID, versionCode, minSdk and signer SHA-256.
+5. Open a pull request. **qlerup reviews it before merge.** Until merge, the
+   submission is not visible in Studio's approved catalog.
 
-Planned package families:
+CoreBAR apps are prebuilt APKs; Studio does not compile code on users' PCs.
+The installer checks the approved artifact hash, APK metadata, permissions and
+signing certificate identity. Android verifies the signature and enforces update
+signer continuity. Apps never receive credentials or root access from the store.
 
-| Type | Artifact | Installation |
-|---|---|---|
-| `corebar-app` | Signed `.apk` | Verified ADB install to chosen CoreBAR |
-| `corebar-widget` | Renderer package | Reviewed native widget adapter; initially first-party only |
-| `studio-plugin` | Versioned `.zip` | Future Studio host API, separate from Android |
+Studio plugins currently use a JSON file with `pluginApi: 1` and a `widgets`
+array. Each widget has `name` and `kind` (`clock`, `cpu`, `memory`, `gpu`, `disk`),
+with optional hex `background`, `textColor` and `accent` values. No scripts,
+executables, shell commands or new permissions are allowed. Installed presets
+appear in Widget library > Studio & App Store. Adding/deploying is explicit.
+Native DEX renderer packages and executable Windows plugins are not supported.
 
-APK updates must retain the original signing key. A checksum is not a substitute
-for an Android signing identity. Store refreshes and package versions are
-independent of Studio releases once the corresponding installation adapter exists.
+See [CONTRIBUTING.md](CONTRIBUTING.md), [manifest.schema.json](manifest.schema.json)
+and the examples under `submissions/`. Each submitted app retains its own license.
 
-## Submissions
+## Review packages
 
-Open a pull request with source/build links, package metadata, license,
-permissions and compatibility notes. qlerup must review and approve entries
-before they go live. Do not publish an unsigned/debuggable APK as production.
-Do not add credentials, device serials or signing keys. Package-specific setup
-must use a supported host API, not arbitrary install scripts from a manifest.
-
-See [CONTRIBUTING.md](CONTRIBUTING.md) and the
-[Studio architecture](https://github.com/qlerup/ultrabar-studio/blob/main/docs/store-architecture.md).
-The initial catalog is intentionally empty until a package is ready and the
-installer exists. `manifest.schema.json` defines the proposed v1 metadata shape;
-it does not imply runtime support. Production rollout also requires catalog
-validation, trusted release signing and the install checks in the architecture.
+Release assets labelled as review builds are available for inspection but do not
+become approved store entries until their catalog pull request is merged.
+Android app signing keys must be preserved privately for later updates.

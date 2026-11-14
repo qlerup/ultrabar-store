@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "UltraBar package manifest v1 (proposed)",
+  "title": "UltraBar package manifest v1",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -13,7 +13,8 @@
     "source",
     "compatibility",
     "permissions",
-    "artifact"
+    "artifact",
+    "description"
   ],
   "properties": {
     "schemaVersion": {
@@ -142,6 +143,11 @@
           "pattern": "^[a-f0-9]{64}$"
         }
       }
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 1000
     }
   },
   "allOf": [

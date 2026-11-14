@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "source": "https://github.com/qlerup/ultrabar-store/tree/submission/clock-and-presets/submissions",
+  "version": "1.0.0",
+  "license": "Proprietary; unmodified official releases may be used",
+  "permissions": [],
+  "id": "dk.ultrabarx.studioclock",
+  "name": "Studio Clock",
+  "description": "An offline clock and today's date on CoreBAR. Uses device time and locale. No network, background service or permissions.",
+  "type": "corebar-app",
+  "compatibility": {
+    "minStudioVersion": "0.18.0",
+    "hostApi": 1,
+    "models": [
+      "CB01"
+    ],
+    "abis": [
+      "armeabi-v7a"
+    ]
+  },
+  "artifact": {
+    "url": "https://github.com/qlerup/ultrabar-store/releases/download/review-packages-1.0.0/studio-clock-1.0.0.apk",
+    "size": 12762,
+    "sha256": "9d441a070182c32cabe884f516b875bedf4dd2997bb915b7600ff106eacfaf3d"
+  },
+  "android": {
+    "packageId": "dk.ultrabarx.studioclock",
+    "versionCode": 1,
+    "minSdk": 26,
+    "signerSha256": "2a23bcbeae92ba0a856c5a252b5bf925d78efd9d6d0ea18996d105e84268fdd5"
+  }
+}

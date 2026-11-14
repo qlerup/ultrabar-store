@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "source": "https://github.com/qlerup/ultrabar-store/tree/submission/clock-and-presets/submissions",
+  "version": "1.0.0",
+  "license": "Proprietary; unmodified official releases may be used",
+  "permissions": [],
+  "id": "studio.iris.presets",
+  "name": "Studio Iris Presets",
+  "description": "Adds a clock preset and an iris-colored RAM widget to the library. Installing does not change Core; add a preset to a draft and deploy when ready.",
+  "type": "studio-plugin",
+  "compatibility": {
+    "minStudioVersion": "0.18.0",
+    "hostApi": 1
+  },
+  "artifact": {
+    "url": "https://github.com/qlerup/ultrabar-store/releases/download/review-packages-1.0.0/studio-presets-1.0.0.json",
+    "size": 207,
+    "sha256": "3393e30e377b023673ebf7c8d27fe5a7f47fefc58b362666568a9d82804654cb"
+  }
+}

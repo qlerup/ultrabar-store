@@ -1,0 +1,6 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="dk.ultrabarx.studioclock" android:versionCode="1" android:versionName="1.0.0">
+ <uses-sdk android:minSdkVersion="26" android:targetSdkVersion="28"/>
+ <application android:label="Studio Clock" android:icon="@drawable/ic_clock" android:debuggable="false" android:allowBackup="false" android:theme="@android:style/Theme.Material.NoActionBar">
+  <activity android:name=".ClockActivity" android:screenOrientation="landscape" android:exported="true"><intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter></activity>
+ </application>
+</manifest>
