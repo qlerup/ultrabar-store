@@ -22,3 +22,5 @@ Removing the library package alone preserves existing layouts.
 Validation: package parser and no-device-write installation tests; browser
 library drag/settings/save flow; native Java renderer compiles. Actual clock
 rendering and final Deploy on physical Core still require owner testing.
+
+The original app icon is icon.png (512x512 PNG). make_icon.py reproduces it using Pillow; the package license also covers this artwork.

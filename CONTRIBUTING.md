@@ -29,15 +29,18 @@ manual review path; do not label an APK as an integrated widget.
 1. Sign in to GitHub and open https://github.com/qlerup/ultrabar-store.
 2. Click **Fork**, then **Create fork**. Create a branch such as `add-my-clock`.
 3. In your fork choose **Add file > Create new file** or **Upload files**.
-4. Add these four files under `submissions/my-clock/` (lowercase folder name):
+4. Add these five files under `submissions/my-clock/` (lowercase folder name):
 
 ```
 submissions/my-clock/
   widget.json
   manifest.json
+  icon.png
   README.md
   LICENSE
 ```
+
+An **icon.png is mandatory**: static PNG, square 256x256 or 512x512 pixels, maximum 256 KiB (262144 bytes). Use your own original or licensed app icon; it is shown on the store card. SVG, animated PNG and other dimensions are rejected. Upload the square artwork without baking rounded corners into it. Studio applies the same rounded mask to every icon on its app card. Transparency is allowed. Include rights for the icon in LICENSE.
 
 Copy `examples/clock/widget.json` and `examples/clock/manifest.json` as a starting
 point. Use your own stable package ID, name, description and license. Widget IDs
@@ -55,7 +58,7 @@ SHA. Set `source` in manifest.json to the immutable file URL:
 `https://github.com/YOURNAME/ultrabar-store/blob/COMMIT_SHA/submissions/my-clock/widget.json`.
 Commit that manifest change. This two-commit sequence avoids a circular commit hash.
 
-Do not add `artifact` or edit `catalog.json` yet. The owner publishes the final
+Do not add `artifact` or `icon` download metadata or edit `catalog.json` yet. Upload the actual icon.png alongside your widget files. The owner publishes the final
 reviewed bytes under the official store account during review.
 
 ## 2. Open the pull request
@@ -96,10 +99,12 @@ The bot cannot prove visual quality or real-device behavior.
 After review, the owner uploads the exact widget.json bytes to a versioned
 GitHub Release asset in `qlerup/ultrabar-store` (a review prerelease is fine), then
 adds `artifact` to manifest.json with the official URL, byte count and SHA-256.
+The owner also publishes icon.png as an official release asset and adds `icon`
+with its URL, size and SHA-256. These metadata fields describe different files.
 The owner adds the identical manifest to `catalog.json.packages` in the PR.
 
 The bot rechecks the structure and downloads the public JSON asset to verify it
-matches the reviewed local file byte-for-byte. It rejects duplicate IDs,
+matches the reviewed local file byte-for-byte, and checks the icon can be decoded, has allowed dimensions and matches its own published bytes/checksum. It rejects duplicate IDs,
 unsupported settings, missing license/README, mutable source references,
 nonofficial artifact URLs and hash/size mismatches. Assets must be publicly
 accessible before the final check can pass.
