@@ -19,7 +19,9 @@ class ApkReviewTests(unittest.TestCase):
  def test_source_archive_matches_every_tracked_file_and_release(self):
   with tempfile.TemporaryDirectory() as tmp:
    root=Path(tmp);source=b'public source';(root/'app.apk').write_bytes(b'apk')
-   with zipfile.ZipFile(root/'source.zip','w') as z:z.writestr('AndroidManifest.xml',source)
+   with zipfile.ZipFile(root/'source.zip','w') as z:
+    z.writestr('src/',b'')  # git archive includes directory entries.
+    z.writestr('AndroidManifest.xml',source)
    tree=dict(tree=[dict(path='AndroidManifest.xml',type='blob',mode='100644',sha=hashlib.sha1(b'blob '+str(len(source)).encode()+b'\0'+source).hexdigest())])
    def remote(req,**kwargs):return io.BytesIO((root/req.full_url.split('/')[-1]).read_bytes())
    with patch.object(repository_check,'get_json',return_value=tree),patch.object(repository_check,'urlopen',side_effect=remote):
