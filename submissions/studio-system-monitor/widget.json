@@ -1,0 +1,19 @@
+{
+  "widgetApi": 1,
+  "runtime": "studio-native-v1",
+  "widgets": [
+    {
+      "id": "system-monitor",
+      "name": "System Monitor",
+      "kind": "cpu",
+      "kindOptions": [
+        "cpu",
+        "memory",
+        "gpu"
+      ],
+      "background": "#192325",
+      "textColor": "#eef6f2",
+      "accent": "#94d9bb"
+    }
+  ]
+}
