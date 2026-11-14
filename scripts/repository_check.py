@@ -24,6 +24,15 @@ def validate_link(link,manifest,author,previous=None):
 
 def run(root,trusted,pr):
  author=pr['user']['login'];errors=[];notes=[]
+ changed=set()
+ for parent in (root/'submissions',trusted/'submissions'):
+  for folder in parent.iterdir():
+   if not folder.is_dir():continue
+   left=root/'submissions'/folder.name;right=trusted/'submissions'/folder.name
+   def contents(path):return {str(f.relative_to(path)):f.read_bytes() for f in path.rglob('*') if f.is_file()} if path.exists() else None
+   if contents(left)!=contents(right):changed.add(folder.name)
+ if len(changed)>1:return ['One PR may change only one plugin package. Split these packages into separate PRs: '+', '.join(sorted(changed))],[]
+
  base=trusted/'submissions';current=root/'submissions'
  for folder in sorted(current.iterdir()):
   if not folder.is_dir():continue

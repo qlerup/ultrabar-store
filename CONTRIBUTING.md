@@ -62,3 +62,7 @@ The comment lists checks and actionable errors. Push fixes to the same PR branch
 Installed updates preserve existing placed blocks and settings. New defaults apply when adding a new block; Deploy sends the saved layout to Core. Removing a package removes its library template; remove placed blocks separately and Deploy. Existing drafts/backups remain available.
 
 The repository owner can delegate development using GitHub collaborators, but under this initial policy only the owner submits Store releases. Support for organization teams or delegated publishers needs explicit maintainer approval. Owning a repository alone does not prove copyright; the maintainer also reviews rights.
+
+## One package per PR
+
+Each PR may change only one submission folder, including additions and removals. Submit separate PRs for separate plugins. In that folder, repository.json is the registration file: repository is YOUR_GITHUB_NAME/YOUR_REPOSITORY, commit is the full source SHA and release is the release tag. The bot checks this against the author and previously approved registration.

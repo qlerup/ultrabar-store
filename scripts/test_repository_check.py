@@ -14,3 +14,14 @@ class OwnershipTests(unittest.TestCase):
  def test_reject_malformed_repository_and_commit(self):
   for change in (dict(repository='alice/../evil'),dict(commit='main'),dict(release='../x')):
    with self.assertRaises(ValueError):validate_link(dict(self.link,**change),self.manifest,'alice')
+
+ def test_multiple_package_changes_rejected(self):
+  import tempfile
+  from pathlib import Path
+  from repository_check import run
+  with tempfile.TemporaryDirectory() as tmp:
+   root=Path(tmp)/'pr';base=Path(tmp)/'base';(base/'submissions').mkdir(parents=True)
+   for name in ('one','two'):
+    folder=root/'submissions'/name;folder.mkdir(parents=True);(folder/'widget.json').write_text('{}')
+   errors,_=run(root,base,dict(user=dict(login='qlerup')))
+   self.assertIn('only one',errors[0])
