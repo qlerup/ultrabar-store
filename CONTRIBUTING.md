@@ -74,10 +74,19 @@ Open **Checks**, select the failed check and read its summary. Fix the files in
 this same branch and commit; GitHub reruns the checks. Do not create a new PR for
 each fix. Optionally run `python scripts/validate.py .` locally with Python 3.
 The bot never executes or builds contributor code. It validates data using the
-validator from the trusted main branch, with a read-only GitHub token.
+validator from the trusted main branch, without executing submitted code. Only the trusted comment step receives permission to update the PR comment.
 
-The initial submission may pass with a note that an official artifact is still
-missing. That means ready for human review, not ready for the live catalog.
+The initial submission reports **Not ready for approval** until the owner has
+published the official artifact and added the catalog entry. This publication
+step is the owner's responsibility, not something contributors need repository
+write access for. The bot distinguishes it in the fixes list.
+
+The bot updates one PR comment with checks, errors and rerun instructions. Fixing
+files and pushing a new commit reruns it automatically. The owner can also choose
+**Actions > Store submission checks > Run workflow**, enter the PR number, and run
+again without changing files. Only **Ready for approval** plus a passing check
+means the package has passed automated publication checks. Human acceptance is
+still required; nothing is merged automatically.
 
 ## 3. Owner review and publication
 

@@ -100,7 +100,9 @@ def validate_tree(root,verify_assets=False):
         try:
             if folder.is_symlink() or not folder.is_dir() or not re.fullmatch(r'[a-z0-9-]{1,80}',folder.name):raise ValueError('Invalid submission folder')
             for name in ('README.md','LICENSE'):
-                if len(read(folder/name).strip())<20:raise ValueError(name+' is missing or empty')
+                try:
+                    if len(read(folder/name).strip())<20:raise ValueError(name+' is empty')
+                except Exception as exc:errors.append(folder.name+': '+str(exc))
             manifest=json.loads(read(folder/'manifest.json'))
             for field in ('id','name','description','version','type','license','source','compatibility','permissions','schemaVersion'):
                 if field not in manifest:raise ValueError('Missing manifest field '+field)
@@ -135,11 +137,17 @@ def validate_tree(root,verify_assets=False):
                 if remote!=raw:raise ValueError('Published GitHub asset differs from reviewed widget.json')
             notes.append(entry['id']+': catalog and package checks passed; owner review and physical testing still required.')
         except Exception as exc:errors.append('catalog: '+str(exc))
+    for package_id in packages:
+        if package_id not in seen:errors.append(package_id+': awaiting owner publication: add the official release artifact and matching catalog entry before approval.')
     return errors,notes
 
 if __name__=='__main__':
     try:errors,notes=validate_tree(Path(sys.argv[1]),'--verify-assets' in sys.argv)
     except Exception as exc:errors=[str(exc)];notes=[]
+    ready=not errors and bool(notes)
+    checks=['Required files: widget.json, manifest.json, README.md and LICENSE','Manifest identity, semantic version, source commit and compatibility','Widget runtime, supported settings and rejection of executable fields','Unique package/widget IDs and exact catalog/manifest match','Local SHA-256 and byte size','Published GitHub release bytes match reviewed package (when catalogued)']
+    result=dict(ready=ready,errors=errors,notes=notes,checks=checks)
+    if os.environ.get('STORE_RESULT'):Path(os.environ['STORE_RESULT']).write_text(json.dumps(result),encoding='utf-8')
     report='Store submission checks\n\n'+'\n'.join(['ERROR: '+e for e in errors]+notes or ['No packages submitted yet.'])+'\n'
     print(report)
     if os.environ.get('GITHUB_STEP_SUMMARY'):
