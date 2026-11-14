@@ -15,6 +15,6 @@ def inspect(path, entry):
     permissions=set(re.findall(r"^uses-permission(?:-sdk-\d+)?: name='([^']+)'",info,re.M))
     if permissions!=set(entry['permissions']):raise ValueError('Declare the exact APK Android permissions in manifest.json.')
     result=subprocess.run(['java','-jar',str(root/'lib/apksigner.jar'),'verify','--verbose','--print-certs',str(path)],capture_output=True,timeout=30)
-    output=result.stdout.decode(errors='replace')
+    output=result.stdout.decode(errors='replace').replace('\r\n','\n')
     signers=re.findall(r'^Signer #\d+ certificate SHA-256 digest: ([a-fA-F0-9]+)$',output,re.M)
     if result.returncode or 'Verified using v2 scheme (APK Signature Scheme v2): true' not in output or signers!=[meta['signerSha256']]:raise ValueError('APK signature verification failed or signer differs from approved manifest.')
