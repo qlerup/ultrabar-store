@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "yourname.clock",
+  "name": "My clock",
+  "description": "Clock and date displayed inside a Core card.",
+  "version": "1.0.0",
+  "type": "corebar-widget",
+  "license": "REPLACE WITH YOUR LICENSE",
+  "source": "https://github.com/YOURNAME/ultrabar-store/blob/COMMIT_SHA/submissions/my-clock/widget.json",
+  "compatibility": {
+    "minStudioVersion": "0.20.0",
+    "hostApi": 1,
+    "models": [
+      "CB01"
+    ],
+    "abis": [
+      "armeabi-v7a"
+    ],
+    "lineosVersions": [
+      "1.0.8",
+      "1.0.9"
+    ]
+  },
+  "permissions": []
+}

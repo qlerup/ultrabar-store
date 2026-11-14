@@ -1,0 +1,30 @@
+name: Store submission checks
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    name: Validate package
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout trusted validator
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          path: trusted
+          persist-credentials: false
+      - name: Checkout submission as data only
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          repository: ${{ github.event.pull_request.head.repo.full_name || github.repository }}
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          path: submitted
+          persist-credentials: false
+      - name: Test trusted validator
+        run: python3 -I -m unittest discover -s trusted/scripts -p test_validator.py
+      - name: Check submission files and published artifacts
+        run: python3 -I trusted/scripts/validate.py submitted --verify-assets
