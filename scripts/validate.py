@@ -162,6 +162,9 @@ def validate_tree(root,verify_assets=False,generated_catalog=False):
                 spec=importlib.util.spec_from_file_location('trusted_apk_check',Path(__file__).with_name('apk_check.py'))
                 inspector=importlib.util.module_from_spec(spec);spec.loader.exec_module(inspector)
                 inspector.inspect(folder/filename,manifest)
+                if 'settings' in manifest:
+                    schema=json.loads(read(folder/'studio-settings.json',32768))
+                    if schema!=manifest['settings']:raise ValueError('studio-settings.json differs from manifest.settings. Fix: use the same reviewed settings schema in both files and APK assets.')
                 notes.append(folder.name+': APK static Studio install/launch contract passed. Generic APKs get app launch/background launch only; custom Studio settings or provisioning require a trusted Studio integration. Physical install/start/configuration tests are still required.')
                 read(folder/'source.zip',16*1024*1024)
             icon_raw=read(folder/'icon.png',262144)

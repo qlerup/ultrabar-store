@@ -5,13 +5,24 @@ def manifest_issues(manifest):
     def problem(field,message,fix):errors.append(f'manifest.json / {field}: {message} Fix: {fix}')
     if not isinstance(manifest,dict):return ['manifest.json: Expected a JSON object. Fix: copy a manifest example and fill its fields.']
     required={'schemaVersion','id','name','description','version','type','publisher','license','source','compatibility','permissions'}
-    allowed=required|{'artifact','icon','android'}
+    allowed=required|{'artifact','icon','android','settings'}
     for field in sorted(required-set(manifest)):problem(field,'Required field is missing.','Add '+field+' using CONTRIBUTING.md and manifest.schema.json.')
     for field in sorted(set(manifest)-allowed):problem(field,'Studio does not support this manifest field.','Remove it; custom settings, scripts and provisioning need a supported Studio integration, not extra manifest fields.')
     if type(manifest.get('schemaVersion')) is not int or manifest.get('schemaVersion')!=1:problem('schemaVersion','Unsupported manifest version.','Set schemaVersion to the integer 1.')
     for field in ('id','name','description','version','type','publisher','license','source'):
         if field in manifest and (not isinstance(manifest[field],str) or not manifest[field].strip()):problem(field,'Expected non-empty text.','Supply a non-empty string.')
     kind=manifest.get('type')
+    if 'settings' in manifest:
+        try:
+            import importlib.util
+            from pathlib import Path
+            spec=importlib.util.spec_from_file_location('trusted_app_settings_contract',Path(__file__).with_name('app_settings_contract.py'))
+            contract=importlib.util.module_from_spec(spec);spec.loader.exec_module(contract)
+            contract.validate_schema(manifest['settings'])
+            if kind!='corebar-app':raise ValueError('settings belongs to corebar-app; native widgets use widget.json settings.')
+            version=manifest.get('compatibility',{}).get('minStudioVersion','')
+            if not isinstance(version,str) or not __import__('re').fullmatch(r'\d+\.\d+\.\d+',version) or tuple(map(int,version.split('.'))) < (0,45,0):raise ValueError('Settings API 1 requires minStudioVersion 0.45.0 or newer.')
+        except (ValueError,AttributeError) as exc:problem('settings',str(exc),'Follow APP-SETTINGS.md and include the identical studio-settings.json in the source and APK assets.')
     if kind not in ('corebar-app','corebar-widget','studio-plugin'):problem('type','Unsupported package type.','Choose corebar-app, corebar-widget or studio-plugin.')
     compatibility=manifest.get('compatibility')
     if not isinstance(compatibility,dict):problem('compatibility','Expected a compatibility object.','Declare minStudioVersion, hostApi, models, lineosVersions and abis.')
@@ -48,4 +59,5 @@ def required_files(folder,manifest):
     kind=manifest.get('type') if isinstance(manifest,dict) else None
     if not isinstance(kind,str):kind=None
     files=['README.md','LICENSE','icon.png']+{'corebar-app':['app.apk','source.zip'],'corebar-widget':['widget.json'],'studio-plugin':['plugin.json']}.get(kind,[])
+    if isinstance(manifest,dict) and 'settings' in manifest:files.append('studio-settings.json')
     return [f'{name}: Required file is missing or a symlink. Fix: include the exact release file in this submission folder; see CONTRIBUTING.md.' for name in files if (folder/name).is_symlink() or not (folder/name).is_file()]

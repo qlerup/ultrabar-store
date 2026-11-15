@@ -55,6 +55,12 @@ def studio_issues(path,info,entry):
     return issues
 
 def inspect(path, entry):
+    contract=None
+    if 'settings' in entry:
+        import importlib.util
+        spec=importlib.util.spec_from_file_location('trusted_settings',Path(__file__).with_name('app_settings_contract.py'))
+        contract=importlib.util.module_from_spec(spec);spec.loader.exec_module(contract)
+        contract.inspect_apk(path,entry['settings'])
     root=Path(os.environ['ANDROID_BUILD_TOOLS'])
     suffix='.exe' if os.name=='nt' else ''
     result=subprocess.run([str(root/('aapt'+suffix)), 'dump','badging',str(path)],capture_output=True,timeout=30)
@@ -70,6 +76,9 @@ def inspect(path, entry):
     manifest=subprocess.run([str(root/('aapt'+suffix)),'dump','xmltree',str(path),'AndroidManifest.xml'],capture_output=True,timeout=30)
     if manifest.returncode:issues.append('app.apk: Cannot inspect compiled AndroidManifest.xml. Fix: build and upload a complete signed APK.')
     else:issues.extend(launcher_issues(manifest.stdout.decode('utf-8',errors='replace'),info,meta['packageId']))
+    if contract and not manifest.returncode:
+        try:contract.validate_receiver(manifest.stdout.decode('utf-8',errors='replace'),meta['packageId'])
+        except ValueError as exc:issues.append(str(exc))
     result=subprocess.run(['java','-jar',str(root/'lib/apksigner.jar'),'verify','--verbose','--print-certs',str(path)],capture_output=True,timeout=30)
     output=result.stdout.decode(errors='replace').replace('\r\n','\n')
     signers=re.findall(r'^Signer #\d+ certificate SHA-256 digest: ([a-fA-F0-9]+)$',output,re.M)

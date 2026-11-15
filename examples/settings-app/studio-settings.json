@@ -1,0 +1,11 @@
+{
+ "api":1,
+ "fields":[
+  {"key":"enabled","label":"Enabled","type":"boolean","default":true},
+  {"key":"delay","label":"Delay (ms)","type":"integer","default":1000,"min":0,"max":3000,"step":250},
+  {"key":"volume","label":"Volume","type":"number","default":0.5,"min":0,"max":1,"step":0.1},
+  {"key":"title","label":"Title","type":"string","default":"My app","maxLength":100},
+  {"key":"website","label":"Website","type":"url","default":"https://example.com","maxLength":2048},
+  {"key":"mode","label":"Mode","type":"choice","default":"normal","options":[{"value":"normal","label":"Normal"},{"value":"quiet","label":"Quiet"}]}
+ ]
+}

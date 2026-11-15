@@ -19,6 +19,15 @@ class StudioContractTests(unittest.TestCase):
             manifest=copy.deepcopy(self.manifest);manifest['type']=kind;del manifest['android']
             self.assertEqual(manifest_issues(manifest),[])
 
+    def test_settings_descriptor_requires_new_studio_and_an_apk(self):
+        from test_app_settings_contract import schema
+        self.manifest['settings']=schema()
+        self.assertTrue(any('0.45.0' in issue for issue in manifest_issues(self.manifest)))
+        self.manifest['compatibility']['minStudioVersion']='0.45.0'
+        self.assertEqual(manifest_issues(self.manifest),[])
+        self.manifest['settings']['fields'][1]['default']=1001
+        self.assertTrue(any('settings' in issue for issue in manifest_issues(self.manifest)))
+
     def test_reports_independent_missing_and_unsupported_fields(self):
         manifest=copy.deepcopy(self.manifest);del manifest['description'];manifest['installScript']='run.sh';manifest['compatibility']['hostApi']=True;manifest['compatibility']['abis']=['arm64-v8a'];manifest['android']['minSdk']=30
         issues=manifest_issues(manifest)

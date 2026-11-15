@@ -1,5 +1,10 @@
 # From your project to UltraBar Store: step-by-step guide
 
+**Before building:** read [APP-SETTINGS.md](APP-SETTINGS.md) for the exact Studio
+integration requirements and [complete example](examples/settings-app). Android
+apps with editable Studio settings require settings API 1 and Studio 0.45+;
+native widgets use the supported widget.json runtime controls documented there.
+
 Your project lives in **your own public GitHub repository**. Fork
 `qlerup/ultrabar-store` to propose a listing or update. You control your source
 repository and its collaborators; the Store owner approves each Store release.

@@ -22,9 +22,10 @@ def eligibility(base, submitted, author, paths):
         previous=load(base,prefix+'repository.json');link=load(submitted,prefix+'repository.json')
     except (OSError,ValueError):return False, 'Manual approval: new package or unregistered legacy package.'
     allowed={'manifest.json','repository.json','icon.png','README.md','LICENSE'}
-    allowed|={'app.apk','source.zip'} if new.get('type')=='corebar-app' else {'widget.json','make_icon.py'} if new.get('type')=='corebar-widget' else {'plugin.json','make_icon.py'}
+    allowed|={'app.apk','source.zip','studio-settings.json'} if new.get('type')=='corebar-app' else {'widget.json','make_icon.py'} if new.get('type')=='corebar-widget' else {'plugin.json','make_icon.py'}
     if any(p[len(prefix):] not in allowed for p in paths):
         return False, 'Manual approval: unexpected package file.'
+    if old.get('settings')!=new.get('settings'):return False, 'Manual approval: app settings contract changed.'
     for key in ('id','type','publisher','permissions','compatibility','license'):
         if key not in old or old[key]!=new.get(key):return False, 'Manual approval: changed '+key+'.'
     repo=previous.get('repository','')

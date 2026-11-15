@@ -22,6 +22,8 @@ class UpdatePolicyTests(unittest.TestCase):
    (root/'catalog.json').write_text(json.dumps(dict(schemaVersion=1,packages=[manifest])))
  def check(self,author='alice',paths=None):return eligibility(self.base,self.head,author,paths or self.paths)[0]
  def test_existing_owner_update_qualifies(self):self.assertTrue(self.check())
+ def test_changed_settings_contract_requires_manual_review(self):
+  self.new['settings']=dict(api=1,fields=[]);self.save();self.assertFalse(self.check())
  def test_new_or_legacy_package_stays_manual(self):
   (self.base/self.prefix/'repository.json').unlink();self.assertFalse(self.check())
  def test_new_package_cannot_use_unapproved_folder_as_history(self):

@@ -27,9 +27,9 @@ def render_comment(result,repo,run_id,sha=''):
     body+='### Automated check scope\n\n'
     body+='\n'.join('- '+html.escape(str(item)) for item in result.get('checks',[]))+'\n\n'
     if result.get('notes'):body+='### Details\n\n<pre>'+html.escape('\n'.join(result['notes']))[:7000]+'</pre>\n\n'
-    body+='### Still needs testing\n\nStatic checks verify the supported Studio package/install/launch contract. They do **not** run submitted apps or prove that the app starts successfully, that its features/custom settings work, that it is safe, or that redistribution rights are valid. Test install, launch, configuration, update and removal on physical Core before approval. Generic APKs do not automatically gain custom Studio settings or provisioning.\n\n'
+    body+='### Still needs testing\n\nStatic checks verify the supported Studio package/install/launch and declared settings API 1 contract. They do **not** run submitted apps or prove that the app starts successfully, that its features/custom settings work, that it is safe, or that redistribution rights are valid. Test install, launch, reading/applying settings, confirmation, restart persistence, update and removal on physical Core before approval. Apps need the documented settings API for editable fields; special provisioning remains a trusted integration.\n\n'
     body+='### Rerun\n\nPush fixes to this same PR branch; checks rerun automatically and update this comment. Maintainers can also use **Actions > Store submission checks > Run workflow** with the PR number.\n\n'
-    body+='[Full run log](https://github.com/'+repo+'/actions/runs/'+run_id+') | [Submission guide](https://github.com/'+repo+'/blob/main/CONTRIBUTING.md)'
+    body+='[Full run log](https://github.com/'+repo+'/actions/runs/'+run_id+') | [Submission guide](https://github.com/'+repo+'/blob/main/CONTRIBUTING.md) | [Settings requirements](https://github.com/'+repo+'/blob/main/APP-SETTINGS.md)'
     return body
 
 

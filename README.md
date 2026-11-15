@@ -6,6 +6,11 @@ right panel, then Deploy. New approved packages appear without updating Studio.
 
 **[Submit a package: step-by-step guide](SUBMIT-A-PACKAGE.md)**
 
+**[Studio integration requirements and settings specification](APP-SETTINGS.md)**
+and [complete Android example](examples/settings-app). Read these before building
+an app with editable Studio settings. The PR checklist and Actions enforce the
+declarative contract; physical behavior must also be tested.
+
 GitHub automatically checks submissions. New packages require owner approval;
 eligible updates to registered packages receive bot approval and auto-merge after
 green checks. The live catalog is generated from approved package manifests on the `catalog` branch. See CONTRIBUTING.md for the policy.

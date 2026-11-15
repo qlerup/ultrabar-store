@@ -2,6 +2,11 @@
 
 **Detailed walkthrough:** [From your project to UltraBar Store](SUBMIT-A-PACKAGE.md).
 
+**Mandatory integration requirements:** [Studio app settings API 1](APP-SETTINGS.md).
+Read this if your app exposes settings in Studio. It specifies required files,
+field types, receiver, read/apply/confirmation behavior and physical tests.
+[Complete Android example](examples/settings-app).
+
 ## Package types and files
 
 All types use `submissions/<package-name>/`. Declare the same `type` in repository.json and manifest.json: `corebar-widget` (integrated drag-and-deploy widget), `corebar-app` (standalone Android APK on Core), or `studio-plugin` (declarative presets, not executable PC plugins). New registrations require type; older approved registrations remain compatible.
@@ -39,9 +44,10 @@ fail, the check stays failed; examine the linked Actions log rather than treatin
 an incomplete run as approval.
 
 A generic APK supports app launch and Studio's generic background-launch control.
-Its own settings, bridge authorization and special provisioning are **not**
-automatically integrated into Studio. Describe such requirements in README.md;
-they need a trusted Studio implementation or app-side setup. Passing checks does
+Editable settings use the [settings API 1 contract](APP-SETTINGS.md), not arbitrary
+Android preferences or extra manifest fields. Bridge authorization and special
+provisioning still need a trusted Studio implementation or app-side setup;
+describe them in README.md. Passing checks does
 not prove runtime behavior, DEX compatibility beyond static inspection, safety,
 source/binary equivalence or rights. Maintainers still test install, launch,
 configuration, update and removal on physical Core. New-package approval and the

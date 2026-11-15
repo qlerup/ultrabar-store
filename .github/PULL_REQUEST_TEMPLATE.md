@@ -35,6 +35,17 @@ Describe features, fixes, settings compatibility and hardware requirements.
 
 ## Testing and limitations
 
+### Studio settings integration (complete one)
+
+- [ ] Android app with editable Studio settings: follows [APP-SETTINGS.md](https://github.com/qlerup/ultrabar-store/blob/main/APP-SETTINGS.md), settings API 1 and Studio 0.45+; identical studio-settings.json in source/submission/manifest/APK assets; protected StudioSettingsReceiver; actual read/apply confirmation tested.
+- [ ] Android app without Studio settings: README explicitly states that settings are configured in the app, not Studio.
+- [ ] Native widget/preset: uses the supported widgetApi/pluginApi runtime fields and controls, with the required minimum Studio version.
+
+Settings tested (current-value read, every field, invalid values, apply/confirmation,
+restart persistence, upgrade/data preservation, timeout/error):
+
+Special setup/provisioning required (or none):
+
 State explicitly whether this release was tested on physical Core and on which firmware.
 
 ## Maintainer publication

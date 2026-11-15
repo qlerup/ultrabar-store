@@ -189,6 +189,9 @@
     "publisher": {
       "type": "string",
       "pattern": "^[A-Za-z0-9][A-Za-z0-9-]{0,38}$"
+    },
+    "settings": {
+      "$ref": "settings.schema.json"
     }
   },
   "allOf": [
