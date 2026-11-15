@@ -54,7 +54,8 @@ def validate_value(field,value):
         valid=isinstance(value,str) and len(value)<=field['maxLength'] and not any(ord(c)<32 for c in value)
         if valid and kind=='url':
             try:
-                parsed=urlsplit(value);valid=parsed.scheme in ('http','https') and bool(parsed.hostname) and not parsed.username and not parsed.password
+                parsed=urlsplit(value);valid=parsed.scheme in ('http','https') and bool(parsed.hostname) and parsed.username is None and parsed.password is None
+                parsed.port  # Reject invalid/non-numeric/out-of-range ports.
             except ValueError:valid=False
     elif kind=='choice':valid=isinstance(value,str) and value in [o['value'] for o in field['options']]
     if not valid:raise ValueError(field['key']+': invalid '+kind+' value, range or step.')
