@@ -24,3 +24,15 @@ library drag/settings/save flow; native Java renderer compiles. Actual clock
 rendering and final Deploy on physical Core still require owner testing.
 
 The original app icon is icon.png (512x512 PNG). make_icon.py reproduces it using Pillow; the package license also covers this artwork.
+
+## Releases and maintenance
+
+This repository is the package source of truth. The complete runtime payload is
+widget.json; no APK compilation is required. Keep package and widget IDs stable.
+Commit changes, test them and publish a new stable GitHub release. Submit updates
+through the same Store submission folder with the new version, commit and tag in
+manifest.json/repository.json. The Store owner reviews each version before it
+becomes available. Keep release tags/assets immutable and never commit credentials.
+See https://github.com/qlerup/ultrabar-store/blob/main/SUBMIT-A-PACKAGE.md for the
+complete submission and update process. The existing package license applies;
+public source visibility does not grant permission to create derivative works.
