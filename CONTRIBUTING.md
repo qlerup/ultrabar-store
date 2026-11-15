@@ -1,6 +1,6 @@
 # Publish or update an UltraBar Store package
 
-**Detailed Danish walkthrough:** [Fra egen app til Store](INDSEND-EN-APP.md).
+**Detailed walkthrough:** [From your project to UltraBar Store](SUBMIT-A-PACKAGE.md).
 
 ## Package types and files
 
