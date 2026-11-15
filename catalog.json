@@ -6,10 +6,10 @@
       "id": "studio.clock.widget",
       "name": "Studio Clock & Date",
       "description": "One clock and date widget for the Core bar. Install, drag from the library, edit settings, then Deploy.",
-      "version": "1.0.2",
+      "version": "1.0.3",
       "type": "corebar-widget",
       "license": "Proprietary; unmodified official releases may be used",
-      "source": "https://github.com/qlerup/studio-clock-widget/blob/8760c9ff2f33f57b9839f23ff641fa86db37d668/widget.json",
+      "source": "https://github.com/qlerup/studio-clock-widget/blob/88bd0c54373f3c07638840feada4dfab16dbe27b/widget.json",
       "compatibility": {
         "minStudioVersion": "0.20.0",
         "hostApi": 1,
@@ -26,12 +26,12 @@
       },
       "permissions": [],
       "artifact": {
-        "url": "https://github.com/qlerup/ultrabar-store/releases/download/review-clock-widget-1.0.1/widget.json",
+        "url": "https://github.com/qlerup/ultrabar-store/releases/download/review-studio-clock-widget-1.0.3/widget.json",
         "size": 324,
         "sha256": "5e1dbd7a380826e427fe803c477eab54c7ac366b0ba6dc0c660b70678694c1ef"
       },
       "icon": {
-        "url": "https://github.com/qlerup/ultrabar-store/releases/download/store-icons-1.0.0/studio-clock.png",
+        "url": "https://github.com/qlerup/ultrabar-store/releases/download/review-studio-clock-widget-1.0.3/icon.png",
         "size": 23949,
         "sha256": "a2b483a70cc7fcb3852a4a3d89866dccfe40fde6698bc6be9793137401611a62"
       },
