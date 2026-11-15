@@ -1,6 +1,6 @@
 {
   "repository": "qlerup/vivo-screen-sync",
-  "commit": "38f8e5662ef9c1f5fc4fe88c52ed3e80f790fc7f",
-  "release": "v1.0.1",
+  "commit": "5528188b92506cf28c6ad385cf44cb3250f7ad9e",
+  "release": "v1.1.0",
   "type": "corebar-app"
 }

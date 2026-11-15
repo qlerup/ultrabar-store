@@ -23,3 +23,19 @@ becomes available. Keep release tags/assets immutable and never commit credentia
 See https://github.com/qlerup/ultrabar-store/blob/main/SUBMIT-A-PACKAGE.md for the
 complete submission and update process. The existing package license applies;
 public source visibility does not grant permission to create derivative works.
+
+## Studio settings contract
+
+This package uses widgetApi 1 and the studio-native-v1 declarative runtime.
+Supported controls: drive selection (one drive or all drives), name and colors.
+Settings belong to each placed block and are saved with the Studio profile/draft;
+Deploy applies them to Core. Existing widget/package IDs remain unchanged.
+It is a native JSON widget, not an APK: it must not contain an Android receiver
+or an APK settings descriptor. Studio provides the renderer and validates the
+supported widget fields. No package-supplied code or install script is executed.
+
+Requirements: https://github.com/qlerup/ultrabar-store/blob/main/APP-SETTINGS.md .
+This documentation update leaves widget.json unchanged. The package is checked
+against the runtime validator and existing Studio regression suite. Physical
+rendering was not retested for this documentation-only update; test existing
+placed blocks and persistence when reviewing.
