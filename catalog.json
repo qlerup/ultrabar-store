@@ -81,7 +81,8 @@
         "url": "https://github.com/qlerup/ultrabar-store/releases/download/review-vivo-screen-sync-1.0.0/icon.png",
         "size": 2098,
         "sha256": "fe43f4838170456080608de077f96c345709cfbb191aa58de9fefaf3aa864f2a"
-      }
+      },
+      "publisher": "qlerup"
     }
   ]
 }
