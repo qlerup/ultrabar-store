@@ -9,7 +9,7 @@
       "version": "1.0.0",
       "type": "corebar-widget",
       "license": "Proprietary; unmodified official releases may be used",
-      "source": "https://github.com/qlerup/ultrabar-store/blob/ae0c5a86c38cb905dd6f09b8c42308c950de350f/submissions/studio-system-monitor/widget.json",
+      "source": "https://github.com/qlerup/studio-system-monitor/blob/a7c010466d411ecebe8434faad48c348b53d7230/widget.json",
       "compatibility": {
         "minStudioVersion": "0.24.0",
         "hostApi": 1,
@@ -34,7 +34,8 @@
         "url": "https://github.com/qlerup/ultrabar-store/releases/download/review-system-monitor-1.0.0/icon.png",
         "size": 4975,
         "sha256": "546a82523597d51537bc88e6d2d3ea5f1e0eb24a7401b49f7ed79f2139a65764"
-      }
+      },
+      "publisher": "qlerup"
     },
     {
       "schemaVersion": 1,
