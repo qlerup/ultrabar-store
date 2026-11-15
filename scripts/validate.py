@@ -48,6 +48,9 @@ def validate_entry(entry):
     for field, maximum in [('name',100),('description',1000),('license',200)]:
         if not isinstance(p.get(field),str) or not 1 <= len(p[field]) <= maximum: raise StoreError('Incomplete package information.')
     valid_version(p.get('version'))
+    if 'publisher' in p:
+        owner=urlsplit(p.get('source','')).path.strip('/').split('/')[0]
+        if not isinstance(p['publisher'],str) or not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9-]{0,38}',p['publisher']) or p['publisher'].lower()!=owner.lower():raise StoreError('Publisher must match the source repository owner.')
     if p.get('type') not in ('corebar-app','studio-plugin','corebar-widget'): raise StoreError('Unknown package type.')
     compatibility=p.get('compatibility',{})
     valid_version(compatibility.get('minStudioVersion'))
@@ -126,24 +129,35 @@ def validate_tree(root,verify_assets=False):
                     if len(read(folder/name).strip())<20:raise ValueError(name+' is empty')
                 except Exception as exc:errors.append(folder.name+': '+str(exc))
             manifest=json.loads(read(folder/'manifest.json'))
-            for field in ('id','name','description','version','type','license','source','compatibility','permissions','schemaVersion'):
+            for field in ('id','name','description','version','type','publisher','license','source','compatibility','permissions','schemaVersion'):
                 if field not in manifest:raise ValueError('Missing manifest field '+field)
             if not re.fullmatch(r'https://github.com/[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+/(tree|blob)/[a-f0-9]{40}/[^\s]+',manifest['source']):raise ValueError('source must link to an exact GitHub source commit (40 hex digits)')
-            if manifest['type']!='corebar-widget':raise ValueError('This submission validator currently accepts integrated corebar-widget packages only; request a separate review for APKs.')
-            raw=read(folder/'widget.json');widgets=widget_package(raw)
+            kind=manifest['type'];widgets=[]
+            filename={'corebar-widget':'widget.json','studio-plugin':'plugin.json','corebar-app':'app.apk'}.get(kind)
+            if not filename:raise ValueError('Unknown package type')
+            raw=read(folder/filename,MAX_SIZE if kind=='corebar-app' else 65536)
+            if kind=='corebar-widget':widgets=widget_package(raw)
+            elif kind=='studio-plugin':plugin_templates(raw)
+            else:
+                # Load only this trusted checkout's inspector, even with python -I.
+                import importlib.util
+                spec=importlib.util.spec_from_file_location('trusted_apk_check',Path(__file__).with_name('apk_check.py'))
+                inspector=importlib.util.module_from_spec(spec);spec.loader.exec_module(inspector)
+                inspector.inspect(folder/filename,manifest)
+                read(folder/'source.zip',16*1024*1024)
             icon_raw=read(folder/'icon.png',262144)
             icon_meta=manifest.get('icon',dict(url=ASSET_PREFIX+'pending/icon.png',size=len(icon_raw),sha256=hashlib.sha256(icon_raw).hexdigest()))
             validate_icon_metadata(icon_meta);validate_icon_bytes(icon_raw,icon_meta)
             compat=manifest['compatibility']
             if compat.get('hostApi')!=1 or valid_version(compat['minStudioVersion'])<(0,20,0):raise ValueError('Widget packages require hostApi 1 and Studio 0.20.0+')
-            if compat.get('abis')!=['armeabi-v7a'] or compat.get('models')!=['CB01'] or not compat.get('lineosVersions') or not set(compat['lineosVersions'])<= {'1.0.8','1.0.9'}:raise ValueError('Declare tested CB01/ARM32/LineOS 1.0.8 or 1.0.9 compatibility')
+            if kind=='corebar-widget' and (compat.get('abis')!=['armeabi-v7a'] or compat.get('models')!=['CB01'] or not compat.get('lineosVersions') or not set(compat['lineosVersions'])<= {'1.0.8','1.0.9'}):raise ValueError('Declare tested CB01/ARM32/LineOS 1.0.8 or 1.0.9 compatibility')
             if any('kindOptions' in w for w in widgets) and valid_version(compat['minStudioVersion'])<(0,24,0):raise ValueError('Selectable measurements require Studio 0.24.0+')
             effective=copy.deepcopy(manifest)
             if 'artifact' not in effective:
-                effective['artifact']=dict(url=ASSET_PREFIX+'pending/widget.json',size=len(raw),sha256=hashlib.sha256(raw).hexdigest())
+                effective['artifact']=dict(url=ASSET_PREFIX+'pending/'+filename,size=len(raw),sha256=hashlib.sha256(raw).hexdigest())
                 notes.append(folder.name+': submission valid; owner must publish the artifact before catalog approval.')
             validate_entry(effective)
-            if effective['artifact']['size']!=len(raw) or effective['artifact']['sha256']!=hashlib.sha256(raw).hexdigest():raise ValueError('Artifact hash/size does not match widget.json')
+            if effective['artifact']['size']!=len(raw) or effective['artifact']['sha256']!=hashlib.sha256(raw).hexdigest():raise ValueError('Artifact hash/size does not match package file')
             if manifest['id'] in packages:raise ValueError('Duplicate package ID')
             packages[manifest['id']]=(manifest,raw,icon_raw)
         except Exception as exc:errors.append(folder.name+': '+str(exc))
@@ -161,8 +175,8 @@ def validate_tree(root,verify_assets=False):
             if verify_assets:
                 req=Request(entry['artifact']['url'],headers={'User-Agent':'UltraBar-Store-Validator'})
                 with build_opener(SafeRedirect).open(req,timeout=20) as response:
-                    remote=response.read(65537)
-                if remote!=raw:raise ValueError('Published GitHub asset differs from reviewed widget.json')
+                    remote=response.read(entry['artifact']['size']+1)
+                if remote!=raw:raise ValueError('Published GitHub asset differs from reviewed package')
                 req=Request(manifest['icon']['url'],headers={'User-Agent':'UltraBar-Store-Validator'})
                 with build_opener(SafeRedirect).open(req,timeout=20) as response:remote_icon=response.read(262145)
                 if remote_icon!=icon_raw:raise ValueError('Published icon differs from reviewed icon.png')
@@ -177,7 +191,7 @@ if __name__=='__main__':
     try:errors,notes=validate_tree(Path(sys.argv[1]),'--verify-assets' in sys.argv)
     except Exception as exc:errors=[str(exc)];notes=[]
     ready=not errors and bool(notes)
-    checks=['Required files: widget.json, manifest.json, icon.png, README.md and LICENSE','Manifest identity, semantic version, source commit and compatibility','Widget runtime, supported settings and rejection of executable fields','Unique package/widget IDs and exact catalog/manifest match','Static PNG icon: 256x256 or 512x512, at most 256 KiB, valid image data','Local SHA-256 and byte size','Published GitHub release bytes match reviewed package (when catalogued)']
+    checks=['Required files for declared type, manifest.json, icon.png, README.md and LICENSE','Manifest identity, semantic version, source commit and compatibility','Declarative runtime/settings or APK metadata, permissions and cryptographic signature','Unique package/widget IDs and exact catalog/manifest match','Static PNG icon: 256x256 or 512x512, at most 256 KiB, valid image data','Local SHA-256 and byte size','Published GitHub release bytes match reviewed package (when catalogued)']
     result=dict(ready=ready,errors=errors,notes=notes,checks=checks)
     if os.environ.get('STORE_RESULT'):Path(os.environ['STORE_RESULT']).write_text(json.dumps(result),encoding='utf-8')
     report='Store submission checks\n\n'+'\n'.join(['ERROR: '+e for e in errors]+notes or ['No packages submitted yet.'])+'\n'

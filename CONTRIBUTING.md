@@ -1,126 +1,86 @@
-# Submit a widget to the UltraBar Store
+# Publish or update an UltraBar Store package
 
-A submission is a GitHub pull request, not a direct upload into the live store.
-Only the owner, qlerup, publishes approved entries. A green automated check is
-not approval and does not install or publish anything.
+**Detailed walkthrough:** [From your project to UltraBar Store](SUBMIT-A-PACKAGE.md).
 
-## What can I submit today?
+## Package types and files
 
-Studio 0.20 supports integrated `corebar-widget` packages. One package installs
-into the Studio library; the user drags its widget onto the bar, edits the right
-panel and presses Deploy. Studio sends the renderer and settings to Core.
-You do not submit a separate PC program or APK for these widgets.
+All types use `submissions/<package-name>/`. Declare the same `type` in repository.json and manifest.json: `corebar-widget` (integrated drag-and-deploy widget), `corebar-app` (standalone Android APK on Core), or `studio-plugin` (declarative presets, not executable PC plugins). New registrations require type; older approved registrations remain compatible.
 
-The `studio-native-v1` runtime supports `clock`, `cpu`, `memory`, `gpu` and `disk`.
-It supplies the editor controls, data collection and Core rendering. Clock
-options are 12/24 hours, seconds and date; disk has a drive selector. All have
-name/background/text/accent controls. Studio 0.24 also supports `kindOptions` on a widget: a list of two or three distinct values from `cpu`, `memory`, `gpu`, including its default `kind`. It adds a per-block Show selector; each placed block stores its own choice. Packages using it must require Studio 0.24.0 or later. Core clock time/locale may differ from the
-PC preview. Hardware metrics need Studio connected. Native integration requires
-root-enabled CB01, ARM32 and LineOS 1.0.8 or 1.0.9. Studio must reconnect to restore
-widgets after a Core restart. Installing a package does not deploy it.
+Every package includes icon.png, README.md, LICENSE and the two manifests. Widgets include widget.json; presets include plugin.json (`pluginApi: 1`, a widgets list of name/kind/colors). APKs include app.apk and source.zip. APK upstream repositories contain AndroidManifest.xml at root, complete source and build instructions. Publish app.apk and a root-level git archive source.zip as stable release assets. The archive must exactly match every tracked file at the pinned commit (maximum 256 files/16 MiB, no symlinks/submodules).
 
-This format cannot run Python, JavaScript, EXEs, APKs, custom shaders or arbitrary
-new sensor logic. A new renderer/data source needs a host API enhancement first.
-Open an Issue with the proposed capability. Standalone APK apps have a separate
-manual review path; do not label an APK as an integrated widget.
+APK Actions inspect package ID, versionName/versionCode, minimum SDK, exact permissions, non-debuggable status and a cryptographically verified v2 signature. APK updates preserve signing key and Android ID and increase versionCode. Binary/source equivalence is not automatically proven: source review and physical testing remain the maintainer's responsibility. SDK tools inspect data; submitted code is never executed.
 
-## 1. Fork and create your submission
+The app receives a prebuilt APK at Install; it never compiles contributor source on the user's PC. Custom installation scripts are unsupported. Special provisioning must already be implemented by the app or by a trusted Studio version.
 
-1. Sign in to GitHub and open https://github.com/qlerup/ultrabar-store.
-2. Click **Fork**, then **Create fork**. Create a branch such as `add-my-clock`.
-3. In your fork choose **Add file > Create new file** or **Upload files**.
-4. Add these five files under `submissions/my-clock/` (lowercase folder name):
+
+## Ownership model
+
+Your widget lives in your own public GitHub repository. You choose collaborators and approve changes there. Forking your repository does not give someone permission to publish updates under your approved Store identity. The Store accepts submissions from the linked personal repository owner's GitHub account. Organization-owned repositories and ownership transfers require separate maintainer handling; they are not automatically approved.
+
+Fork **qlerup/ultrabar-store** only to propose a listing or an update. You keep the source in your repository. Every Store version still needs owner review and merge; merely publishing a new release does not update users automatically.
+
+## 1. Create your widget repository
+
+Create your own public repository, or fork/copy an example you have permission to reuse. The root must contain:
 
 ```
-submissions/my-clock/
-  widget.json
-  manifest.json
-  icon.png
-  README.md
-  LICENSE
+widget.json
+icon.png
+README.md
+LICENSE
 ```
 
-An **icon.png is mandatory**: static PNG, square 256x256 or 512x512 pixels, maximum 256 KiB (262144 bytes). Use your own original or licensed app icon; it is shown on the store card. SVG, animated PNG and other dimensions are rejected. Upload the square artwork without baking rounded corners into it. Studio applies the same rounded mask to every icon on its app card. Transparency is allowed. Include rights for the icon in LICENSE.
+Copy examples/clock/widget.json as a starting point. widgetApi is 1; runtime is studio-native-v1. Supported kinds: clock, cpu, memory, gpu, disk. Studio 0.24+ supports kindOptions containing two or three distinct cpu/memory/gpu values including the default kind. Each block then gets its own Show selector. Disk already has a per-block drive selector. Name/background/text/accent settings are supplied by Studio. The JSON is the complete source: arbitrary executable code and new renderer kinds are not supported by this format. Standalone APKs use the separate format above and require source/permission review.
 
-Copy `examples/clock/widget.json` and `examples/clock/manifest.json` as a starting
-point. Use your own stable package ID, name, description and license. Widget IDs
-must stay stable between updates. Change the default settings to suit your widget.
-Keep `widgetApi: 1` and `runtime: studio-native-v1`.
+icon.png must be static, square 256x256 or 512x512, maximum 256 KiB. Supply square artwork; Studio applies the rounded mask. Include redistribution rights for the icon and package in LICENSE. README describes settings, hardware, data collected, testing and limitations. Never include credentials or personal device identifiers.
 
-README.md must describe what the widget does, every setting, supported hardware,
-what you tested and any limitations. LICENSE must actually permit store users to
-download/use the package and the owner to redistribute it. Submit only files you
-have permission to share. No keys, passwords, personal device addresses or IDs. Save JSON as UTF-8 with LF line endings; checksums apply to these exact bytes.
-For declarative JSON, widget.json itself is the source; no build tool is needed.
+Commit the files, then publish a stable GitHub release such as v1.0.0 pointing to that commit. Copy its full 40-character SHA. Do not move the tag or overwrite published assets after review.
 
-Commit the widget files first. Open that commit and copy its full 40-character
-SHA. Set `source` in manifest.json to the immutable file URL:
-`https://github.com/YOURNAME/ultrabar-store/blob/COMMIT_SHA/submissions/my-clock/widget.json`.
-Commit that manifest change. This two-commit sequence avoids a circular commit hash.
+## 2. Fork the Store list and submit a PR
 
-Do not add `artifact` or `icon` download metadata or edit `catalog.json` yet. Upload the actual icon.png alongside your widget files. The owner publishes the final
-reviewed bytes under the official store account during review.
+Fork https://github.com/qlerup/ultrabar-store, create a branch and add a folder submissions/my-widget/. Include exact copies of the four root files from your release plus manifest.json and repository.json.
 
-## 2. Open the pull request
+Copy this into repository.json and replace the values:
 
-1. In your fork choose **Contribute > Open pull request**.
-2. Set base repository `qlerup/ultrabar-store`, base branch `main`, and compare
-   your submission branch.
-3. Fill in the template: explain the function, license, compatibility and testing.
-   If you have not tested on physical Core, state that plainly.
-4. Allow maintainer edits if you want the owner to prepare publication on your
-   branch. Otherwise the owner can publish via a separate reviewed branch.
-5. Click **Create pull request**.
+```json
+{
+  "repository": "YOURNAME/YOUR-WIDGET",
+  "commit": "REPLACE_WITH_FULL_40_CHARACTER_COMMIT_SHA",
+  "release": "v1.0.0",
+  "type": "corebar-widget"
+}
+```
 
-The **Store submission checks / Validate package** bot runs automatically.
-Open **Checks**, select the failed check and read its summary. Fix the files in
-this same branch and commit; GitHub reruns the checks. Do not create a new PR for
-each fix. Optionally run `python scripts/validate.py .` locally with Python 3.
-The bot never executes or builds contributor code. It validates data using the
-validator from the trusted main branch, without executing submitted code. Only the trusted comment step receives permission to update the PR comment.
+Copy examples/clock/manifest.json. Keep a stable unique package ID and stable widget IDs. Set source to https://github.com/YOURNAME/YOUR-WIDGET/blob/COMMIT_SHA/widget.json. Set version and actual compatibility. Native integration currently requires root-enabled ARM32 CB01, LineOS 1.0.8/1.0.9; PC hardware widgets need Studio connected. Reconnect after Core restart. Declare Studio 0.24.0+ for kindOptions.
 
-The initial submission reports **Not ready for approval** until the owner has
-published the official artifact and added the catalog entry. This publication
-step is the owner's responsibility, not something contributors need repository
-write access for. The bot distinguishes it in the fixes list.
+Leave artifact/icon download metadata and catalog edits to the maintainer for first submissions. The maintainer publishes reviewed bytes as official versioned mirrors during review. This lets current Studio releases continue downloading through their verified official Store endpoint. The linked upstream repository remains the developer's source of truth; the mirror is a copy, not ownership of the project.
 
-The bot updates one PR comment with checks, errors and rerun instructions. Fixing
-files and pushing a new commit reruns it automatically. The owner can also choose
-**Actions > Store submission checks > Run workflow**, enter the PR number, and run
-again without changing files. Only **Ready for approval** plus a passing check
-means the package has passed automated publication checks. Human acceptance is
-still required; nothing is merged automatically.
+Open Contribute > Open pull request against qlerup/ultrabar-store main. GitHub inserts the copy/paste checklist from .github/pull_request_template.md automatically. Fill the links, version, changes and testing, and tick only completed items. Checkboxes are declarations; the Actions validate the actual data.
 
-## 3. Owner review and publication
+## 3. Automated checks and acceptance
 
-The owner reviews rights, source, usability, compatibility and testing evidence.
-The bot cannot prove visual quality or real-device behavior.
+The existing bot is deterministic GitHub Actions, not AI. Separate named steps test the validator, check package/schema/icon/compatibility, verify published bytes, and check repository ownership, update identity and upstream release files. Only trusted scripts from main run; contributor code is read as data, never executed.
 
-After review, the owner uploads the exact widget.json bytes to a versioned
-GitHub Release asset in `qlerup/ultrabar-store` (a review prerelease is fine), then
-adds `artifact` to manifest.json with the official URL, byte count and SHA-256.
-The owner also publishes icon.png as an official release asset and adds `icon`
-with its URL, size and SHA-256. These metadata fields describe different files.
-The owner adds the identical manifest to `catalog.json.packages` in the PR.
+For linked packages the PR author must match the repository owner. Updates keep the approved repository and package ID, increase version, and match exact upstream widget/icon/README/LICENSE bytes. A stable release must resolve to the reviewed commit. Repository redirects, archived/private repositories and unexpected ownership changes fail. Existing and pending first-party packages submitted by qlerup without repository.json remain compatible while their maintainer migrates them. New third-party submissions always require the linked repository.
 
-The bot rechecks the structure and downloads the public JSON asset to verify it
-matches the reviewed local file byte-for-byte, and checks the icon can be decoded, has allowed dimensions and matches its own published bytes/checksum. It rejects duplicate IDs,
-unsupported settings, missing license/README, mutable source references,
-nonofficial artifact URLs and hash/size mismatches. Assets must be publicly
-accessible before the final check can pass.
+The comment lists checks and actionable errors. Push fixes to the same PR branch to rerun; maintainers can also use Actions > Store submission checks > Run workflow and enter the PR number. A green check and Ready for approval mean automated validation passed. The Store owner still reviews rights, functionality and physical testing before merging. The first review may report awaiting maintainer publication until official mirror metadata and the catalog entry are prepared.
 
-The owner then explicitly merges the PR. Studio refreshes main/catalog.json when
-the store opens, on Refresh, and once a minute while visible. GitHub caching can
-briefly delay visibility. Users install once, drag, configure and Deploy. No new
-Studio release is needed for packages using an already-supported host API.
+## Updates
 
-## Updates and removal
+1. Change files in your own widget repository and keep existing package/widget IDs.
+2. Increase version, test and publish a new stable release at a new commit.
+3. Create a new Store PR updating the same submission folder, repository.json commit/release, manifest/source/version and exact source copies.
+4. The maintainer publishes new immutable mirrored files and prepares the matching catalog entry. Actions rerun all checks and verify your ownership against the approved listing.
+5. After Store owner merge, users refresh the Store and see Update. No new Studio release is needed for supported capabilities.
 
-Keep package and widget IDs; increase the semantic version, submit a new PR and
-publish a new immutable asset. Never replace an old asset with different bytes.
-Library updates do not silently change existing draft/deployed settings. Remove
-and add the widget again to adopt new defaults, then Deploy.
+Installed updates preserve existing placed blocks and settings. New defaults apply when adding a new block; Deploy sends the saved layout to Core. Removing a package removes its library template; remove placed blocks separately and Deploy. Existing drafts/backups remain available.
 
-Removing a package from the library does not erase placed widgets. Remove the
-widget from the layout and Deploy to remove it from Core. Saved drafts/backups
-are retained. A catalog removal stops new installs, not existing deployments.
+The repository owner can delegate development using GitHub collaborators, but under this initial policy only the owner submits Store releases. Support for organization teams or delegated publishers needs explicit maintainer approval. Owning a repository alone does not prove copyright; the maintainer also reviews rights.
+
+## One package per PR
+
+Each PR may change only one submission folder, including additions and removals. Submit separate PRs for separate plugins. In that folder, repository.json is the registration file: repository is YOUR_GITHUB_NAME/YOUR_REPOSITORY, commit is the full source SHA, release is the release tag, and type declares the package category. The bot checks this against the author and previously approved registration.
+
+## Uploader identity
+
+Every manifest declares `publisher`, the GitHub account owning the registered repository. Actions verifies this against `repository.json`, source URL and PR author. Studio displays **Uploaded by @ACCOUNT** on the package card. Changing this field cannot transfer package ownership. All changed packages require repository.json; the former first-party registration exemption has been removed.
