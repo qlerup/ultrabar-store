@@ -43,6 +43,15 @@ class Checks(unittest.TestCase):
   (self.folder/'LICENSE').unlink();self.assertTrue(validate_tree(self.root)[0])
   (self.folder/'LICENSE').write_text('License text permitting distribution of this test.')
   self.manifest['source']='https://github.com/test/repo/tree/main/widget.json';self.save();self.assertTrue(validate_tree(self.root)[0])
+ def test_reports_all_missing_files_and_contract_problems_together(self):
+  for name in ('LICENSE','README.md','icon.png'):(self.folder/name).unlink()
+  self.manifest['compatibility']['hostApi']=2;self.manifest['android']={};self.save()
+  errors,_=validate_tree(self.root,generated_catalog=True)
+  for name in ('LICENSE','README.md','icon.png','hostApi','android'):
+   self.assertTrue(any(name in error and 'Fix:' in error for error in errors),name)
+ def test_boolean_plugin_api_is_not_an_integer_api(self):
+  from validate import plugin_templates,StoreError
+  with self.assertRaises(StoreError):plugin_templates(b'{"pluginApi":true,"widgets":[{"name":"Clock","kind":"clock"}]}')
 if __name__=='__main__':unittest.main()
 
 class MeasurementOptions(unittest.TestCase):

@@ -1,0 +1,31 @@
+name: Validator regression checks
+on:
+  push:
+    branches: [main]
+    paths: ['scripts/**', 'manifest.schema.json', '.github/workflows/validator-tests.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - name: Checkout trusted validator
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Prepare trusted inspection tools
+        run: |
+          python3 -m venv .validator-env
+          .validator-env/bin/python -I -m pip install Pillow==12.3.0
+          sudo apt-get update -qq
+          sudo apt-get install -y aapt apksigner
+          mkdir -p "$RUNNER_TEMP/android-inspection/lib"
+          ln -s "$(command -v aapt)" "$RUNNER_TEMP/android-inspection/aapt"
+          ln -s /usr/share/java/apksigner.jar "$RUNNER_TEMP/android-inspection/lib/apksigner.jar"
+          echo "ANDROID_BUILD_TOOLS=$RUNNER_TEMP/android-inspection" >> "$GITHUB_ENV"
+      - name: Test contract failures and PR feedback
+        run: .validator-env/bin/python -I -m unittest discover -s scripts -p 'test_*.py'
+      - name: Check approved packages against the Studio contract
+        run: .validator-env/bin/python -I scripts/validate.py . --generated-catalog --verify-assets

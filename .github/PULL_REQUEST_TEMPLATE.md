@@ -28,6 +28,8 @@ Describe features, fixes, settings compatibility and hardware requirements.
 - [ ] No secrets, personal device addresses or signing keys are included.
 - [ ] I described install/use/update/removal tests and any untested hardware paths below.
 - [ ] For an APK: release build, exact permissions, same signing key for updates, complete source.zip matching the pinned commit (or not an APK).
+- [ ] For an APK: enabled/exported MAIN/LAUNCHER activity, application DEX, CB01-compatible minSdk and ARM32 native libraries if used (or not an APK).
+- [ ] I use only supported Studio fields/runtime/settings; any app-side setup or custom Studio integration requirement is explained in README.md.
 - [ ] This PR changes only one submission folder and does not edit catalog.json.
 - [ ] I understand that green Actions checks still require Store owner approval.
 

@@ -61,14 +61,14 @@ jobs:
           echo "ANDROID_BUILD_TOOLS=$RUNNER_TEMP/android-inspection" >> "$GITHUB_ENV"
       - name: Test trusted validator
         run: .validator-env/bin/python -I -m unittest discover -s trusted/scripts -p 'test_*.py'
-      - name: Check submission files and published artifacts
+      - name: Check Studio contract, submission files and published artifacts
         run: .validator-env/bin/python -I trusted/scripts/validate.py submitted --generated-catalog --verify-assets
       - name: Check repository owner, release and update identity
         if: always()
         env:
           GH_TOKEN: ${{ github.token }}
         run: .validator-env/bin/python -I trusted/scripts/repository_check.py submitted trusted
-      - name: Update PR review comment
+      - name: Report missing requirements and fixes on the PR
         if: always()
         env:
           GH_TOKEN: ${{ github.token }}

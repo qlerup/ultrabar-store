@@ -1,5 +1,5 @@
 """Trusted data-only validator. Never imports or executes submitted code."""
-import copy,hashlib,json,re,sys,os,io
+import copy,hashlib,json,re,sys,os,io,importlib.util
 from pathlib import Path
 from types import SimpleNamespace
 from urllib.request import Request,build_opener,HTTPRedirectHandler
@@ -11,6 +11,8 @@ ID=re.compile(r'[a-z][a-z0-9]*(?:\.[a-z][a-z0-9-]*)+')
 ANDROID_ID=re.compile(r'[A-Za-z][A-Za-z0-9_]*(?:\.[A-Za-z][A-Za-z0-9_]*)+')
 HEX=re.compile(r'[a-f0-9]{64}')
 class StoreError(ValueError):pass
+_contract_spec=importlib.util.spec_from_file_location('trusted_studio_contract',Path(__file__).with_name('studio_contract.py'))
+studio_contract=importlib.util.module_from_spec(_contract_spec);_contract_spec.loader.exec_module(studio_contract)
 class SafeRedirect(HTTPRedirectHandler):
     def redirect_request(self, req, fp, code, msg, headers, newurl):
         parsed = urlsplit(newurl)
@@ -75,11 +77,13 @@ def validate_entry(entry):
 def plugin_templates(raw):
     try: data=json.loads(raw)
     except (ValueError,UnicodeError) as exc: raise StoreError('Invalid plugin JSON.') from exc
-    if not isinstance(data,dict) or set(data)!={'pluginApi','widgets'} or data['pluginApi']!=1 or not isinstance(data['widgets'],list) or not 1<=len(data['widgets'])<=32: raise StoreError('Unsupported declarative plugin format.')
+    if not isinstance(data,dict) or set(data)!={'pluginApi','widgets'} or type(data['pluginApi']) is not int or data['pluginApi']!=1 or not isinstance(data['widgets'],list) or not 1<=len(data['widgets'])<=32: raise StoreError('plugin.json: Unsupported declarative plugin format. Fix: use integer pluginApi 1 and 1-32 supported widget presets; executable plugins are not supported.')
     result=[]
     for w in data['widgets']:
-        if not isinstance(w,dict) or set(w)-{'name','kind','background','textColor','accent'}: raise StoreError('Plugins may contain widget presets only, not code or commands.')
-        if not isinstance(w.get('name'),str) or not 1<=len(w['name'])<=100 or w.get('kind') not in ('clock','cpu','memory','gpu','disk'): raise StoreError('Invalid plugin widget.')
+        if not isinstance(w,dict):raise StoreError('plugin.json / widgets: Expected widget objects. Fix: copy the declarative plugin example.')
+        unknown=set(w)-{'name','kind','background','textColor','accent'}
+        if unknown:raise StoreError('Widget preset has unsupported fields: '+', '.join(sorted(unknown))+'. Fix: use only name, kind, background, textColor and accent. Plugins may contain widget presets only, not code or commands.')
+        if not isinstance(w.get('name'),str) or not 1<=len(w['name'])<=100 or w.get('kind') not in ('clock','cpu','memory','gpu','disk'): raise StoreError('Invalid widget name or kind. Fix: supply a 1-100 character name and one of clock, cpu, memory, gpu or disk; new renderer kinds require a Studio implementation.')
         for field in ('background','textColor','accent'):
             if field in w and not re.fullmatch(r'#[a-fA-F0-9]{6}',str(w[field])): raise StoreError('Invalid widget color.')
         result.append(dict(w))
@@ -89,12 +93,14 @@ def widget_package(raw):
     try:data=json.loads(raw)
     except (ValueError,UnicodeError) as exc:raise StoreError('Invalid widget package JSON.') from exc
     if not isinstance(data,dict) or set(data)!={'widgetApi','runtime','widgets'} or type(data['widgetApi']) is not int or data['widgetApi']!=1 or data['runtime']!='studio-native-v1':
-        raise StoreError('Unsupported widget package runtime.')
+        raise StoreError('widget.json: Unsupported widget package runtime. Fix: use integer widgetApi 1, runtime "studio-native-v1" and a widgets array. Custom runtime code is not supported.')
     widgets=data['widgets']
     if not isinstance(widgets,list) or not 1<=len(widgets)<=32:raise StoreError('A package must contain 1-32 widgets.')
     result=[];ids=set()
     for w in widgets:
-        if not isinstance(w,dict) or set(w)-{'id','name','kind','background','textColor','accent','hourFormat','showSeconds','showDate','kindOptions'}:raise StoreError('Unsupported widget field. Executable code is not supported.')
+        if not isinstance(w,dict):raise StoreError('widget.json / widgets: Expected widget objects. Fix: copy examples/clock/widget.json.')
+        unknown=set(w)-{'id','name','kind','background','textColor','accent','hourFormat','showSeconds','showDate','kindOptions'}
+        if unknown:raise StoreError('widget.json: Unsupported widget fields: '+', '.join(sorted(unknown))+'. Fix: remove these fields; custom settings and executable code need a supported Studio integration.')
         key=w.get('id')
         if not isinstance(key,str) or not re.fullmatch(r'[a-z][a-z0-9-]{0,63}',key) or key in ids:raise StoreError('Widget IDs must be unique.')
         ids.add(key)
@@ -121,7 +127,10 @@ def validate_tree(root,verify_assets=False,generated_catalog=False):
         import importlib.util
         spec=importlib.util.spec_from_file_location('trusted_catalog',Path(__file__).with_name('build_catalog.py'))
         builder=importlib.util.module_from_spec(spec);spec.loader.exec_module(builder)
-        catalog=builder.build(root)
+        try:catalog=builder.build(root)
+        except Exception as exc:
+            errors.append('catalog generation: '+str(exc)+'. Fix: correct the per-package manifest/listing files; do not edit catalog.json.')
+            catalog=dict(schemaVersion=1,packages=[])
     else:catalog=json.loads(read(root/'catalog.json',1024*1024))
     if not isinstance(catalog,dict) or catalog.get('schemaVersion')!=1 or not isinstance(catalog.get('packages'),list):raise ValueError('Invalid catalog')
     folders=list((root/'submissions').iterdir()) if (root/'submissions').exists() else []
@@ -129,11 +138,15 @@ def validate_tree(root,verify_assets=False,generated_catalog=False):
     for folder in folders:
         try:
             if folder.is_symlink() or not folder.is_dir() or not re.fullmatch(r'[a-z0-9-]{1,80}',folder.name):raise ValueError('Invalid submission folder')
+            manifest=json.loads(read(folder/'manifest.json'))
+            issues=studio_contract.manifest_issues(manifest)+studio_contract.required_files(folder,manifest)
+            if issues:
+                errors.extend(folder.name+'/'+issue for issue in issues)
+                continue
             for name in ('README.md','LICENSE'):
                 try:
                     if len(read(folder/name).strip())<20:raise ValueError(name+' is empty')
                 except Exception as exc:errors.append(folder.name+': '+str(exc))
-            manifest=json.loads(read(folder/'manifest.json'))
             for field in ('id','name','description','version','type','publisher','license','source','compatibility','permissions','schemaVersion'):
                 if field not in manifest:raise ValueError('Missing manifest field '+field)
             if not re.fullmatch(r'https://github.com/[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+/(tree|blob)/[a-f0-9]{40}/[^\s]+',manifest['source']):raise ValueError('source must link to an exact GitHub source commit (40 hex digits)')
@@ -149,6 +162,7 @@ def validate_tree(root,verify_assets=False,generated_catalog=False):
                 spec=importlib.util.spec_from_file_location('trusted_apk_check',Path(__file__).with_name('apk_check.py'))
                 inspector=importlib.util.module_from_spec(spec);spec.loader.exec_module(inspector)
                 inspector.inspect(folder/filename,manifest)
+                notes.append(folder.name+': APK static Studio install/launch contract passed. Generic APKs get app launch/background launch only; custom Studio settings or provisioning require a trusted Studio integration. Physical install/start/configuration tests are still required.')
                 read(folder/'source.zip',16*1024*1024)
             icon_raw=read(folder/'icon.png',262144)
             icon_meta=manifest.get('icon',dict(url=ASSET_PREFIX+'pending/icon.png',size=len(icon_raw),sha256=hashlib.sha256(icon_raw).hexdigest()))
@@ -202,7 +216,7 @@ if __name__=='__main__':
     try:errors,notes=validate_tree(Path(sys.argv[1]),'--verify-assets' in sys.argv,'--generated-catalog' in sys.argv)
     except Exception as exc:errors=[str(exc)];notes=[]
     ready=not errors and bool(notes)
-    checks=['Required files for declared type, manifest.json, icon.png, README.md and LICENSE','Manifest identity, semantic version, source commit and compatibility','Declarative runtime/settings or APK metadata, permissions and cryptographic signature','Unique package/widget IDs and exact catalog/manifest match','Static PNG icon: 256x256 or 512x512, at most 256 KiB, valid image data','Local SHA-256 and byte size','Published GitHub release bytes match reviewed package (when catalogued)']
+    checks=['Required files for declared type, manifest.json, icon.png, README.md and LICENSE','Studio v1 manifest fields, hostApi 1 and supported CB01/ARM32/LineOS compatibility','Supported declarative runtime/settings, integer API versions and feature-specific minimum Studio version','APK install/launch entry point, executable DEX, minSdk, native ABI compatibility, metadata, exact permissions and cryptographic signature','Unique package/widget IDs and exact catalog/manifest match','Static PNG icon: 256x256 or 512x512, at most 256 KiB, valid image data','Local SHA-256 and byte size','Published GitHub release bytes match reviewed package (when catalogued)']
     result=dict(ready=ready,errors=errors,notes=notes,checks=checks)
     if os.environ.get('STORE_RESULT'):Path(os.environ['STORE_RESULT']).write_text(json.dumps(result),encoding='utf-8')
     report='Store submission checks\n\n'+'\n'.join(['ERROR: '+e for e in errors]+notes or ['No packages submitted yet.'])+'\n'

@@ -10,6 +10,46 @@ Every package includes icon.png, README.md, LICENSE and the two manifests. Widge
 
 APK Actions inspect package ID, versionName/versionCode, minimum SDK, exact permissions, non-debuggable status and a cryptographically verified v2 signature. APK updates preserve signing key and Android ID and increase versionCode. Binary/source equivalence is not automatically proven: source review and physical testing remain the maintainer's responsibility. SDK tools inspect data; submitted code is never executed.
 
+### What the GitHub PR checks require for Studio
+
+The PR's **Store submission checks** workflow validates the package against the
+supported Studio v1 contract, in addition to ownership and release checks:
+
+- `manifest.json`: supported fields, `hostApi: 1`, explicit tested CB01,
+  `armeabi-v7a`, and LineOS 1.0.8/1.0.9 compatibility. Unknown settings or install
+  commands are rejected because Studio does not interpret them.
+- APKs: complete release APK with a `classes.dex` header; matching ID/version/SDK,
+  exact permissions, verified v2 signature; a MAIN/LAUNCHER activity that is enabled
+  and exported. Activity aliases must target an existing enabled activity. The
+  compiled manifest is inspected, not merely the submitted source XML.
+- CB01 currently runs Android API 29. APK `minSdk` must be 26–29 and `maxSdkVersion`
+  must not exclude API 29. Native APKs must contain libraries for every declared
+  ABI, including ARM32 `armeabi-v7a`; pure Java/Dex apps need no native libraries.
+  A newer `targetSdk` alone does not make an app incompatible.
+- JSON packages: supported runtime/API integers, widget kinds and settings only.
+  `kindOptions` requires Studio 0.24.0 or newer. New renderer kinds and executable
+  scripts cannot be added by declaring extra JSON fields.
+- Required source/package files, icon, download hashes and immutable release
+  bytes, plus the existing registration and update-identity checks.
+
+The bot updates one comment on the PR with **What to fix**, the affected file/field,
+and correction instructions. Independent manifest/file problems are reported
+together. Push fixes to the same branch to rerun. If inspection tools or downloads
+fail, the check stays failed; examine the linked Actions log rather than treating
+an incomplete run as approval.
+
+A generic APK supports app launch and Studio's generic background-launch control.
+Its own settings, bridge authorization and special provisioning are **not**
+automatically integrated into Studio. Describe such requirements in README.md;
+they need a trusted Studio implementation or app-side setup. Passing checks does
+not prove runtime behavior, DEX compatibility beyond static inspection, safety,
+source/binary equivalence or rights. Maintainers still test install, launch,
+configuration, update and removal on physical Core. New-package approval and the
+existing eligible-update merge policy are unchanged.
+
+Validator changes also run **Validator regression checks** on GitHub, covering
+failure cases, PR-comment updates and all currently approved published packages.
+
 The app receives a prebuilt APK at Install; it never compiles contributor source on the user's PC. Custom installation scripts are unsupported. Special provisioning must already be implemented by the app or by a trusted Studio version.
 
 
