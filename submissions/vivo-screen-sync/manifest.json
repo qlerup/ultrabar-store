@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "id": "studio.vivo.screensync",
+  "name": "Vivo Screen Sync",
+  "description": "Keep VivoCube screens in sync with Core. Standalone background app; configure through Studio, then choose Follow Core on Core. Requires root ADB and existing approved Studio bridge authorization.",
+  "version": "1.0.0",
+  "type": "corebar-app",
+  "license": "Proprietary; unmodified official releases may be used",
+  "source": "https://github.com/qlerup/vivo-screen-sync/blob/724d2c0e3daa6fb217dfe71726e0893271a05685/AndroidManifest.xml",
+  "compatibility": {
+    "minStudioVersion": "0.28.0",
+    "hostApi": 1,
+    "models": [
+      "CB01"
+    ],
+    "lineosVersions": [
+      "1.0.8",
+      "1.0.9"
+    ],
+    "abis": [
+      "armeabi-v7a"
+    ]
+  },
+  "permissions": [
+    "android.permission.INTERNET",
+    "android.permission.FOREGROUND_SERVICE",
+    "android.permission.RECEIVE_BOOT_COMPLETED",
+    "android.permission.WAKE_LOCK"
+  ],
+  "android": {
+    "packageId": "dk.ultrabarx.screensync",
+    "versionCode": 100,
+    "minSdk": 26,
+    "signerSha256": "6b663d4525f5a8f192df55e4548582e96c52188809cc76123e2e7dbd44ebff1f"
+  },
+  "artifact": {
+    "url": "https://github.com/qlerup/ultrabar-store/releases/download/review-vivo-screen-sync-1.0.0/app.apk",
+    "size": 25053,
+    "sha256": "d390187458fe748068f94caab3b1bfac43f60e2db14ce0bac7fb3b1e4a45cf4e"
+  },
+  "icon": {
+    "url": "https://github.com/qlerup/ultrabar-store/releases/download/review-vivo-screen-sync-1.0.0/icon.png",
+    "size": 2098,
+    "sha256": "fe43f4838170456080608de077f96c345709cfbb191aa58de9fefaf3aa864f2a"
+  },
+  "publisher": "qlerup"
+}
