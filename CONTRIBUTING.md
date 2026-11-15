@@ -17,7 +17,7 @@ The app receives a prebuilt APK at Install; it never compiles contributor source
 
 Your widget lives in your own public GitHub repository. You choose collaborators and approve changes there. Forking your repository does not give someone permission to publish updates under your approved Store identity. The Store accepts submissions from the linked personal repository owner's GitHub account. Organization-owned repositories and ownership transfers require separate maintainer handling; they are not automatically approved.
 
-Fork **qlerup/ultrabar-store** only to propose a listing or an update. You keep the source in your repository. Every Store version still needs owner review and merge; merely publishing a new release does not update users automatically.
+Fork **qlerup/ultrabar-store** only to propose a listing or an update. You keep the source in your repository. New packages require owner review. Eligible existing-package updates receive bot approval and auto-merge after green checks; publishing a new upstream release alone does not update users.
 
 ## 1. Create your widget repository
 
@@ -63,7 +63,7 @@ The existing bot is deterministic GitHub Actions, not AI. Separate named steps t
 
 For linked packages the PR author must match the repository owner. Updates keep the approved repository and package ID, increase version, and match exact upstream widget/icon/README/LICENSE bytes. A stable release must resolve to the reviewed commit. Repository redirects, archived/private repositories and unexpected ownership changes fail. Every changed submission, including first-party packages, requires repository.json. The initial migration of an approved legacy package is maintainer-only; subsequent updates are bound to the registered repository.
 
-The comment lists checks and actionable errors. Push fixes to the same PR branch to rerun; maintainers can also use Actions > Store submission checks > Run workflow and enter the PR number. A green check and Ready for approval mean automated validation passed. The Store owner still reviews rights, functionality and physical testing before merging. The first review may report awaiting maintainer publication until official mirror metadata and the catalog entry are prepared.
+The comment lists checks and actionable errors. Push fixes to the same PR branch to rerun; maintainers can also use Actions > Store submission checks > Run workflow and enter the PR number. A green check and Ready for approval mean automated validation passed. New submissions require owner review of rights, functionality and physical testing. Eligible existing-package updates proceed to automatic approval and merge. The first review may report awaiting maintainer publication until official mirror metadata and the catalog entry are prepared.
 
 ## Updates
 
@@ -84,3 +84,28 @@ Each PR may change only one submission folder, including additions and removals.
 ## Uploader identity
 
 Every manifest declares `publisher`, the GitHub account owning the registered repository. Actions verifies this against `repository.json`, source URL and PR author. Studio displays **Uploaded by @ACCOUNT** on the package card. Changing this field cannot transfer package ownership. All changed packages require repository.json; the former first-party registration exemption has been removed.
+
+## Automatic merge for existing-package updates
+
+A PR updating one already approved and registered package can merge automatically
+after all required checks pass. The trusted Actions job approves the exact checked
+commit and enables GitHub auto-merge. GitHub still requires green checks and an
+up-to-date branch. The bot never runs submitted code.
+
+Automatic approval requires the same registered repository, publishing account,
+package ID/type, license, permissions and compatibility. Android updates must
+also preserve package ID, signer and minimum SDK while increasing versionCode.
+The package version must increase. Only that package folder and its exact catalog
+entry may change. Changes to workflows, other packages or unrelated catalog entries
+require manual approval. New packages, first repository-registration migrations,
+identity changes and permission/requirement changes also require manual approval.
+An outstanding changes-requested review prevents automatic approval. Add the
+`store-manual-review` label before validation to keep an update manual.
+
+The existing one-review requirement remains enabled. Only eligible updates receive
+a bot approval; new submissions still require a maintainer review/merge. Review
+results appear in the **Merge eligible package update** job. Publishing an upstream
+release alone still does not create a Store PR or update users. Reviewed immutable
+artifact/icon mirrors and matching catalog metadata are still required for checks
+to pass. Users install the package update through Studio's Store; Studio itself
+does not need an update.
