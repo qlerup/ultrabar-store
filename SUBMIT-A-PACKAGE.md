@@ -185,3 +185,7 @@ Publishing an upstream release alone does not update Store. Another person's for
 cannot take over your approved registration. Android updates preserve app data;
 the app developer is responsible for any data-format migration. Widget updates
 preserve settings of blocks users have already placed.
+
+## Uploader identity
+
+Every manifest declares `publisher`, the GitHub account owning the registered repository. Actions verifies this against `repository.json`, source URL and PR author. Studio displays **Uploaded by @ACCOUNT** on the package card. Changing this field cannot transfer package ownership. All changed packages require repository.json; the former first-party registration exemption has been removed.

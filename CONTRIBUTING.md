@@ -80,3 +80,7 @@ The repository owner can delegate development using GitHub collaborators, but un
 ## One package per PR
 
 Each PR may change only one submission folder, including additions and removals. Submit separate PRs for separate plugins. In that folder, repository.json is the registration file: repository is YOUR_GITHUB_NAME/YOUR_REPOSITORY, commit is the full source SHA, release is the release tag, and type declares the package category. The bot checks this against the author and previously approved registration.
+
+## Uploader identity
+
+Every manifest declares `publisher`, the GitHub account owning the registered repository. Actions verifies this against `repository.json`, source URL and PR author. Studio displays **Uploaded by @ACCOUNT** on the package card. Changing this field cannot transfer package ownership. All changed packages require repository.json; the former first-party registration exemption has been removed.

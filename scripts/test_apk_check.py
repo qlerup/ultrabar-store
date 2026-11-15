@@ -30,6 +30,6 @@ class ApkReviewTests(unittest.TestCase):
     with self.assertRaisesRegex(ValueError,'differs'):repository_check.verify_apk_source(root,'alice/app','a'*40,'v1.0.0')
  def test_registration_type_must_match(self):
   link=dict(repository='alice/app',commit='a'*40,release='v1.0.0',type='corebar-app')
-  manifest=dict(type='corebar-app',source='https://github.com/alice/app/blob/'+'a'*40+'/AndroidManifest.xml')
+  manifest=dict(publisher='alice',type='corebar-app',source='https://github.com/alice/app/blob/'+'a'*40+'/AndroidManifest.xml')
   repository_check.validate_link(link,manifest,'alice')
   with self.assertRaisesRegex(ValueError,'type'):repository_check.validate_link(link,dict(manifest,type='corebar-widget'),'alice')

@@ -48,6 +48,9 @@ def validate_entry(entry):
     for field, maximum in [('name',100),('description',1000),('license',200)]:
         if not isinstance(p.get(field),str) or not 1 <= len(p[field]) <= maximum: raise StoreError('Incomplete package information.')
     valid_version(p.get('version'))
+    if 'publisher' in p:
+        owner=urlsplit(p.get('source','')).path.strip('/').split('/')[0]
+        if not isinstance(p['publisher'],str) or not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9-]{0,38}',p['publisher']) or p['publisher'].lower()!=owner.lower():raise StoreError('Publisher must match the source repository owner.')
     if p.get('type') not in ('corebar-app','studio-plugin','corebar-widget'): raise StoreError('Unknown package type.')
     compatibility=p.get('compatibility',{})
     valid_version(compatibility.get('minStudioVersion'))
@@ -126,7 +129,7 @@ def validate_tree(root,verify_assets=False):
                     if len(read(folder/name).strip())<20:raise ValueError(name+' is empty')
                 except Exception as exc:errors.append(folder.name+': '+str(exc))
             manifest=json.loads(read(folder/'manifest.json'))
-            for field in ('id','name','description','version','type','license','source','compatibility','permissions','schemaVersion'):
+            for field in ('id','name','description','version','type','publisher','license','source','compatibility','permissions','schemaVersion'):
                 if field not in manifest:raise ValueError('Missing manifest field '+field)
             if not re.fullmatch(r'https://github.com/[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+/(tree|blob)/[a-f0-9]{40}/[^\s]+',manifest['source']):raise ValueError('source must link to an exact GitHub source commit (40 hex digits)')
             kind=manifest['type'];widgets=[]

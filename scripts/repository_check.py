@@ -14,6 +14,7 @@ def validate_link(link,manifest,author,previous=None):
  if not isinstance(link,dict) or set(link) not in ({'repository','commit','release'},{'repository','commit','release','type'}):raise ValueError('repository.json requires repository, commit and release.')
  if 'type' in link and link['type']!=manifest.get('type'):raise ValueError('repository.json type must match manifest.json type.')
  repo=link['repository'];commit=link['commit'];release=link['release']
+ if manifest.get('publisher','').lower()!=str(repo).split('/')[0].lower():raise ValueError('Publisher must match the registered repository owner.')
  if not isinstance(repo,str) or not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_.-]*/[A-Za-z0-9][A-Za-z0-9_.-]*',repo):raise ValueError('repository must be OWNER/REPO.')
  if not isinstance(commit,str) or not re.fullmatch(r'[a-f0-9]{40}',commit):raise ValueError('commit must be a full immutable commit SHA.')
  if not isinstance(release,str) or not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_.-]{0,99}',release):raise ValueError('release must be a versioned release tag.')
@@ -46,9 +47,6 @@ def run(root,trusted,pr):
   try:
    manifest=json.loads((folder/'manifest.json').read_text(encoding='utf-8'))
    if not (folder/'repository.json').exists():
-    # Existing first-party submissions remain compatible. Third parties cannot edit them.
-    if author.lower()=='qlerup' and not (old/'repository.json').exists() and (old.exists() or manifest.get('id') in ('studio.drive.widget','studio.system.widget')):
-     notes.append(folder.name+': legacy first-party package; maintainer submission.');continue
     raise ValueError('Add repository.json linking your own public GitHub repository and release.')
    if old.exists() and not (old/'repository.json').exists():
     if author.lower()!='qlerup':raise ValueError('Only the maintainer can migrate a legacy package to its owner repository.')

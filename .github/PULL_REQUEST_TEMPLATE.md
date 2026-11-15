@@ -2,6 +2,7 @@
 
 - Package name:
 - Package type (`corebar-app`, `corebar-widget`, or `studio-plugin`):
+- Publisher (repository owner GitHub account):
 - Package ID:
 - Your repository: https://github.com/OWNER/REPO
 - Stable release: https://github.com/OWNER/REPO/releases/tag/v1.0.0
