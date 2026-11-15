@@ -1,0 +1,160 @@
+{
+  "schemaVersion": 1,
+  "packages": [
+    {
+      "schemaVersion": 1,
+      "id": "studio.clock.widget",
+      "name": "Studio Clock & Date",
+      "description": "One clock and date widget for the Core bar. Install, drag from the library, edit settings, then Deploy.",
+      "version": "1.0.2",
+      "type": "corebar-widget",
+      "license": "Proprietary; unmodified official releases may be used",
+      "source": "https://github.com/qlerup/studio-clock-widget/blob/8760c9ff2f33f57b9839f23ff641fa86db37d668/widget.json",
+      "compatibility": {
+        "minStudioVersion": "0.20.0",
+        "hostApi": 1,
+        "models": [
+          "CB01"
+        ],
+        "abis": [
+          "armeabi-v7a"
+        ],
+        "lineosVersions": [
+          "1.0.8",
+          "1.0.9"
+        ]
+      },
+      "permissions": [],
+      "artifact": {
+        "url": "https://github.com/qlerup/ultrabar-store/releases/download/review-clock-widget-1.0.1/widget.json",
+        "size": 324,
+        "sha256": "5e1dbd7a380826e427fe803c477eab54c7ac366b0ba6dc0c660b70678694c1ef"
+      },
+      "icon": {
+        "url": "https://github.com/qlerup/ultrabar-store/releases/download/store-icons-1.0.0/studio-clock.png",
+        "size": 23949,
+        "sha256": "a2b483a70cc7fcb3852a4a3d89866dccfe40fde6698bc6be9793137401611a62"
+      },
+      "publisher": "qlerup"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "studio.drive.widget",
+      "name": "Studio Drive Usage",
+      "description": "PC drive usage on Core. Install once, add cards, choose one drive or All drives, then Deploy.",
+      "version": "1.0.0",
+      "type": "corebar-widget",
+      "license": "Proprietary; unmodified official releases may be used",
+      "source": "https://github.com/qlerup/studio-drive-usage/blob/acc655497084c82c67b5eb276add567639bd0f49/widget.json",
+      "compatibility": {
+        "minStudioVersion": "0.24.0",
+        "hostApi": 1,
+        "models": [
+          "CB01"
+        ],
+        "abis": [
+          "armeabi-v7a"
+        ],
+        "lineosVersions": [
+          "1.0.8",
+          "1.0.9"
+        ]
+      },
+      "permissions": [],
+      "artifact": {
+        "url": "https://github.com/qlerup/ultrabar-store/releases/download/review-drive-widget-1.0.0-lf/widget.json",
+        "size": 251,
+        "sha256": "66b46108e7fe1e646935ef19c6f6a9e142c4163bda5bb6c3111b2b12a0e22f6a"
+      },
+      "icon": {
+        "url": "https://github.com/qlerup/ultrabar-store/releases/download/review-drive-widget-1.0.0/icon.png",
+        "size": 19568,
+        "sha256": "eae058e43679f58a59bea91d743069609b2a4152030c36aa3d9ebc1ab0a05836"
+      },
+      "publisher": "qlerup"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "studio.system.widget",
+      "name": "Studio System Monitor",
+      "description": "One widget, your choice: CPU, RAM or GPU usage. Add blocks, choose what each shows in settings, then Deploy.",
+      "version": "1.0.0",
+      "type": "corebar-widget",
+      "license": "Proprietary; unmodified official releases may be used",
+      "source": "https://github.com/qlerup/studio-system-monitor/blob/a7c010466d411ecebe8434faad48c348b53d7230/widget.json",
+      "compatibility": {
+        "minStudioVersion": "0.24.0",
+        "hostApi": 1,
+        "models": [
+          "CB01"
+        ],
+        "abis": [
+          "armeabi-v7a"
+        ],
+        "lineosVersions": [
+          "1.0.8",
+          "1.0.9"
+        ]
+      },
+      "permissions": [],
+      "artifact": {
+        "url": "https://github.com/qlerup/ultrabar-store/releases/download/review-system-monitor-1.0.0/widget.json",
+        "size": 335,
+        "sha256": "1bcdad4eec2c1245a78bcb90e6675528025534346fec283ba1bddac0e4a3725d"
+      },
+      "icon": {
+        "url": "https://github.com/qlerup/ultrabar-store/releases/download/review-system-monitor-1.0.0/icon.png",
+        "size": 4975,
+        "sha256": "546a82523597d51537bc88e6d2d3ea5f1e0eb24a7401b49f7ed79f2139a65764"
+      },
+      "publisher": "qlerup"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "studio.vivo.screensync",
+      "name": "Vivo Screen Sync",
+      "description": "Keep VivoCube screens in sync with Core. Standalone background app; configure through Studio, then choose Follow Core on Core. Requires root ADB and existing approved Studio bridge authorization.",
+      "version": "1.0.0",
+      "type": "corebar-app",
+      "license": "Proprietary; unmodified official releases may be used",
+      "source": "https://github.com/qlerup/vivo-screen-sync/blob/724d2c0e3daa6fb217dfe71726e0893271a05685/AndroidManifest.xml",
+      "compatibility": {
+        "minStudioVersion": "0.28.0",
+        "hostApi": 1,
+        "models": [
+          "CB01"
+        ],
+        "lineosVersions": [
+          "1.0.8",
+          "1.0.9"
+        ],
+        "abis": [
+          "armeabi-v7a"
+        ]
+      },
+      "permissions": [
+        "android.permission.INTERNET",
+        "android.permission.FOREGROUND_SERVICE",
+        "android.permission.RECEIVE_BOOT_COMPLETED",
+        "android.permission.WAKE_LOCK"
+      ],
+      "android": {
+        "packageId": "dk.ultrabarx.screensync",
+        "versionCode": 100,
+        "minSdk": 26,
+        "signerSha256": "6b663d4525f5a8f192df55e4548582e96c52188809cc76123e2e7dbd44ebff1f"
+      },
+      "artifact": {
+        "url": "https://github.com/qlerup/ultrabar-store/releases/download/review-vivo-screen-sync-1.0.0/app.apk",
+        "size": 25053,
+        "sha256": "d390187458fe748068f94caab3b1bfac43f60e2db14ce0bac7fb3b1e4a45cf4e"
+      },
+      "icon": {
+        "url": "https://github.com/qlerup/ultrabar-store/releases/download/review-vivo-screen-sync-1.0.0/icon.png",
+        "size": 2098,
+        "sha256": "fe43f4838170456080608de077f96c345709cfbb191aa58de9fefaf3aa864f2a"
+      },
+      "publisher": "qlerup"
+    }
+  ]
+}
