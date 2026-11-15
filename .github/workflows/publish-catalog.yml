@@ -24,7 +24,13 @@ jobs:
         with:
           ref: main
           persist-credentials: false
+      - name: Check whether approved source changed
+        id: catalog
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 -I scripts/publish_catalog.py --check
       - name: Install trusted inspection tools
+        if: steps.catalog.outputs.needed == 'true'
         run: |
           python3 -m venv .validator-env
           .validator-env/bin/python -I -m pip install Pillow==12.3.0
@@ -35,8 +41,10 @@ jobs:
           ln -s /usr/share/java/apksigner.jar "$RUNNER_TEMP/android-inspection/lib/apksigner.jar"
           echo "ANDROID_BUILD_TOOLS=$RUNNER_TEMP/android-inspection" >> "$GITHUB_ENV"
       - name: Verify approved packages and immutable downloads
+        if: steps.catalog.outputs.needed == 'true'
         run: .validator-env/bin/python -I scripts/validate.py . --generated-catalog --verify-assets
       - name: Publish generated catalog atomically
+        if: steps.catalog.outputs.needed == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
         run: python3 -I scripts/publish_catalog.py

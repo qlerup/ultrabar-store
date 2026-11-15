@@ -4,7 +4,7 @@ from pathlib import Path
 import importlib.util
 
 
-def main():
+def main(check_only=False):
     spec=importlib.util.spec_from_file_location('trusted_catalog',Path(__file__).with_name('build_catalog.py'))
     module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
     catalog=module.build(Path('.'))
@@ -19,7 +19,17 @@ def main():
             raise RuntimeError('GitHub catalog publication failed: '+result.stderr.decode(errors='replace'))
         return json.loads(result.stdout)
     if api('/git/ref/heads/main')['object']['sha']!=source:
+        if check_only and os.environ.get('GITHUB_OUTPUT'):
+            with open(os.environ['GITHUB_OUTPUT'],'a') as output:output.write('needed=false\n')
         print('Main advanced; the newer queued run will publish the latest approved packages.');return
+    if check_only:
+        metadata=api('/contents/source.json?ref=catalog',optional=True)
+        published=json.loads(base64.b64decode(metadata['content'])) if metadata else {}
+        needed=published.get('sourceCommit')!=source
+        if os.environ.get('GITHUB_OUTPUT'):
+            with open(os.environ['GITHUB_OUTPUT'],'a') as output:output.write('needed='+str(needed).lower()+'\n')
+        print('Catalog publication required.' if needed else 'Catalog is current; skipping artifact downloads and inspection.')
+        return
     ref=api('/git/ref/heads/catalog',optional=True)
     tree=api('/git/trees','POST',dict(tree=[dict(path='catalog.json',mode='100644',type='blob',content=json.dumps(catalog,indent=2)+'\n'),dict(path='source.json',mode='100644',type='blob',content=json.dumps(dict(sourceCommit=source))+'\n')]))
     if ref:
@@ -34,4 +44,6 @@ def main():
     print('Published '+str(len(catalog['packages']))+' approved packages from '+source)
 
 
-if __name__=='__main__':main()
+if __name__=='__main__':
+    import sys
+    main(check_only='--check' in sys.argv)
