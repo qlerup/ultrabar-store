@@ -120,6 +120,7 @@ Start with an example or approved package of the same type. Set:
 
 - `schemaVersion`: 1; a stable unique `id`, name, description and version.
 - `type`: exactly the value declared in repository.json.
+- `publisher`: your GitHub account, matching the registered repository owner.
 - `source`: `https://github.com/OWNER/REPO/blob/SHA/widget.json`, `plugin.json`
   or `AndroidManifest.xml`, depending on package type.
 - `license`: a short description of the package license.
