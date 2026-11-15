@@ -2,6 +2,10 @@
 import json
 from pathlib import Path
 import re
+import importlib.util
+
+spec=importlib.util.spec_from_file_location('trusted_listing',Path(__file__).with_name('listing.py'))
+listing=importlib.util.module_from_spec(spec);spec.loader.exec_module(listing)
 
 
 def build(root):
@@ -15,7 +19,8 @@ def build(root):
         if not isinstance(entry,dict) or not isinstance(entry.get('id'),str):raise ValueError('Missing package ID')
         if entry['id'] in seen:raise ValueError('Duplicate package ID')
         seen.add(entry['id']);packages.append(entry)
-        if len(packages)>500:raise ValueError('Too many packages')
+        if not listing.state(folder)['listed']:packages.pop()
+        if len(seen)>500:raise ValueError('Too many packages')
     return dict(schemaVersion=1,packages=sorted(packages,key=lambda p:p['id']))
 
 

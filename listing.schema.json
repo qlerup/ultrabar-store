@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Store listing state",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["listed", "reason"],
+  "properties": {
+    "listed": {"type": "boolean"},
+    "reason": {"type": "string", "minLength": 1, "maxLength": 1000}
+  }
+}

@@ -1,0 +1,20 @@
+name: Check removal request
+on:
+  issues:
+    types: [opened, edited]
+permissions:
+  contents: read
+  issues: write
+jobs:
+  verify:
+    if: startsWith(github.event.issue.title, '[Removal]')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: main
+          persist-credentials: false
+      - name: Verify requester and explain next step
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 -I scripts/removal_request.py

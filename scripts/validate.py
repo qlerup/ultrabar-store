@@ -189,7 +189,13 @@ def validate_tree(root,verify_assets=False,generated_catalog=False):
             notes.append(entry['id']+': catalog and package checks passed; owner review and physical testing still required.')
         except Exception as exc:errors.append('catalog: '+str(exc))
     for package_id in packages:
-        if package_id not in seen:errors.append(package_id+': awaiting owner publication: add the official release artifact and matching catalog entry before approval.')
+        if package_id not in seen:
+            import importlib.util
+            spec=importlib.util.spec_from_file_location('trusted_listing',Path(__file__).with_name('listing.py'))
+            listing=importlib.util.module_from_spec(spec);spec.loader.exec_module(listing)
+            folder=next(f for f in folders if json.loads(read(f/'manifest.json'))['id']==package_id)
+            if listing.state(folder)['listed']:errors.append(package_id+': awaiting owner publication: add the official release artifact and matching catalog entry before approval.')
+            else:notes.append(package_id+': delisted; registration and local source retained.')
     return errors,notes
 
 if __name__=='__main__':

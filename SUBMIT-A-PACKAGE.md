@@ -231,3 +231,31 @@ is needed to switch to the new feed. Subsequent supported package releases do no
 require Studio updates. Publication normally follows merge; a scheduled recovery
 also checks every five minutes because bot merges can suppress ordinary push
 workflows. Refresh Store after publication to see the new list.
+
+## Request removal or restore a package
+
+Package owners can open **Issues > New issue > Request package removal**, enter the
+package ID and reason, and submit from the GitHub account owning the registered
+repository. A deterministic Actions check verifies that account and comments on
+the request. It does not remove the listing automatically.
+
+The Store maintainer opens **Actions > Remove or restore package > Run workflow**,
+selects main, enters package_id, chooses remove or restore, and supplies a public
+reason. Optionally enable dry_run to preview without creating anything. A normal
+run creates a listing-only PR and starts validation. Review and merge that PR to
+publish the change. Listing changes never auto-merge. The workflow summary links
+to the prepared PR.
+
+The per-package listing.json records listed=false and a reason. Source files,
+registration, release assets and existing user installations are retained. The
+generated live catalog excludes the package after merge; installed copies can
+still be managed locally. Restoration is a maintainer decision using the same
+workflow with action=restore. Package owners may also propose listing.json=false
+in their own package folder without changing the package version; the maintainer
+still reviews the removal PR.
+
+## Test before submitting
+
+Studio 0.32+ can install a local package with **Install from folder**. See
+https://github.com/qlerup/ultrabar-studio/blob/main/docs/LOCAL-PACKAGE-TESTING.md .
+Local development packages are explicitly marked and are not published to Store.

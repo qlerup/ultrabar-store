@@ -47,6 +47,18 @@ def run(root,trusted,pr):
   if not changed:continue
   try:
    manifest=json.loads((folder/'manifest.json').read_text(encoding='utf-8'))
+   if old.exists():
+    changed_files={f.name for parent in (old,folder) for f in parent.iterdir() if f.is_file() and (not (old/f.name).exists() or not (folder/f.name).exists() or (old/f.name).read_bytes()!=(folder/f.name).read_bytes())}
+    if changed_files=={'listing.json'}:
+     import importlib.util
+     spec=importlib.util.spec_from_file_location('trusted_listing',Path(__file__).with_name('listing.py'))
+     listing=importlib.util.module_from_spec(spec);spec.loader.exec_module(listing)
+     new_state=listing.state(folder)
+     registration=json.loads((old/'repository.json').read_text())
+     owner=registration['repository'].split('/')[0]
+     maintainer_bot=author=='github-actions[bot]' and pr.get('head',{}).get('repo',{}).get('full_name')=='qlerup/ultrabar-store' and pr.get('head',{}).get('ref','').startswith('maintenance/listing-')
+     if author.lower()!='qlerup' and not maintainer_bot and (author.lower()!=owner.lower() or new_state['listed']):raise ValueError('Only the registered owner can request delisting; only the Store maintainer can restore a listing.')
+     notes.append(folder.name+': listing change verified; Store maintainer approval is required.');continue
    if not (folder/'repository.json').exists():
     raise ValueError('Add repository.json linking your own public GitHub repository and release.')
    if old.exists() and not (old/'repository.json').exists():

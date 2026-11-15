@@ -1,0 +1,41 @@
+name: Remove or restore package
+on:
+  workflow_dispatch:
+    inputs:
+      package_id:
+        description: Registered package ID, for example studio.drive.widget
+        required: true
+        type: string
+      action:
+        description: Listing action
+        type: choice
+        options: [remove, restore]
+        required: true
+      reason:
+        description: Public reason for this listing change
+        required: true
+        type: string
+      dry_run:
+        description: Preview the change without creating a PR
+        type: boolean
+        default: false
+permissions:
+  contents: write
+  pull-requests: write
+  actions: write
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: main
+          persist-credentials: false
+      - name: Create a reviewable listing-change PR
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PACKAGE_ID: ${{ inputs.package_id }}
+          LISTING_ACTION: ${{ inputs.action }}
+          LISTING_REASON: ${{ inputs.reason }}
+          LISTING_DRY_RUN: ${{ inputs.dry_run }}
+        run: python3 -I scripts/manage_listing.py
