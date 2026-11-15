@@ -1,0 +1,21 @@
+{
+  "widgetApi": 1,
+  "runtime": "studio-native-v1",
+  "widgets": [{
+    "id": "bambu-liquid",
+    "name": "Bambu Liquid",
+    "kind": "bambu",
+    "background": "#14202b",
+    "textColor": "#eff6fa",
+    "accent": "#86e4c3",
+    "primary": "progress",
+    "secondary": "remaining",
+    "expandedSlots": 3,
+    "showJob": true,
+    "showTemperatures": true,
+    "showLayers": true,
+    "showRemaining": true,
+    "showControls": true,
+    "liquidMotion": true
+  }]
+}
