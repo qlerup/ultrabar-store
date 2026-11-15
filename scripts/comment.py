@@ -20,7 +20,7 @@ body=marker+'\n## '+('Ready for approval' if r['ready'] else 'Not ready for appr
 body+='### Checks performed\n\n'+'\n'.join('- '+x for x in r['checks'])+'\n\n'
 if r['errors']:
     body+='### Fixes needed\n\n<pre>'+html.escape('\n'.join(r['errors']))+'</pre>\n\n'
-else:body+='All automated checks passed for this commit. Owner acceptance is still required.\n\n'
+else:body+='All automated checks passed for this commit. Existing registered-owner updates are now evaluated for automatic approval and merge. New packages, registration migrations and identity/permission/requirement changes still require owner acceptance. See the Merge eligible package update job for the decision.\n\n'
 if r['notes']:body+='### Details\n\n<pre>'+html.escape('\n'.join(r['notes']))+'</pre>\n\n'
 body+='### Rerun\n\nPush fixes to this same PR branch; checks rerun automatically. Maintainers can also open Actions > Store submission checks > Run workflow and enter this PR number. This comment is updated on each run.\n\n'
 body+='The bot validates package data and downloads; it does not test visual quality, hardware behavior or license ownership. Review those before merging.\n\n'
