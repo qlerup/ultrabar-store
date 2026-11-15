@@ -1,0 +1,14 @@
+{
+  "widgetApi": 1,
+  "runtime": "studio-native-v1",
+  "widgets": [
+    {
+      "id": "drive-usage",
+      "name": "Drive usage",
+      "kind": "disk",
+      "background": "#192325",
+      "textColor": "#eef6f2",
+      "accent": "#94d9bb"
+    }
+  ]
+}
