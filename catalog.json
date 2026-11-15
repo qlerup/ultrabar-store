@@ -114,10 +114,10 @@
       "id": "studio.vivo.screensync",
       "name": "Vivo Screen Sync",
       "description": "Keep VivoCube screens in sync with Core. Standalone background app; configure through Studio, then choose Follow Core on Core. Requires root ADB and existing approved Studio bridge authorization.",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "type": "corebar-app",
       "license": "Proprietary; unmodified official releases may be used",
-      "source": "https://github.com/qlerup/vivo-screen-sync/blob/724d2c0e3daa6fb217dfe71726e0893271a05685/AndroidManifest.xml",
+      "source": "https://github.com/qlerup/vivo-screen-sync/blob/38f8e5662ef9c1f5fc4fe88c52ed3e80f790fc7f/AndroidManifest.xml",
       "compatibility": {
         "minStudioVersion": "0.28.0",
         "hostApi": 1,
@@ -140,19 +140,19 @@
       ],
       "android": {
         "packageId": "dk.ultrabarx.screensync",
-        "versionCode": 100,
+        "versionCode": 101,
         "minSdk": 26,
         "signerSha256": "6b663d4525f5a8f192df55e4548582e96c52188809cc76123e2e7dbd44ebff1f"
       },
       "artifact": {
-        "url": "https://github.com/qlerup/ultrabar-store/releases/download/review-vivo-screen-sync-1.0.0/app.apk",
+        "url": "https://github.com/qlerup/ultrabar-store/releases/download/review-vivo-screen-sync-1.0.1/app.apk",
         "size": 25053,
-        "sha256": "d390187458fe748068f94caab3b1bfac43f60e2db14ce0bac7fb3b1e4a45cf4e"
+        "sha256": "72f77908336c7e3110cfef65fb55ca7232892f4fd237bd51d80aa9dd9df3af65"
       },
       "icon": {
-        "url": "https://github.com/qlerup/ultrabar-store/releases/download/review-vivo-screen-sync-1.0.0/icon.png",
-        "size": 2098,
-        "sha256": "fe43f4838170456080608de077f96c345709cfbb191aa58de9fefaf3aa864f2a"
+        "url": "https://github.com/qlerup/ultrabar-store/releases/download/review-vivo-screen-sync-1.0.1/icon.png",
+        "size": 12606,
+        "sha256": "96bf23ff9d3478ff81c1d7c6b148414d01da1d165c251b1af107488248ad5001"
       },
       "publisher": "qlerup"
     }
