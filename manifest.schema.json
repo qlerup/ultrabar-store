@@ -15,7 +15,8 @@
     "permissions",
     "artifact",
     "description",
-    "icon"
+    "icon",
+    "publisher"
   ],
   "properties": {
     "schemaVersion": {
@@ -168,6 +169,10 @@
           "pattern": "^[a-f0-9]{64}$"
         }
       }
+    },
+    "publisher": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9-]{0,38}$"
     }
   },
   "allOf": [
