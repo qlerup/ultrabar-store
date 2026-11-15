@@ -3,10 +3,10 @@
   "id": "studio.clock.widget",
   "name": "Studio Clock & Date",
   "description": "One clock and date widget for the Core bar. Install, drag from the library, edit settings, then Deploy.",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "type": "corebar-widget",
   "license": "Proprietary; unmodified official releases may be used",
-  "source": "https://github.com/qlerup/ultrabar-store/blob/05f6ad4740cf159b69b3ba54c220486aaad82391/submissions/studio-clock-widget/widget.json",
+  "source": "https://github.com/qlerup/studio-clock-widget/blob/8760c9ff2f33f57b9839f23ff641fa86db37d668/widget.json",
   "compatibility": {
     "minStudioVersion": "0.20.0",
     "hostApi": 1,
