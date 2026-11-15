@@ -11,3 +11,15 @@ The package itself requests no Android permissions. Studio reads PC drive capaci
 Testing: package and icon validation, existing native disk renderer regression tests and editor browser checks. The new Store installation has not yet been tested by the owner on physical Core. Existing disk cards were already in use on Core; final Store acceptance remains the owner's decision.
 
 Original square 512x512 PNG icon drawn from geometric primitives in make_icon.py; Studio provides rounded corners. Removing the package only removes its library template. Placed cards are removed separately from the layout and with Deploy.
+
+## Releases and maintenance
+
+This repository is the package source of truth. The complete runtime payload is
+widget.json; no APK compilation is required. Keep package and widget IDs stable.
+Commit changes, test them and publish a new stable GitHub release. Submit updates
+through the same Store submission folder with the new version, commit and tag in
+manifest.json/repository.json. The Store owner reviews each version before it
+becomes available. Keep release tags/assets immutable and never commit credentials.
+See https://github.com/qlerup/ultrabar-store/blob/main/SUBMIT-A-PACKAGE.md for the
+complete submission and update process. The existing package license applies;
+public source visibility does not grant permission to create derivative works.
