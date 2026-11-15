@@ -6,8 +6,9 @@ right panel, then Deploy. New approved packages appear without updating Studio.
 
 **[Submit your widget ? step-by-step guide](CONTRIBUTING.md)**
 
-GitHub automatically checks submissions. qlerup reviews and merges approved
-packages; a passing check does not publish them. Only main/catalog.json is live.
+GitHub automatically checks submissions. New packages require owner approval;
+eligible updates to registered packages receive bot approval and auto-merge after
+green checks. Only main/catalog.json is live. See CONTRIBUTING.md for the policy.
 Studio 0.20 supports clock/date and PC hardware widgets through the shared native
 runtime. Arbitrary executable plugins are not supported. See the guide for limits.
 

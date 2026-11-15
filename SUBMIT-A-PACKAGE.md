@@ -159,7 +159,7 @@ If two package folders changed, split them into separate PRs.
 
 **Ready for approval** and green checks mean automated file, identity and package
 validation passed. They do not prove security, copyright ownership or hardware
-functionality. The Store owner reviews and tests the package before merging.
+functionality. The Store owner reviews new packages and changes requiring manual approval; eligible existing-package updates can merge automatically after checks.
 
 ## 9. Approval and user installation
 
@@ -179,8 +179,7 @@ Keep the approved repository, package ID and type. Update the source in your
 repository, increase the version, test, commit and publish a new stable release.
 APKs must also increase versionCode and keep their Android package ID and signing
 key. Open a new Store PR updating the **same package folder** with the new files,
-SHA and release. Ownership verification and all checks run again. Users can fetch
-the update after Store owner approval and merge.
+SHA and release. Ownership verification and all checks run again. Eligible updates merge automatically; changes outside the automatic-update policy require owner approval. Users can fetch the update after merge.
 
 Publishing an upstream release alone does not update Store. Another person's fork
 cannot take over your approved registration. Android updates preserve app data;
@@ -190,3 +189,28 @@ preserve settings of blocks users have already placed.
 ## Uploader identity
 
 Every manifest declares `publisher`, the GitHub account owning the registered repository. Actions verifies this against `repository.json`, source URL and PR author. Studio displays **Uploaded by @ACCOUNT** on the package card. Changing this field cannot transfer package ownership. All changed packages require repository.json; the former first-party registration exemption has been removed.
+
+## Automatic merge for existing-package updates
+
+A PR updating one already approved and registered package can merge automatically
+after all required checks pass. The trusted Actions job approves the exact checked
+commit and enables GitHub auto-merge. GitHub still requires green checks and an
+up-to-date branch. The bot never runs submitted code.
+
+Automatic approval requires the same registered repository, publishing account,
+package ID/type, license, permissions and compatibility. Android updates must
+also preserve package ID, signer and minimum SDK while increasing versionCode.
+The package version must increase. Only that package folder and its exact catalog
+entry may change. Changes to workflows, other packages or unrelated catalog entries
+require manual approval. New packages, first repository-registration migrations,
+identity changes and permission/requirement changes also require manual approval.
+An outstanding changes-requested review prevents automatic approval. Add the
+`store-manual-review` label before validation to keep an update manual.
+
+The existing one-review requirement remains enabled. Only eligible updates receive
+a bot approval; new submissions still require a maintainer review/merge. Review
+results appear in the **Merge eligible package update** job. Publishing an upstream
+release alone still does not create a Store PR or update users. Reviewed immutable
+artifact/icon mirrors and matching catalog metadata are still required for checks
+to pass. Users install the package update through Studio's Store; Studio itself
+does not need an update.

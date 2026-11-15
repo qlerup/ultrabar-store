@@ -19,6 +19,9 @@ jobs:
     name: Validate package
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    outputs:
+      review_sha: ${{ steps.review.outputs.head }}
+      base_sha: ${{ steps.review.outputs.base }}
     env:
       PR_NUMBER: ${{ github.event.pull_request.number || inputs.pr_number }}
       STORE_RESULT: ${{ github.workspace }}/validation-result.json
@@ -39,7 +42,11 @@ jobs:
           path: submitted
           persist-credentials: false
       - name: Record reviewed commit
-        run: echo "REVIEW_SHA=$(git -C submitted rev-parse HEAD)" >> "$GITHUB_ENV"
+        id: review
+        run: |
+          echo "REVIEW_SHA=$(git -C submitted rev-parse HEAD)" >> "$GITHUB_ENV"
+          echo "head=$(git -C submitted rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+          echo "base=$(git -C trusted rev-parse HEAD)" >> "$GITHUB_OUTPUT"
       - name: Install trusted image validator
         run: |
           python3 -m venv .validator-env
@@ -66,3 +73,33 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: python3 -I trusted/scripts/comment.py
+  auto-update:
+    name: Merge eligible package update
+    needs: validate
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    permissions:
+      contents: write
+      pull-requests: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      PR_NUMBER: ${{ github.event.pull_request.number || inputs.pr_number }}
+      REVIEW_SHA: ${{ needs.validate.outputs.review_sha }}
+      REVIEW_BASE_SHA: ${{ needs.validate.outputs.base_sha }}
+    steps:
+      - name: Checkout trusted update policy
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ needs.validate.outputs.base_sha }}
+          path: trusted
+          persist-credentials: false
+      - name: Checkout validated package as data
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          repository: ${{ github.repository }}
+          ref: ${{ needs.validate.outputs.review_sha }}
+          fetch-depth: 0
+          path: submitted
+          persist-credentials: false
+      - name: Approve and queue an eligible existing-package update
+        run: python3 -I trusted/scripts/auto_update.py trusted submitted
