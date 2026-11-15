@@ -1,5 +1,10 @@
 # Publish or update an UltraBar Store package
 
+**Bambu liquid widgets:** the fixed `bambu` kind and per-widget display/expansion
+fields require reviewed Studio 0.46+. See [BAMBU-WIDGETS.md](BAMBU-WIDGETS.md).
+Submit one corebar-app package with a bundled native widget descriptor; app and
+widget share one source repository, Store installation and update.
+
 **Detailed walkthrough:** [From your project to UltraBar Store](SUBMIT-A-PACKAGE.md).
 
 **Mandatory integration requirements:** [Studio app settings API 1](APP-SETTINGS.md).

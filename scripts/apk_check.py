@@ -55,6 +55,11 @@ def studio_issues(path,info,entry):
     return issues
 
 def inspect(path, entry):
+    if 'bundledWidgets' in entry:
+        import importlib.util
+        spec=importlib.util.spec_from_file_location('trusted_bundle',Path(__file__).with_name('bundle_contract.py'))
+        bundle=importlib.util.module_from_spec(spec);spec.loader.exec_module(bundle)
+        bundle.inspect_apk(path,entry)
     contract=None
     if 'settings' in entry:
         import importlib.util

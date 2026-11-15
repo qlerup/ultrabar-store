@@ -13,6 +13,10 @@ HEX=re.compile(r'[a-f0-9]{64}')
 class StoreError(ValueError):pass
 _contract_spec=importlib.util.spec_from_file_location('trusted_studio_contract',Path(__file__).with_name('studio_contract.py'))
 studio_contract=importlib.util.module_from_spec(_contract_spec);_contract_spec.loader.exec_module(studio_contract)
+_bambu_spec=importlib.util.spec_from_file_location('trusted_bambu_contract',Path(__file__).with_name('bambu_contract.py'))
+bambu_contract=importlib.util.module_from_spec(_bambu_spec);_bambu_spec.loader.exec_module(bambu_contract)
+_bundle_spec=importlib.util.spec_from_file_location('trusted_bundle_contract',Path(__file__).with_name('bundle_contract.py'))
+bundle_contract=importlib.util.module_from_spec(_bundle_spec);_bundle_spec.loader.exec_module(bundle_contract)
 class SafeRedirect(HTTPRedirectHandler):
     def redirect_request(self, req, fp, code, msg, headers, newurl):
         parsed = urlsplit(newurl)
@@ -46,6 +50,7 @@ def validate_icon_bytes(raw,icon):
 def validate_entry(entry):
     if not isinstance(entry, dict): raise StoreError('Invalid catalog entry.')
     p = copy.deepcopy(entry)
+    bundle_contract.validate(p,widget_package)
     if p.get('schemaVersion') != 1 or not ID.fullmatch(str(p.get('id',''))): raise StoreError('Unsupported package manifest.')
     for field, maximum in [('name',100),('description',1000),('license',200)]:
         if not isinstance(p.get(field),str) or not 1 <= len(p[field]) <= maximum: raise StoreError('Incomplete package information.')
@@ -99,13 +104,19 @@ def widget_package(raw):
     result=[];ids=set()
     for w in widgets:
         if not isinstance(w,dict):raise StoreError('widget.json / widgets: Expected widget objects. Fix: copy examples/clock/widget.json.')
-        unknown=set(w)-{'id','name','kind','background','textColor','accent','hourFormat','showSeconds','showDate','kindOptions'}
+        unknown=set(w)-({'id','name','kind','background','textColor','accent','hourFormat','showSeconds','showDate','kindOptions'}|bambu_contract.FIELDS)
         if unknown:raise StoreError('widget.json: Unsupported widget fields: '+', '.join(sorted(unknown))+'. Fix: remove these fields; custom settings and executable code need a supported Studio integration.')
         key=w.get('id')
         if not isinstance(key,str) or not re.fullmatch(r'[a-z][a-z0-9-]{0,63}',key) or key in ids:raise StoreError('Widget IDs must be unique.')
         ids.add(key)
         base={k:v for k,v in w.items() if k in ('name','kind','background','textColor','accent')}
-        plugin_templates(json.dumps(dict(pluginApi=1,widgets=[base])).encode())
+        if w.get('kind')=='bambu':
+            if not isinstance(w.get('name'),str) or not 1<=len(w['name'])<=100:raise StoreError('Invalid printer widget name.')
+            for color in ('background','textColor','accent'):
+                if color in w and not re.fullmatch(r'#[a-fA-F0-9]{6}',str(w[color])):raise StoreError('Invalid widget color.')
+        else:plugin_templates(json.dumps(dict(pluginApi=1,widgets=[base])).encode())
+        try:bambu_contract.validate(w)
+        except ValueError as exc:raise StoreError(str(exc)) from exc
         if w.get('hourFormat','24') not in ('12','24') or any(type(w[k]) is not bool for k in ('showSeconds','showDate') if k in w):raise StoreError('Invalid clock settings.')
         if w['kind']!='clock' and any(k in w for k in ('hourFormat','showSeconds','showDate')):raise StoreError('Clock settings require a clock widget.')
         if 'kindOptions' in w:
@@ -162,6 +173,8 @@ def validate_tree(root,verify_assets=False,generated_catalog=False):
                 spec=importlib.util.spec_from_file_location('trusted_apk_check',Path(__file__).with_name('apk_check.py'))
                 inspector=importlib.util.module_from_spec(spec);spec.loader.exec_module(inspector)
                 inspector.inspect(folder/filename,manifest)
+                if 'bundledWidgets' in manifest:
+                    if json.loads(read(folder/'widget.json'))!=manifest['bundledWidgets']:raise ValueError('widget.json differs from manifest.bundledWidgets.')
                 if 'settings' in manifest:
                     schema=json.loads(read(folder/'studio-settings.json',32768))
                     if schema!=manifest['settings']:raise ValueError('studio-settings.json differs from manifest.settings. Fix: use the same reviewed settings schema in both files and APK assets.')
@@ -174,6 +187,7 @@ def validate_tree(root,verify_assets=False,generated_catalog=False):
             if compat.get('hostApi')!=1 or valid_version(compat['minStudioVersion'])<(0,20,0):raise ValueError('Widget packages require hostApi 1 and Studio 0.20.0+')
             if kind=='corebar-widget' and (compat.get('abis')!=['armeabi-v7a'] or compat.get('models')!=['CB01'] or not compat.get('lineosVersions') or not set(compat['lineosVersions'])<= {'1.0.8','1.0.9'}):raise ValueError('Declare tested CB01/ARM32/LineOS 1.0.8 or 1.0.9 compatibility')
             if any('kindOptions' in w for w in widgets) and valid_version(compat['minStudioVersion'])<(0,24,0):raise ValueError('Selectable measurements require Studio 0.24.0+')
+            if any(w['kind']=='bambu' for w in widgets) and valid_version(compat['minStudioVersion'])<(0,46,0):raise ValueError('Liquid Bambu widgets require Studio 0.46.0+')
             effective=copy.deepcopy(manifest)
             if 'artifact' not in effective:
                 effective['artifact']=dict(url=ASSET_PREFIX+'pending/'+filename,size=len(raw),sha256=hashlib.sha256(raw).hexdigest())

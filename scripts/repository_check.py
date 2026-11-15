@@ -88,6 +88,7 @@ def run(root,trusted,pr):
    files={k:v for k,v in FILES.items() if k!='widget.json'}
    if kind!='corebar-app':files['widget.json' if kind=='corebar-widget' else 'plugin.json']=65536
    if manifest.get('settings'):files['studio-settings.json']=32768
+   if manifest.get('bundledWidgets'):files['widget.json']=65536
    for name,limit in files.items():
     file=folder/name
     if file.is_symlink() or not file.is_file() or file.stat().st_size>limit:raise ValueError('Missing or invalid '+name)
