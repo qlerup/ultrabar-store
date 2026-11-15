@@ -53,7 +53,7 @@ Copy this into repository.json and replace the values:
 
 Copy examples/clock/manifest.json. Keep a stable unique package ID and stable widget IDs. Set source to https://github.com/YOURNAME/YOUR-WIDGET/blob/COMMIT_SHA/widget.json. Set version and actual compatibility. Native integration currently requires root-enabled ARM32 CB01, LineOS 1.0.8/1.0.9; PC hardware widgets need Studio connected. Reconnect after Core restart. Declare Studio 0.24.0+ for kindOptions.
 
-Leave artifact/icon download metadata and catalog edits to the maintainer for first submissions. The maintainer publishes reviewed bytes as official versioned mirrors during review. This lets current Studio releases continue downloading through their verified official Store endpoint. The linked upstream repository remains the developer's source of truth; the mirror is a copy, not ownership of the project.
+Leave artifact/icon download metadata to the maintainer for first submissions. Never edit catalog.json. The maintainer publishes reviewed bytes as official versioned mirrors during review. This lets current Studio releases continue downloading through their verified official Store endpoint. The linked upstream repository remains the developer's source of truth; the mirror is a copy, not ownership of the project.
 
 Open Contribute > Open pull request against qlerup/ultrabar-store main. GitHub inserts the copy/paste checklist from .github/pull_request_template.md automatically. Fill the links, version, changes and testing, and tick only completed items. Checkboxes are declarations; the Actions validate the actual data.
 
@@ -63,14 +63,14 @@ The existing bot is deterministic GitHub Actions, not AI. Separate named steps t
 
 For linked packages the PR author must match the repository owner. Updates keep the approved repository and package ID, increase version, and match exact upstream widget/icon/README/LICENSE bytes. A stable release must resolve to the reviewed commit. Repository redirects, archived/private repositories and unexpected ownership changes fail. Every changed submission, including first-party packages, requires repository.json. The initial migration of an approved legacy package is maintainer-only; subsequent updates are bound to the registered repository.
 
-The comment lists checks and actionable errors. Push fixes to the same PR branch to rerun; maintainers can also use Actions > Store submission checks > Run workflow and enter the PR number. A green check and Ready for approval mean automated validation passed. New submissions require owner review of rights, functionality and physical testing. Eligible existing-package updates proceed to automatic approval and merge. The first review may report awaiting maintainer publication until official mirror metadata and the catalog entry are prepared.
+The comment lists checks and actionable errors. Push fixes to the same PR branch to rerun; maintainers can also use Actions > Store submission checks > Run workflow and enter the PR number. A green check and Ready for approval mean automated validation passed. New submissions require owner review of rights, functionality and physical testing. Eligible existing-package updates proceed to automatic approval and merge. The first review may report awaiting maintainer publication until official mirror metadata is prepared.
 
 ## Updates
 
 1. Change files in your own widget repository and keep existing package/widget IDs.
 2. Increase version, test and publish a new stable release at a new commit.
 3. Create a new Store PR updating the same submission folder, repository.json commit/release, manifest/source/version and exact source copies.
-4. The maintainer publishes new immutable mirrored files and prepares the matching catalog entry. Actions rerun all checks and verify your ownership against the approved listing.
+4. The maintainer publishes new immutable mirrored files and prepares matching manifest metadata. Actions rerun all checks and verify your ownership against the approved listing.
 5. After Store owner merge, users refresh the Store and see Update. No new Studio release is needed for supported capabilities.
 
 Installed updates preserve existing placed blocks and settings. New defaults apply when adding a new block; Deploy sends the saved layout to Core. Removing a package removes its library template; remove placed blocks separately and Deploy. Existing drafts/backups remain available.
@@ -95,8 +95,7 @@ up-to-date branch. The bot never runs submitted code.
 Automatic approval requires the same registered repository, publishing account,
 package ID/type, license, permissions and compatibility. Android updates must
 also preserve package ID, signer and minimum SDK while increasing versionCode.
-The package version must increase. Only that package folder and its exact catalog
-entry may change. Changes to workflows, other packages or unrelated catalog entries
+The package version must increase. Only that package folder may change. Changes to workflows, other packages or catalog.json
 require manual approval. New packages, first repository-registration migrations,
 identity changes and permission/requirement changes also require manual approval.
 An outstanding changes-requested review prevents automatic approval. Add the
@@ -106,6 +105,25 @@ The existing one-review requirement remains enabled. Only eligible updates recei
 a bot approval; new submissions still require a maintainer review/merge. Review
 results appear in the **Merge eligible package update** job. Publishing an upstream
 release alone still does not create a Store PR or update users. Reviewed immutable
-artifact/icon mirrors and matching catalog metadata are still required for checks
+artifact/icon mirrors and matching package manifest metadata are still required for checks
 to pass. Users install the package update through Studio's Store; Studio itself
 does not need an update.
+
+## Generated catalog: no shared-list edits in package PRs
+
+Each package has one folder under submissions/. Its manifest.json is the source
+for its Store card; repository.json records the source owner and release. Change
+only that folder when submitting a package or update. Do not edit catalog.json.
+GitHub validates a freshly generated catalog during PR checks, then publishes the
+complete approved list on the data-only `catalog` branch after merge. Packages
+are sorted by ID, and invalid or duplicate entries stop publication. Failures leave
+the last successful published catalog intact. Separate package PRs therefore do
+not compete over a shared JSON array.
+
+Studio 0.31+ reads `catalog/catalog.json` from that generated branch. The old
+main/catalog.json is a frozen compatibility snapshot for older Studio clients;
+it is not the live list and must not be updated in package PRs. One Studio upgrade
+is needed to switch to the new feed. Subsequent supported package releases do not
+require Studio updates. Publication normally follows merge; a scheduled recovery
+also checks every five minutes because bot merges can suppress ordinary push
+workflows. Refresh Store after publication to see the new list.

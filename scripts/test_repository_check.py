@@ -23,6 +23,7 @@ class OwnershipTests(unittest.TestCase):
    root=Path(tmp)/'pr';base=Path(tmp)/'base';(base/'submissions').mkdir(parents=True)
    for name in ('one','two'):
     folder=root/'submissions'/name;folder.mkdir(parents=True);(folder/'widget.json').write_text('{}')
+   (base/'catalog.json').write_text('{}');(root/'catalog.json').write_text('{}')
    errors,_=run(root,base,dict(user=dict(login='qlerup')))
    self.assertIn('only one',errors[0])
 

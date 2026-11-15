@@ -28,7 +28,7 @@ Describe features, fixes, settings compatibility and hardware requirements.
 - [ ] No secrets, personal device addresses or signing keys are included.
 - [ ] I described install/use/update/removal tests and any untested hardware paths below.
 - [ ] For an APK: release build, exact permissions, same signing key for updates, complete source.zip matching the pinned commit (or not an APK).
-- [ ] This PR changes only one submission folder.
+- [ ] This PR changes only one submission folder and does not edit catalog.json.
 - [ ] I understand that green Actions checks still require Store owner approval.
 
 ## Testing and limitations
@@ -37,4 +37,4 @@ State explicitly whether this release was tested on physical Core and on which f
 
 ## Maintainer publication
 
-Official mirrored download metadata and catalog entry are prepared during review. Do not overwrite an old release asset. Push fixes to this PR to rerun Actions; maintainers can also rerun from Actions > Store submission checks.
+Official mirrored download metadata is prepared in the package manifest during review. GitHub generates and publishes the catalog after merge. Do not overwrite an old release asset. Push fixes to this PR to rerun Actions; maintainers can also rerun from Actions > Store submission checks.

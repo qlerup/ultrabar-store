@@ -29,6 +29,7 @@ def validate_link(link,manifest,author,previous=None):
 
 def run(root,trusted,pr):
  author=pr['user']['login'];errors=[];notes=[]
+ if (root/'catalog.json').read_bytes()!=(trusted/'catalog.json').read_bytes():return ['Do not edit catalog.json. GitHub generates the live catalog from each package manifest after merge.'],[]
  changed=set()
  for parent in (root/'submissions',trusted/'submissions'):
   for folder in parent.iterdir():

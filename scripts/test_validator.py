@@ -26,6 +26,13 @@ class Checks(unittest.TestCase):
   self.assertEqual(validate_tree(self.root)[0],[])
   (self.folder/'widget.json').write_bytes(self.raw+b' ')
   self.assertTrue(validate_tree(self.root)[0])
+ def test_generated_catalog_uses_manifests_without_editing_shared_file(self):
+  self.manifest['artifact']=dict(url='https://github.com/qlerup/ultrabar-store/releases/download/v1/widget.json',size=len(self.raw),sha256=hashlib.sha256(self.raw).hexdigest());self.save()
+  # Stale legacy snapshots are deliberately excluded from the new live list.
+  (self.root/'catalog.json').write_text('obsolete snapshot')
+  self.assertEqual(validate_tree(self.root,generated_catalog=True)[0],[])
+  self.manifest['artifact']['sha256']='a'*64;self.save()
+  self.assertTrue(validate_tree(self.root,generated_catalog=True)[0])
  def test_missing_or_wrong_size_icon_fails(self):
   (self.folder/'icon.png').unlink();self.assertTrue(validate_tree(self.root)[0])
   Image.new('RGB',(128,128)).save(self.folder/'icon.png');self.assertTrue(validate_tree(self.root)[0])

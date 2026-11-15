@@ -12,7 +12,7 @@ class UpdatePolicyTests(unittest.TestCase):
   self.old=dict(id='alice.widget',type='corebar-widget',publisher='alice',permissions=[],compatibility=dict(hostApi=1,minStudioVersion='0.20.0'),license='Test',version='1.0.0')
   self.new=dict(self.old,version='1.0.1')
   self.link=dict(repository='alice/widget',type='corebar-widget',release='v1.0.0',commit='a'*40)
-  self.paths=['catalog.json',self.prefix+'manifest.json',self.prefix+'repository.json',self.prefix+'widget.json']
+  self.paths=[self.prefix+'manifest.json',self.prefix+'repository.json',self.prefix+'widget.json']
   self.save()
  def save(self,link=None):
   for root,manifest,registration in ((self.base,self.old,self.link),(self.head,self.new,link or self.link)):
@@ -25,7 +25,7 @@ class UpdatePolicyTests(unittest.TestCase):
  def test_new_or_legacy_package_stays_manual(self):
   (self.base/self.prefix/'repository.json').unlink();self.assertFalse(self.check())
  def test_new_package_cannot_use_unapproved_folder_as_history(self):
-  (self.base/'catalog.json').write_text('{"packages":[]}');self.assertFalse(self.check())
+  (self.base/self.prefix/'manifest.json').unlink();self.assertFalse(self.check())
  def test_wrong_author_or_owner_transfer_stays_manual(self):
   self.assertFalse(self.check('bob'));self.save(dict(self.link,repository='alice/another'));self.assertFalse(self.check())
  def test_permission_identity_compatibility_changes_stay_manual(self):
@@ -35,11 +35,11 @@ class UpdatePolicyTests(unittest.TestCase):
   for path in ('.github/workflows/validate.yml','submissions/other/widget.json',self.prefix+'script.sh'):
    self.assertFalse(self.check(paths=self.paths+[path]),path)
  def test_unrelated_catalog_edit_stays_manual(self):
-  (self.head/'catalog.json').write_text(json.dumps(dict(schemaVersion=1,packages=[self.new,dict(self.new,id='alice.extra')])));self.assertFalse(self.check())
+  self.assertFalse(self.check(paths=self.paths+['catalog.json']))
  def test_apk_update_preserves_signer_and_identity(self):
   self.old.update(type='corebar-app',android=dict(packageId='dk.alice.app',signerSha256='a'*64,minSdk=26,versionCode=1));self.link['type']='corebar-app'
   self.new=copy.deepcopy(self.old);self.new['version']='1.0.1';self.new['android']['versionCode']=2;self.save()
-  paths=['catalog.json',self.prefix+'manifest.json',self.prefix+'app.apk']
+  paths=[self.prefix+'manifest.json',self.prefix+'app.apk']
   self.assertTrue(self.check(paths=paths))
   self.new['android']['signerSha256']='b'*64;self.save();self.assertFalse(self.check(paths=paths))
  def invoke(self,change=None,reviews=None):

@@ -62,7 +62,7 @@ jobs:
       - name: Test trusted validator
         run: .validator-env/bin/python -I -m unittest discover -s trusted/scripts -p 'test_*.py'
       - name: Check submission files and published artifacts
-        run: .validator-env/bin/python -I trusted/scripts/validate.py submitted --verify-assets
+        run: .validator-env/bin/python -I trusted/scripts/validate.py submitted --generated-catalog --verify-assets
       - name: Check repository owner, release and update identity
         if: always()
         env:

@@ -115,9 +115,14 @@ def read(path,limit=65536):
     if path.is_symlink() or not path.is_file() or path.stat().st_size>limit:raise ValueError('Missing, oversized or symlink file: '+str(path.name))
     return path.read_bytes()
 
-def validate_tree(root,verify_assets=False):
+def validate_tree(root,verify_assets=False,generated_catalog=False):
     errors=[];notes=[];packages={}
-    catalog=json.loads(read(root/'catalog.json',1024*1024))
+    if generated_catalog:
+        import importlib.util
+        spec=importlib.util.spec_from_file_location('trusted_catalog',Path(__file__).with_name('build_catalog.py'))
+        builder=importlib.util.module_from_spec(spec);spec.loader.exec_module(builder)
+        catalog=builder.build(root)
+    else:catalog=json.loads(read(root/'catalog.json',1024*1024))
     if not isinstance(catalog,dict) or catalog.get('schemaVersion')!=1 or not isinstance(catalog.get('packages'),list):raise ValueError('Invalid catalog')
     folders=list((root/'submissions').iterdir()) if (root/'submissions').exists() else []
     if len(folders)>500 or len(catalog['packages'])>500:raise ValueError('Too many submissions')
@@ -188,7 +193,7 @@ def validate_tree(root,verify_assets=False):
     return errors,notes
 
 if __name__=='__main__':
-    try:errors,notes=validate_tree(Path(sys.argv[1]),'--verify-assets' in sys.argv)
+    try:errors,notes=validate_tree(Path(sys.argv[1]),'--verify-assets' in sys.argv,'--generated-catalog' in sys.argv)
     except Exception as exc:errors=[str(exc)];notes=[]
     ready=not errors and bool(notes)
     checks=['Required files for declared type, manifest.json, icon.png, README.md and LICENSE','Manifest identity, semantic version, source commit and compatibility','Declarative runtime/settings or APK metadata, permissions and cryptographic signature','Unique package/widget IDs and exact catalog/manifest match','Static PNG icon: 256x256 or 512x512, at most 256 KiB, valid image data','Local SHA-256 and byte size','Published GitHub release bytes match reviewed package (when catalogued)']

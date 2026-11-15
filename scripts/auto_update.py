@@ -15,18 +15,15 @@ def eligibility(base, submitted, author, paths):
     folders={p.split('/')[1] for p in paths if p.startswith('submissions/') and len(p.split('/'))>=3}
     if len(folders)!=1:return False, 'Manual approval: one existing package is required.'
     folder=next(iter(folders));prefix='submissions/'+folder+'/'
-    if any(p!='catalog.json' and (not p.startswith(prefix) or '/' in p[len(prefix):]) for p in paths):
-        return False, 'Manual approval: changes outside the package or catalog.'
+    if any(not p.startswith(prefix) or '/' in p[len(prefix):] for p in paths):
+        return False, 'Manual approval: changes outside the package. The catalog is generated automatically.'
     try:
         old=load(base,prefix+'manifest.json');new=load(submitted,prefix+'manifest.json')
         previous=load(base,prefix+'repository.json');link=load(submitted,prefix+'repository.json')
-        catalog=load(base,'catalog.json');updated=load(submitted,'catalog.json')
     except (OSError,ValueError):return False, 'Manual approval: new package or unregistered legacy package.'
-    old_rows=[p for p in catalog['packages'] if p['id']==old['id']]
-    if old_rows!=[old]:return False, 'Manual approval: previous package is not approved in the catalog.'
     allowed={'manifest.json','repository.json','icon.png','README.md','LICENSE'}
     allowed|={'app.apk','source.zip'} if new.get('type')=='corebar-app' else {'widget.json','make_icon.py'} if new.get('type')=='corebar-widget' else {'plugin.json','make_icon.py'}
-    if any(p!='catalog.json' and p[len(prefix):] not in allowed for p in paths):
+    if any(p[len(prefix):] not in allowed for p in paths):
         return False, 'Manual approval: unexpected package file.'
     for key in ('id','type','publisher','permissions','compatibility','license'):
         if key not in old or old[key]!=new.get(key):return False, 'Manual approval: changed '+key+'.'
@@ -45,8 +42,6 @@ def eligibility(base, submitted, author, paths):
         for key in ('packageId','signerSha256','minSdk'):
             if old['android'][key]!=new.get('android',{}).get(key):return False, 'Manual approval: Android identity or requirements changed.'
         if new['android']['versionCode']<=old['android']['versionCode']:return False, 'Manual approval: Android versionCode did not increase.'
-    expected=dict(catalog,packages=[new if p['id']==old['id'] else p for p in catalog['packages']])
-    if updated!=expected:return False, 'Manual approval: unrelated catalog changes.'
     return True, 'Existing package update from its registered owner; all package checks passed.'
 
 

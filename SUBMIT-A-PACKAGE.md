@@ -134,8 +134,7 @@ Start with an example or approved package of the same type. Set:
 
 A first submission may omit `artifact` and `icon` download metadata. During review,
 the maintainer publishes the reviewed files as immutable assets in the official
-Store repository and supplies the URL, byte size and SHA-256 with an identical
-catalog entry. Checks become fully green after this publication step.
+Store repository and supplies the URL, byte size and SHA-256 in the package manifest. GitHub generates the catalog entry automatically after merge. Checks become fully green after this publication step.
 The mirror distributes a reviewed copy; your repository remains the source's home.
 
 ## 7. Open a PR and complete the checklist
@@ -163,7 +162,7 @@ functionality. The Store owner reviews new packages and changes requiring manual
 
 ## 9. Approval and user installation
 
-After the Store owner merges the PR, the listing is in the main catalog. Users
+After the Store owner merges the PR, the listing is eligible for automatic catalog publication. Users
 open Store and select **Refresh store**. GitHub caching can cause a short delay.
 A new Studio release is unnecessary when the installed version already supports
 the package's type, capabilities and declared minimum version.
@@ -200,8 +199,7 @@ up-to-date branch. The bot never runs submitted code.
 Automatic approval requires the same registered repository, publishing account,
 package ID/type, license, permissions and compatibility. Android updates must
 also preserve package ID, signer and minimum SDK while increasing versionCode.
-The package version must increase. Only that package folder and its exact catalog
-entry may change. Changes to workflows, other packages or unrelated catalog entries
+The package version must increase. Only that package folder may change. Changes to workflows, other packages or catalog.json
 require manual approval. New packages, first repository-registration migrations,
 identity changes and permission/requirement changes also require manual approval.
 An outstanding changes-requested review prevents automatic approval. Add the
@@ -211,6 +209,25 @@ The existing one-review requirement remains enabled. Only eligible updates recei
 a bot approval; new submissions still require a maintainer review/merge. Review
 results appear in the **Merge eligible package update** job. Publishing an upstream
 release alone still does not create a Store PR or update users. Reviewed immutable
-artifact/icon mirrors and matching catalog metadata are still required for checks
+artifact/icon mirrors and matching package manifest metadata are still required for checks
 to pass. Users install the package update through Studio's Store; Studio itself
 does not need an update.
+
+## Generated catalog: no shared-list edits in package PRs
+
+Each package has one folder under submissions/. Its manifest.json is the source
+for its Store card; repository.json records the source owner and release. Change
+only that folder when submitting a package or update. Do not edit catalog.json.
+GitHub validates a freshly generated catalog during PR checks, then publishes the
+complete approved list on the data-only `catalog` branch after merge. Packages
+are sorted by ID, and invalid or duplicate entries stop publication. Failures leave
+the last successful published catalog intact. Separate package PRs therefore do
+not compete over a shared JSON array.
+
+Studio 0.31+ reads `catalog/catalog.json` from that generated branch. The old
+main/catalog.json is a frozen compatibility snapshot for older Studio clients;
+it is not the live list and must not be updated in package PRs. One Studio upgrade
+is needed to switch to the new feed. Subsequent supported package releases do not
+require Studio updates. Publication normally follows merge; a scheduled recovery
+also checks every five minutes because bot merges can suppress ordinary push
+workflows. Refresh Store after publication to see the new list.

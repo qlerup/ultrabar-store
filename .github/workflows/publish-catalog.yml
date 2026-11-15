@@ -1,0 +1,42 @@
+name: Publish Store catalog
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+  workflow_run:
+    workflows: [Store submission checks]
+    types: [completed]
+  schedule:
+    - cron: '*/5 * * * *'
+permissions:
+  contents: write
+concurrency:
+  group: publish-store-catalog
+  cancel-in-progress: false
+jobs:
+  publish:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - name: Checkout latest approved packages
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: main
+          persist-credentials: false
+      - name: Install trusted inspection tools
+        run: |
+          python3 -m venv .validator-env
+          .validator-env/bin/python -I -m pip install Pillow==12.3.0
+          sudo apt-get update -qq
+          sudo apt-get install -y aapt apksigner
+          mkdir -p "$RUNNER_TEMP/android-inspection/lib"
+          ln -s "$(command -v aapt)" "$RUNNER_TEMP/android-inspection/aapt"
+          ln -s /usr/share/java/apksigner.jar "$RUNNER_TEMP/android-inspection/lib/apksigner.jar"
+          echo "ANDROID_BUILD_TOOLS=$RUNNER_TEMP/android-inspection" >> "$GITHUB_ENV"
+      - name: Verify approved packages and immutable downloads
+        run: .validator-env/bin/python -I scripts/validate.py . --generated-catalog --verify-assets
+      - name: Publish generated catalog atomically
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 -I scripts/publish_catalog.py
