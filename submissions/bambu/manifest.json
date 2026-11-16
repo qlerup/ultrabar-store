@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "id": "studio.bambu",
+  "name": "Bambu",
+  "description": "One Bambu app with its native home widget in one installation. Discover local printers, choose readings in Studio and unfold across 2-5 slots while neighboring widgets move. Access codes stay on Core. Requires Studio 0.47 and compatible LAN firmware.",
+  "version": "1.0.1",
+  "type": "corebar-app",
+  "license": "MIT",
+  "publisher": "qlerup",
+  "source": "https://github.com/qlerup/ultrabar-bambu/blob/45b6d85a8c4abc18761e069f081b05380e0802be/AndroidManifest.xml",
+  "compatibility": {
+    "minStudioVersion": "0.47.0",
+    "hostApi": 1,
+    "models": [
+      "CB01"
+    ],
+    "lineosVersions": [
+      "1.0.9"
+    ],
+    "abis": [
+      "armeabi-v7a"
+    ]
+  },
+  "permissions": [
+    "android.permission.INTERNET",
+    "android.permission.FOREGROUND_SERVICE"
+  ],
+  "android": {
+    "packageId": "dk.ultrabar.bambu",
+    "versionCode": 101,
+    "minSdk": 26,
+    "signerSha256": "3421efe203846a4074d48ab0b7f3c7be23784f04eef7914d4b84c943711f2796"
+  },
+  "artifact": {
+    "url": "https://github.com/qlerup/ultrabar-store/releases/download/review-bambu-1.0.1/app.apk",
+    "size": 57961,
+    "sha256": "acb393b8216f9be0b7ae18f33614c06cb5794d7191dea58b4b42f09d6c472fec"
+  },
+  "icon": {
+    "url": "https://github.com/qlerup/ultrabar-store/releases/download/review-bambu-1.0.1/icon.png",
+    "size": 11485,
+    "sha256": "6c55cb63db1f36c7f58a1e29cbda82cf5d9bfcf8030ce19bdba884a5befa50c2"
+  },
+  "settings": {
+    "api": 1,
+    "fields": [
+      {
+        "key": "printerName",
+        "label": "Panel title",
+        "type": "string",
+        "default": "Bambu Lab",
+        "maxLength": 48
+      },
+      {
+        "key": "allowControls",
+        "label": "Enable printer controls",
+        "help": "Allows pause, resume, stop and chamber light. Requires local setup and compatible printer firmware. Off by default.",
+        "type": "boolean",
+        "default": false
+      },
+      {
+        "key": "showTemperatures",
+        "label": "Show temperatures",
+        "type": "boolean",
+        "default": true
+      },
+      {
+        "key": "keepScreenOn",
+        "label": "Keep screen awake while panel is open",
+        "type": "boolean",
+        "default": false
+      }
+    ]
+  }
+}
