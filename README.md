@@ -1,5 +1,12 @@
 # UltraBar Store
 
+Studio downloads the approved catalog and immutable package files directly,
+without GitHub API requests. Download/issue counts are published separately as
+`catalog/package-stats.json`. The trusted publication workflow collects those
+counts centrally with its Actions token, at most once every 15 minutes for an
+unchanged package set. PCs only read the public snapshot; no token is distributed.
+Unavailable counts retain their last known values and never block installation.
+
 Reviewed widget packages for [UltraBar Studio](https://github.com/qlerup/ultrabar-studio).
 One package appears in the widget library: drag it onto Core, configure it in the
 right panel, then Deploy. New approved packages appear without updating Studio.

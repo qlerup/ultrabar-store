@@ -31,9 +31,11 @@ def main(check_only=False):
         print('Catalog publication required.' if needed else 'Catalog is current; skipping artifact downloads and inspection.')
         return
     ref=api('/git/ref/heads/catalog',optional=True)
-    tree=api('/git/trees','POST',dict(tree=[dict(path='catalog.json',mode='100644',type='blob',content=json.dumps(catalog,indent=2)+'\n'),dict(path='source.json',mode='100644',type='blob',content=json.dumps(dict(sourceCommit=source))+'\n')]))
+    previous=api('/git/commits/'+ref['object']['sha']) if ref else None
+    tree_body=dict(tree=[dict(path='catalog.json',mode='100644',type='blob',content=json.dumps(catalog,indent=2)+'\n'),dict(path='source.json',mode='100644',type='blob',content=json.dumps(dict(sourceCommit=source))+'\n')])
+    if previous:tree_body['base_tree']=previous['tree']['sha']
+    tree=api('/git/trees','POST',tree_body)
     if ref:
-        previous=api('/git/commits/'+ref['object']['sha'])
         if previous['tree']['sha']==tree['sha']:
             print('Catalog is already current.');return
     commit=api('/git/commits','POST',dict(message='Generate Store catalog from '+source,tree=tree['sha'],parents=[ref['object']['sha']] if ref else []))
