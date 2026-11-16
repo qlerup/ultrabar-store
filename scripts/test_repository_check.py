@@ -1,6 +1,17 @@
 import unittest
 from repository_check import validate_link
 class OwnershipTests(unittest.TestCase):
+ def test_only_explicit_maintainer_app_to_widget_migrations(self):
+  from repository_check import validate_type_update
+  old=dict(type='corebar-app',id='owner.package',publisher='owner')
+  new=dict(type='corebar-widget',id='owner.package',publisher='owner',permissions=[],compatibility=dict(minStudioVersion='0.48.1'))
+  pr=dict(user=dict(login='qlerup'),labels=[dict(name='store-type-migration')])
+  validate_type_update(old,new,pr)
+  for change in (dict(user=dict(login='owner')),dict(labels=[])):
+   with self.assertRaises(ValueError):validate_type_update(old,new,dict(pr,**change))
+  for change in (dict(id='another.package'),dict(type='studio-plugin'),dict(permissions=['android.permission.INTERNET']),dict(android={}),dict(compatibility=dict(minStudioVersion='0.48.0'))):
+   with self.assertRaises(ValueError):validate_type_update(old,dict(new,**change),pr)
+  with self.assertRaises(ValueError):validate_type_update(new,old,pr)
  def setUp(self):
   self.link=dict(repository='alice/widget',commit='a'*40,release='v1.0.0')
   self.manifest=dict(publisher='alice',source='https://github.com/alice/widget/blob/'+'a'*40+'/widget.json')

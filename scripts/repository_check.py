@@ -4,6 +4,18 @@ from pathlib import Path
 from urllib.request import Request,urlopen
 
 FILES={'widget.json':65536,'icon.png':262144,'README.md':65536,'LICENSE':65536}
+
+def validate_type_update(prior,manifest,pr):
+ # Type changes are manual maintainer migrations, never ordinary owner updates.
+ if prior['type']==manifest['type']:return
+ labels={item['name'] for item in pr.get('labels',[]) if isinstance(item,dict) and 'name' in item}
+ compatible=manifest.get('compatibility',{}).get('minStudioVersion','')
+ allowed=(pr['user']['login'].lower()=='qlerup' and 'store-type-migration' in labels
+          and prior['type']=='corebar-app' and manifest['type']=='corebar-widget'
+          and prior['id']==manifest['id'] and prior.get('publisher')==manifest.get('publisher')
+          and manifest.get('permissions')==[] and 'android' not in manifest
+          and re.fullmatch(r'\d+\.\d+\.\d+',compatible) and tuple(map(int,compatible.split('.'))) >= (0,48,1))
+ if not allowed:raise ValueError('Updates keep their approved package type unless the Store maintainer explicitly labels an app-to-widget migration store-type-migration. Keep the package ID and repository; require a Studio release supporting the migration.')
 def get_json(url):
  headers={'User-Agent':'UltraBar-Store-Checks','Accept':'application/vnd.github+json'}
  token=os.environ.get('GH_TOKEN')
@@ -69,7 +81,7 @@ def run(root,trusted,pr):
    if old.exists():
     prior=json.loads((old/'manifest.json').read_text())
     if prior['id']!=manifest['id']:raise ValueError('Keep the approved package ID.')
-    if prior['type']!=manifest['type']:raise ValueError('Updates must keep the approved package type.')
+    validate_type_update(prior,manifest,pr)
     def valid_version(value):
      if not isinstance(value,str) or not re.fullmatch(r'(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)',value):raise ValueError('Invalid version.')
      return tuple(map(int,value.split('.')))

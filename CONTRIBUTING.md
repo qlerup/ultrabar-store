@@ -162,6 +162,12 @@ does not need an update.
 
 ## Generated catalog: no shared-list edits in package PRs
 
+A maintainer-reviewed app-to-widget migration can retain the original package ID
+and source repository so installed users receive an Update. It requires the
+`store-type-migration` label applied by the Store maintainer, no Android permissions
+or Android metadata in the new widget, and Studio 0.48.1+ migration support. It
+never qualifies for automatic approval. Ordinary updates keep their package type.
+
 Each package has one folder under submissions/. Its manifest.json is the source
 for its Store card; repository.json records the source owner and release. Change
 only that folder when submitting a package or update. Do not edit catalog.json.
