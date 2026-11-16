@@ -5,7 +5,7 @@ def manifest_issues(manifest):
     def problem(field,message,fix):errors.append(f'manifest.json / {field}: {message} Fix: {fix}')
     if not isinstance(manifest,dict):return ['manifest.json: Expected a JSON object. Fix: copy a manifest example and fill its fields.']
     required={'schemaVersion','id','name','description','version','type','publisher','license','source','compatibility','permissions'}
-    allowed=required|{'artifact','icon','android','settings'}
+    allowed=required|{'artifact','icon','android','settings','bundledWidgets'}
     for field in sorted(required-set(manifest)):problem(field,'Required field is missing.','Add '+field+' using CONTRIBUTING.md and manifest.schema.json.')
     for field in sorted(set(manifest)-allowed):problem(field,'Studio does not support this manifest field.','Remove it; custom settings, scripts and provisioning need a supported Studio integration, not extra manifest fields.')
     if type(manifest.get('schemaVersion')) is not int or manifest.get('schemaVersion')!=1:problem('schemaVersion','Unsupported manifest version.','Set schemaVersion to the integer 1.')
@@ -59,5 +59,6 @@ def required_files(folder,manifest):
     kind=manifest.get('type') if isinstance(manifest,dict) else None
     if not isinstance(kind,str):kind=None
     files=['README.md','LICENSE','icon.png']+{'corebar-app':['app.apk','source.zip'],'corebar-widget':['widget.json'],'studio-plugin':['plugin.json']}.get(kind,[])
+    if isinstance(manifest,dict) and 'bundledWidgets' in manifest:files.append('widget.json')
     if isinstance(manifest,dict) and 'settings' in manifest:files.append('studio-settings.json')
     return [f'{name}: Required file is missing or a symlink. Fix: include the exact release file in this submission folder; see CONTRIBUTING.md.' for name in files if (folder/name).is_symlink() or not (folder/name).is_file()]
