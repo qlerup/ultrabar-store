@@ -12,7 +12,7 @@ class BundleTests(unittest.TestCase):
             with self.assertRaises(ValueError):bundle_contract.validate(bad,widget_package)
         with tempfile.TemporaryDirectory() as temp:
             path=Path(temp)/'app.apk'
-            with zipfile.ZipFile(path,'w') as z:z.writestr('assets/widget.json',json.dumps(descriptor))
+            with zipfile.ZipFile(path,'w') as z:z.writestr('assets/ultrabar-widgets.json',json.dumps(descriptor))
             bundle_contract.inspect_apk(path,manifest)
-            with zipfile.ZipFile(path,'w') as z:z.writestr('assets/widget.json','{}')
+            with zipfile.ZipFile(path,'w') as z:z.writestr('assets/ultrabar-widgets.json','{}')
             with self.assertRaises(ValueError):bundle_contract.inspect_apk(path,manifest)

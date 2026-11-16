@@ -172,9 +172,10 @@ def validate_tree(root,verify_assets=False,generated_catalog=False):
                 import importlib.util
                 spec=importlib.util.spec_from_file_location('trusted_apk_check',Path(__file__).with_name('apk_check.py'))
                 inspector=importlib.util.module_from_spec(spec);spec.loader.exec_module(inspector)
-                inspector.inspect(folder/filename,manifest)
-                if 'bundledWidgets' in manifest:
-                    if json.loads(read(folder/'widget.json'))!=manifest['bundledWidgets']:raise ValueError('widget.json differs from manifest.bundledWidgets.')
+                embedded=inspector.inspect(folder/filename,manifest)
+                if embedded is not None:
+                    bundle_contract.validate(dict(manifest,bundledWidgets=embedded),widget_package)
+                    if json.loads(read(folder/'widget.json'))!=embedded:raise ValueError('Root widget.json differs from the embedded APK descriptor.')
                 if 'settings' in manifest:
                     schema=json.loads(read(folder/'studio-settings.json',32768))
                     if schema!=manifest['settings']:raise ValueError('studio-settings.json differs from manifest.settings. Fix: use the same reviewed settings schema in both files and APK assets.')

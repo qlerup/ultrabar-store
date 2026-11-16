@@ -55,11 +55,10 @@ def studio_issues(path,info,entry):
     return issues
 
 def inspect(path, entry):
-    if 'bundledWidgets' in entry:
-        import importlib.util
-        spec=importlib.util.spec_from_file_location('trusted_bundle',Path(__file__).with_name('bundle_contract.py'))
-        bundle=importlib.util.module_from_spec(spec);spec.loader.exec_module(bundle)
-        bundle.inspect_apk(path,entry)
+    import importlib.util
+    spec=importlib.util.spec_from_file_location('trusted_bundle',Path(__file__).with_name('bundle_contract.py'))
+    bundle=importlib.util.module_from_spec(spec);spec.loader.exec_module(bundle)
+    embedded=bundle.inspect_apk(path,entry)
     contract=None
     if 'settings' in entry:
         import importlib.util
@@ -89,3 +88,4 @@ def inspect(path, entry):
     signers=re.findall(r'^Signer #\d+ certificate SHA-256 digest: ([a-fA-F0-9]+)$',output,re.M)
     if result.returncode or 'Verified using v2 scheme (APK Signature Scheme v2): true' not in output or [s.lower() for s in signers]!=[meta['signerSha256']]:issues.append('app.apk / android.signerSha256: APK signature verification failed or signer differs from approved manifest. Fix: sign with APK Signature Scheme v2, declare the release certificate SHA-256, and keep the approved signing key for updates.')
     if issues:raise ValueError('\n'.join(issues))
+    return embedded
