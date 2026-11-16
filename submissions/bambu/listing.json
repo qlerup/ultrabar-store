@@ -1,4 +1,4 @@
 {
-  "listed": false,
-  "reason": "Superseded by studio.bambu.widget: printer setup and connections now live in UltraBar Studio 0.48+. Existing Android installations and private printer data are preserved."
+  "listed": true,
+  "reason": "Bambu continues under its original studio.bambu identity. Version 2.0.1 updates existing installations with Studio-managed printer connections."
 }

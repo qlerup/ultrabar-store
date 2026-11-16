@@ -1,9 +1,0 @@
-{
-  "api": 1,
-  "fields": [
-    {"key":"printerName","label":"Panel title","type":"string","default":"Bambu Lab","maxLength":48},
-    {"key":"allowControls","label":"Enable printer controls","help":"Allows pause, resume, stop and chamber light. Requires local setup and compatible printer firmware. Off by default.","type":"boolean","default":false},
-    {"key":"showTemperatures","label":"Show temperatures","type":"boolean","default":true},
-    {"key":"keepScreenOn","label":"Keep screen awake while panel is open","type":"boolean","default":false}
-  ]
-}
