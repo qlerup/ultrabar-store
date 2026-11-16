@@ -41,7 +41,7 @@ enable controls, require fresh status, check the selected connection, validate t
 fixed action whitelist, confirm stop and wait for printer telemetry rather than
 interpreting MQTT delivery as success. No offline command replay is allowed.
 
-Declare `compatibility.minStudioVersion: "0.46.0"` or higher and only physically
+Declare `compatibility.minStudioVersion: "0.47.0"` or higher and only physically
 tested CB01/LineOS compatibility. Submit one **corebar-app package** with
 the full widget.json descriptor embedded in APK `assets/ultrabar-widgets.json`,
 identical to the source root and submission. Studio reads it only after APK
