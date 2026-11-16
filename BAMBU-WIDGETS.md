@@ -43,8 +43,9 @@ interpreting MQTT delivery as success. No offline command replay is allowed.
 
 Declare `compatibility.minStudioVersion: "0.46.0"` or higher and only physically
 tested CB01/LineOS compatibility. Submit one **corebar-app package** with
-`bundledWidgets` containing the full widget.json descriptor, identical to the
-source root, submission and APK `assets/widget.json`. It uses one repository,
+the full widget.json descriptor embedded in APK `assets/ultrabar-widgets.json`,
+identical to the source root and submission. Studio reads it only after APK
+verification; the public manifest needs no extra bundle field. It uses one repository,
 stable release, signed APK, Store listing, installation and update. Studio adds
 the companion once to Background apps on widget placement and resolves the
 matching APK on Deploy. Initial review and complete signature/source checks apply.

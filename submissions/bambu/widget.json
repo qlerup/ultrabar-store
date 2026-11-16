@@ -3,7 +3,7 @@
   "runtime": "studio-native-v1",
   "widgets": [{
     "id": "bambu-liquid",
-    "name": "Bambu Liquid",
+    "name": "Bambu",
     "kind": "bambu",
     "background": "#14202b",
     "textColor": "#eff6fa",

@@ -1,8 +1,8 @@
-# Bambu Panel for UltraBar Studio
+# Bambu for UltraBar Studio
 
 A local Bambu Lab printer integration for CoreBAR's ultrawide touchscreen, with
-a companion app and the **Bambu Liquid** native home widget in **one Store package
-and one installation**. Studio 0.46 lets each
+an app and its native home widget in **one Store package and one installation**.
+It appears once as **Bambu** in the widget library. Studio 0.46 lets each
 placed widget choose its readings and unfold smoothly across 2, 3, 4 or 5 slots.
 The companion owns the printer connection and credentials directly on CoreBAR.
 
@@ -10,15 +10,12 @@ The Studio 0.46 runtime and Store contract are under review. Released Studio 0.4
 supports the companion app and its settings, but cannot render the new liquid
 widget until the matching Studio update is installed.
 
-![Native renderer preview with clearly labelled sample data](docs/preview.png)
-
-![Expanded native renderer preview, sample data](docs/expanded.png)
-
-[Watch the native unfold animation](docs/liquid-demo.mp4) (sample data, no printer connection).
+The widget renderer and app are maintained in this same repository; see
+[studio-support](studio-support/README.md).
 
 ## Install the widget
 
-Install **Bambu Panel** once from Store after review. Drag its liquid widget onto
+Install **Bambu** once from Store after review. Drag its liquid widget onto
 Core: Studio automatically adds the bundled app to **Background apps**, once even
 with multiple placed widgets. Deploy with Studio 0.46+ installs the matching APK
 and activates the widget together. App and widget share one source repository,
