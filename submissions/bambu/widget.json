@@ -171,7 +171,7 @@
             }
           ]
         },
-        "help": "Display preferences apply to this widget. Printer connections and access codes stay on this PC. Enable controls in Manage printers. Unfolding moves neighboring cards, then restores them on close."
+        "help": "Unfold the widget to see a separate temperature for each nozzle the printer reports. Display preferences apply to this widget. Connections and access codes stay on this PC. Enable controls in Manage printers. Neighboring cards return to their places when the widget closes."
       }
     }
   ]
