@@ -498,13 +498,15 @@ or certificate pin in the layout, descriptor, export or metrics sent to Core.
 | Integration | Owner and scope | Apply behavior |
 | --- | --- | --- |
 | Native `widgets[].studio.settings` | Package defines fields; values belong to each placed widget/profile | Draft, Undo and Save preserve values; Deploy applies the layout/runtime settings |
-| Native `studio.connection` | Approved provider owns PC connection records/secrets, shared by that package's widgets | Connection edits save immediately; each widget chooses an opaque record ID |
+| Native `studio.connection` | Approved provider owns PC connection records/secrets; Bambu saved printers are shared by widgets/packages using `bambu-lan` | Connection edits save immediately; each widget independently chooses an opaque record ID |
 | Android manifest `settings` API 1 | Android app owns actual app-private global values across profiles | Read loads actual Core values; Deploy applies and requires receiver confirmation |
 
 Studio supplies the same connection dialog lifecycle for every supported provider:
 status refresh while open, no form resets or lost focus during refresh, visible
 errors and refresh cleanup when closed. The app descriptor owns presentation; the
-trusted provider owns operational validation and secrets. A hidden controls field
+trusted provider owns operational validation and secrets. Package-scoped endpoint
+authorization does not create separate credential stores: the built-in Bambu
+adapter reuses the shared PC saved-printer store across packages. A hidden controls field
 or a claimed default cannot bypass the provider's action gates.
 
 ### Developer verification checklist
@@ -532,7 +534,8 @@ or a claimed default cannot bypass the provider's action gates.
   certificate rejection, saved/reloaded secrets, blank-secret edit, reconnect,
   automatic Connected/Disconnected updates, request errors and closing/reopening
   the panel. Confirm partially entered form values and keyboard focus survive
-  refresh. Test two package instances without secret/selection leakage.
+  refresh. Test that two package instances independently select the provider's
+  shared records and that secret values never enter API responses or drafts.
 - For Android API 1, perform the receiver read/apply/confirmation/persistence and
   invalid-request tests described above; native per-widget JSON is not a substitute.
 - Test physical Core and real devices for the supported matrix. State exactly
