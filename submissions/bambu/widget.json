@@ -1,21 +1,178 @@
 {
   "widgetApi": 1,
   "runtime": "studio-native-v1",
-  "widgets": [{
-    "id": "bambu-liquid",
-    "name": "Bambu",
-    "kind": "bambu",
-    "background": "#14202b",
-    "textColor": "#eff6fa",
-    "accent": "#86e4c3",
-    "primary": "progress",
-    "secondary": "remaining",
-    "expandedSlots": 3,
-    "showJob": true,
-    "showTemperatures": true,
-    "showLayers": true,
-    "showRemaining": true,
-    "showControls": true,
-    "liquidMotion": true
-  }]
+  "widgets": [
+    {
+      "id": "bambu-liquid",
+      "name": "Bambu",
+      "kind": "bambu",
+      "background": "#14202b",
+      "textColor": "#eff6fa",
+      "accent": "#86e4c3",
+      "primary": "progress",
+      "secondary": "remaining",
+      "expandedSlots": 3,
+      "showJob": true,
+      "showTemperatures": true,
+      "showLayers": true,
+      "showRemaining": true,
+      "showControls": true,
+      "liquidMotion": true,
+      "studio": {
+        "api": 1,
+        "settings": {
+          "api": 1,
+          "fields": [
+            {
+              "key": "primary",
+              "label": "Main reading",
+              "type": "choice",
+              "default": "progress",
+              "options": [
+                {
+                  "value": "progress",
+                  "label": "Print progress"
+                },
+                {
+                  "value": "state",
+                  "label": "Printer status"
+                },
+                {
+                  "value": "remaining",
+                  "label": "Time remaining"
+                },
+                {
+                  "value": "temperature",
+                  "label": "Nozzle temperature"
+                }
+              ]
+            },
+            {
+              "key": "secondary",
+              "label": "Secondary reading",
+              "type": "choice",
+              "default": "remaining",
+              "options": [
+                {
+                  "value": "remaining",
+                  "label": "Time remaining"
+                },
+                {
+                  "value": "state",
+                  "label": "Printer status"
+                },
+                {
+                  "value": "job",
+                  "label": "Job name"
+                },
+                {
+                  "value": "layers",
+                  "label": "Layer count"
+                },
+                {
+                  "value": "temperature",
+                  "label": "Nozzle temperature"
+                },
+                {
+                  "value": "none",
+                  "label": "None"
+                }
+              ]
+            },
+            {
+              "key": "expandedSlots",
+              "label": "Size when unfolded",
+              "type": "integer",
+              "default": 3,
+              "min": 2,
+              "max": 5,
+              "step": 1
+            },
+            {
+              "key": "showJob",
+              "label": "Job name",
+              "type": "boolean",
+              "default": true
+            },
+            {
+              "key": "showTemperatures",
+              "label": "Temperatures",
+              "type": "boolean",
+              "default": true
+            },
+            {
+              "key": "showLayers",
+              "label": "Layer count",
+              "type": "boolean",
+              "default": true
+            },
+            {
+              "key": "showRemaining",
+              "label": "Time remaining",
+              "type": "boolean",
+              "default": true
+            },
+            {
+              "key": "showControls",
+              "label": "Printer controls",
+              "type": "boolean",
+              "default": true
+            },
+            {
+              "key": "liquidMotion",
+              "label": "Liquid unfold animation",
+              "type": "boolean",
+              "default": true
+            }
+          ]
+        },
+        "connection": {
+          "provider": "bambu-lan",
+          "key": "printerId",
+          "label": "Printer",
+          "title": "Bambu printers",
+          "manageLabel": "Manage printers",
+          "itemLabel": "printer",
+          "setupHelp": "Find the IP, serial and LAN access code in the printer network settings. The PC and printer need LAN access. Some firmware requires Developer Mode for controls.",
+          "fields": [
+            {
+              "key": "name",
+              "label": "Printer name",
+              "type": "string",
+              "maxLength": 48,
+              "required": true
+            },
+            {
+              "key": "host",
+              "label": "Printer IP address",
+              "type": "string",
+              "maxLength": 48,
+              "required": true
+            },
+            {
+              "key": "serial",
+              "label": "Printer serial number",
+              "type": "string",
+              "maxLength": 32,
+              "required": true
+            },
+            {
+              "key": "code",
+              "label": "8-character LAN access code",
+              "type": "secret",
+              "maxLength": 8,
+              "required": true
+            },
+            {
+              "key": "controls",
+              "label": "Enable pause, resume, stop and light",
+              "type": "boolean",
+              "required": false
+            }
+          ]
+        },
+        "help": "Display preferences apply to this widget. Printer connections and access codes stay on this PC. Enable controls in Manage printers. Unfolding moves neighboring cards, then restores them on close."
+      }
+    }
+  ]
 }

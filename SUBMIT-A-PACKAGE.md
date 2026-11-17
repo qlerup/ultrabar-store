@@ -3,7 +3,8 @@
 **Before building:** read [APP-SETTINGS.md](APP-SETTINGS.md) for the exact Studio
 integration requirements and [complete example](examples/settings-app). Android
 apps with editable Studio settings require settings API 1 and Studio 0.45+;
-native widgets use the supported widget.json runtime controls documented there.
+native widgets can own their controls through widgets[].studio (Studio 0.49+),
+using the approved runtime/providers documented there.
 
 Your project lives in **your own public GitHub repository**. Fork
 `qlerup/ultrabar-store` to propose a listing or update. You control your source
@@ -43,6 +44,98 @@ For **widgets**, put `widget.json` at repository root. Start with
 `kindOptions` enables per-block CPU/RAM/GPU selection and requires Studio 0.24+.
 Disk widgets have a per-block drive selector. New renderers and executable code
 require a different supported integration; JSON cannot introduce them.
+
+### Implement settings inside your package
+
+For a native widget, add an optional **`widgets[].studio`** object directly to the
+root `widget.json`; do not add Android `settings` to the package manifest. This
+complete example exposes seconds/date/time format through Studio's shared editor:
+
+```json
+{
+  "widgetApi": 1,
+  "runtime": "studio-native-v1",
+  "widgets": [
+    {
+      "id": "clock",
+      "name": "Clock & date",
+      "kind": "clock",
+      "background": "#192325",
+      "textColor": "#eef6f2",
+      "accent": "#b8adff",
+      "hourFormat": "24",
+      "showSeconds": true,
+      "showDate": true,
+      "studio": {
+        "api": 1,
+        "help": "Uses Core time and locale; editor preview uses PC time. Keep Studio connected to restore the widget after Core restarts.",
+        "settings": {
+          "api": 1,
+          "fields": [
+            {
+              "key": "hourFormat",
+              "label": "Time format",
+              "type": "choice",
+              "default": "24",
+              "options": [
+                {
+                  "value": "12",
+                  "label": "12-hour"
+                },
+                {
+                  "value": "24",
+                  "label": "24-hour"
+                }
+              ]
+            },
+            {
+              "key": "showSeconds",
+              "label": "Show seconds",
+              "type": "boolean",
+              "default": true
+            },
+            {
+              "key": "showDate",
+              "label": "Show date",
+              "type": "boolean",
+              "default": true
+            }
+          ]
+        }
+      }
+    }
+  ]
+}
+```
+
+Set `manifest.json` -> `compatibility.minStudioVersion` to **`0.49.0`** (or newer)
+and keep `hostApi: 1`, `permissions: []`, stable package/widget IDs and the tested
+CB01/ARM32/LineOS matrix. The package owns field labels/options/defaults/help;
+Studio owns rendering, validation and per-widget draft/Undo/Save/Deploy. Existing
+saved values override package defaults. Keep keys and runtime defaults compatible.
+
+The [native panel implementation guide](APP-SETTINGS.md#native-widget-panels-studio-049)
+provides the exact supported keys/types per renderer, a complete live Drive source
+example, a complete Bambu connection form/provider example, certificate approval
+requirements, settings scopes, developer checklist and executable validation commands.
+Use `sources: {"drive":"pc.drives"}` only for the supported disk setting. Use
+`connection.provider: "bambu-lan"` only with its documented exact fields and
+`printerId` selection key. Unsupported providers/fields are rejected; the package
+cannot supply JavaScript, commands or arbitrary networking code. A new protocol
+requires a reviewed trusted Studio provider implementation before package use.
+
+For an Android app, continue using **settings API 1**: include root and embedded
+`studio-settings.json`, implement the protected fixed `.StudioSettingsReceiver`,
+validate read/apply requests and return confirmed saved values. Those values are
+global to the Android app, unlike native per-widget settings. Follow the complete
+[Android implementation contract](APP-SETTINGS.md#mandatory-files-and-android-component)
+and [buildable receiver example](examples/settings-app). Vivo Screen Sync already
+uses this route and does not require migration to native widget panels.
+
+Before releasing, run the validation commands/checklist in that guide and verify
+installation, editing, save/reload, update without data loss and physical Deploy.
+Describe untested hardware paths honestly. Schema/provider support changes belong
+in a separate Store infrastructure PR before your one-package submission PR.
 
 For **presets**, put `plugin.json` at repository root:
 
