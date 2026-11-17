@@ -2,14 +2,14 @@
   "schemaVersion": 1,
   "id": "studio.bambu",
   "name": "Bambu",
-  "description": "Connect Bambu printers in Studio on your PC and select a printer per widget. Follow multiple printers simultaneously with progress, job, temperatures and liquid 2-5 slot expansion. Requires Studio running; no Core companion app or printer setup on Core.",
-  "version": "2.1.0",
+  "description": "Connect Bambu printers in Studio and select one per widget. The unfolded view shows print progress and a temperature for every reported nozzle, including all nine on the H3C. Keep Studio running for live readings.",
+  "version": "2.1.1",
   "type": "corebar-widget",
   "license": "MIT",
   "publisher": "qlerup",
-  "source": "https://github.com/qlerup/ultrabar-bambu/blob/2dcb65c6bb7da11cf217283587134ce9f381bb45/widget.json",
+  "source": "https://github.com/qlerup/ultrabar-bambu/blob/a243223ccb1f47396c00822eb6ea7d8f8dc162ef/widget.json",
   "compatibility": {
-    "minStudioVersion": "0.49.0",
+    "minStudioVersion": "0.49.2",
     "hostApi": 1,
     "models": [
       "CB01"
@@ -23,12 +23,12 @@
   },
   "permissions": [],
   "artifact": {
-    "url": "https://github.com/qlerup/ultrabar-store/releases/download/review-bambu-2.1.0/widget.json",
-    "size": 5168,
-    "sha256": "7fbebefb6ab5ebd619e40786b280fffffaac7b018d300a9904abc13cd5d942f8"
+    "url": "https://github.com/qlerup/ultrabar-store/releases/download/review-bambu-2.1.1/widget.json",
+    "size": 5246,
+    "sha256": "beb898569f5b48135c26891cd35b3ed72efa6029296aecd2479081eaa5b2cfb7"
   },
   "icon": {
-    "url": "https://github.com/qlerup/ultrabar-store/releases/download/review-bambu-2.1.0/icon.png",
+    "url": "https://github.com/qlerup/ultrabar-store/releases/download/review-bambu-2.1.1/icon.png",
     "size": 11485,
     "sha256": "6c55cb63db1f36c7f58a1e29cbda82cf5d9bfcf8030ce19bdba884a5befa50c2"
   }

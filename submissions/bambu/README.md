@@ -5,7 +5,7 @@ your PC**, choose a printer for each widget, then Save and Deploy. Studio sends
 live readings to Core through the same channel as CPU, RAM and drive widgets.
 No printer setup or companion app is required on Core.
 
-Requires **Studio 0.49.0+**, root-enabled ARM32 CB01 / LineOS 1.0.9, and compatible
+Requires **Studio 0.49.2+**, root-enabled ARM32 CB01 / LineOS 1.0.9, and compatible
 Bambu LAN firmware. Keep Studio running for live readings and controls.
 
 ## Connect printers
@@ -40,6 +40,8 @@ clearly marked sample data.
 
 Live readings include print progress, job, remaining time, layers and reported
 nozzle/bed/chamber temperatures, including packed multi-extruder reports.
+The unfolded widget gives every reported nozzle its own temperature in °C.
+It adjusts the layout to fit the number of nozzles, including nine on the H3C.
 Pause/resume/stop/chamber-light controls default off per connection. They require
 explicit enablement in Studio, fresh state and compatible firmware. Stop asks for
 confirmation on Core. Stale state, disconnects or signed-command enforcement
@@ -98,8 +100,8 @@ No claim is made that every Bambu model or firmware has been physically tested.
 
 Publish `widget.json` and `icon.png` as immutable stable release assets. Store pins
 the source commit, copies exact README/LICENSE/icon/descriptor bytes and mirrors
-the reviewed assets with SHA-256 metadata. The widget requires Studio 0.49.0+;
-older clients cannot provide its complete update migration.
+the reviewed assets with SHA-256 metadata. Studio 0.49.2+ provides the adaptive
+temperature layout on Core. After updating Studio, use Save and Deploy.
 
 The original Android build instructions remain in the archived Core-app README.
 They are not needed to install or use the Studio widget.
