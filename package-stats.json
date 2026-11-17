@@ -1,32 +1,32 @@
 {
   "schemaVersion": 1,
-  "generatedAt": 1794957205,
+  "generatedAt": 1794958305,
   "packages": {
     "studio.bambu": {
       "repository": "https://github.com/qlerup/ultrabar-bambu",
       "artifact": "https://github.com/qlerup/ultrabar-store/releases/download/review-bambu-2.1.0/widget.json",
-      "downloads": 10,
+      "downloads": 11,
       "issues": 0,
       "stale": false
     },
     "studio.clock.widget": {
       "repository": "https://github.com/qlerup/studio-clock-widget",
       "artifact": "https://github.com/qlerup/ultrabar-store/releases/download/review-studio-clock-widget-1.1.0/widget.json",
-      "downloads": 8,
+      "downloads": 9,
       "issues": 0,
       "stale": false
     },
     "studio.drive.widget": {
       "repository": "https://github.com/qlerup/studio-drive-usage",
       "artifact": "https://github.com/qlerup/ultrabar-store/releases/download/review-studio-drive-widget-1.1.0/widget.json",
-      "downloads": 6,
+      "downloads": 7,
       "issues": 0,
       "stale": false
     },
     "studio.system.widget": {
       "repository": "https://github.com/qlerup/studio-system-monitor",
       "artifact": "https://github.com/qlerup/ultrabar-store/releases/download/review-studio-system-monitor-1.1.0/widget.json",
-      "downloads": 5,
+      "downloads": 6,
       "issues": 0,
       "stale": false
     },
