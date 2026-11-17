@@ -11,7 +11,44 @@
       "accent": "#b8adff",
       "hourFormat": "24",
       "showSeconds": true,
-      "showDate": true
+      "showDate": true,
+      "studio": {
+        "api": 1,
+        "help": "Uses Core time and locale; editor preview uses PC time. Keep Studio connected to restore the widget after Core restarts.",
+        "settings": {
+          "api": 1,
+          "fields": [
+            {
+              "key": "hourFormat",
+              "label": "Time format",
+              "type": "choice",
+              "default": "24",
+              "options": [
+                {
+                  "value": "12",
+                  "label": "12-hour"
+                },
+                {
+                  "value": "24",
+                  "label": "24-hour"
+                }
+              ]
+            },
+            {
+              "key": "showSeconds",
+              "label": "Show seconds",
+              "type": "boolean",
+              "default": true
+            },
+            {
+              "key": "showDate",
+              "label": "Show date",
+              "type": "boolean",
+              "default": true
+            }
+          ]
+        }
+      }
     }
   ]
 }

@@ -1,0 +1,141 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Native widget Studio panel API 1",
+  "description": "Embed in widget.json widgets[].studio. scripts/widget_studio_contract.py enforces renderer-specific keys/types/choices, approved sources/provider fields and size limits. Requires Studio 0.49.0.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "api"
+  ],
+  "anyOf": [
+    {
+      "required": [
+        "settings"
+      ]
+    },
+    {
+      "required": [
+        "connection"
+      ]
+    }
+  ],
+  "properties": {
+    "api": {
+      "const": 1
+    },
+    "settings": {
+      "$ref": "settings.schema.json"
+    },
+    "help": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 2000
+    },
+    "sources": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "drive": {
+          "const": "pc.drives"
+        }
+      }
+    },
+    "connection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "label",
+        "title",
+        "manageLabel",
+        "itemLabel",
+        "setupHelp",
+        "provider",
+        "key",
+        "fields"
+      ],
+      "properties": {
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "manageLabel": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "itemLabel": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "setupHelp": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        },
+        "provider": {
+          "const": "bambu-lan"
+        },
+        "key": {
+          "const": "printerId"
+        },
+        "fields": {
+          "type": "array",
+          "minItems": 5,
+          "maxItems": 5,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "key",
+              "label",
+              "type"
+            ],
+            "properties": {
+              "key": {
+                "enum": [
+                  "name",
+                  "host",
+                  "serial",
+                  "code",
+                  "controls"
+                ]
+              },
+              "label": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 100
+              },
+              "type": {
+                "enum": [
+                  "string",
+                  "secret",
+                  "boolean"
+                ]
+              },
+              "maxLength": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 2048
+              },
+              "required": {
+                "type": "boolean"
+              },
+              "help": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 500
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
