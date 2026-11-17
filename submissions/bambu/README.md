@@ -5,7 +5,7 @@ your PC**, choose a printer for each widget, then Save and Deploy. Studio sends
 live readings to Core through the same channel as CPU, RAM and drive widgets.
 No printer setup or companion app is required on Core.
 
-Requires **Studio 0.48.1+**, root-enabled ARM32 CB01 / LineOS 1.0.9, and compatible
+Requires **Studio 0.49.0+**, root-enabled ARM32 CB01 / LineOS 1.0.9, and compatible
 Bambu LAN firmware. Keep Studio running for live readings and controls.
 
 ## Connect printers
@@ -24,6 +24,7 @@ Up to 16 printers can be saved. Widgets can follow different printers at the sam
 time, or show different readings for one printer. Connection changes save
 immediately on the PC. Widget selections follow the normal draft/Undo/Save/Deploy
 workflow. **Manage printers** also supports editing, removal and explicit reconnect.
+Status updates automatically while the dialog is open, without resetting the form.
 A blank code keeps the saved code only for the same address and serial.
 
 The PC must reach the printer on TLS MQTT port 8883. Find LAN settings on the
@@ -59,14 +60,19 @@ First-use certificate trust still requires a trusted comparison; it cannot estab
 printer identity on a hostile network by itself.
 
 The Store artifact is the data-only root `widget.json`; it contains no executable
-code or credentials. The trusted connection service and native renderer ship in
+code or credentials. Its versioned `widgets[].studio` descriptor owns display
+fields, labels, choices, defaults, help and the printer connection form. Studio
+provides the shared settings/connection UI, automatic status lifecycle, protected
+storage and approved `bambu-lan` provider. Other packages use this same contract.
+Changing labels or supported defaults does not require a custom Studio dialog.
+Protocol support and new providers still require a trusted Studio implementation. The trusted connection service and native renderer ship in
 [UltraBar Studio](https://github.com/qlerup/ultrabar-studio). This repository keeps
 the original icon, widget descriptor and native renderer reference source.
 
 ## Previous Core app
 
-Release 1.x was the `studio.bambu` Android app. Release 2.0.1 retains that same
-Store identity and appears as **Update** for existing installations. Studio 0.48.1
+Release 1.x was the `studio.bambu` Android app. Release 2.1.0 retains that same
+Store identity and appears as **Update** for existing installations. Studio 0.49.0
 keeps placed cards, names, colors, readings and display settings, and removes their
 obsolete companion dependency. Set up and select printer connections in Studio,
 then Save and Deploy. Credentials on Core are not silently extracted or deleted.
@@ -92,7 +98,7 @@ No claim is made that every Bambu model or firmware has been physically tested.
 
 Publish `widget.json` and `icon.png` as immutable stable release assets. Store pins
 the source commit, copies exact README/LICENSE/icon/descriptor bytes and mirrors
-the reviewed assets with SHA-256 metadata. The widget requires Studio 0.48.1+;
+the reviewed assets with SHA-256 metadata. The widget requires Studio 0.49.0+;
 older clients cannot provide its complete update migration.
 
 The original Android build instructions remain in the archived Core-app README.
