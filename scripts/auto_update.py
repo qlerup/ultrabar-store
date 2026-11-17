@@ -27,6 +27,15 @@ def eligibility(base, submitted, author, paths):
     if any(p[len(prefix):] not in allowed for p in paths):
         return False, 'Manual approval: unexpected package file.'
     if old.get('settings')!=new.get('settings'):return False, 'Manual approval: app settings contract changed.'
+    if new.get('type')=='corebar-widget':
+        def panels(root):
+            path=root/prefix/'widget.json'
+            if not path.exists():return {}
+            return {w['id']:w['studio'] for w in json.loads(path.read_text(encoding='utf-8')).get('widgets',[]) if 'studio' in w}
+        try:
+            if panels(base)!=panels(submitted):return False, 'Manual approval: native app Studio panel contract changed.'
+        except (OSError,ValueError,KeyError,TypeError):return False, 'Manual approval: invalid native app Studio panel.'
+
     if old.get('bundledWidgets')!=new.get('bundledWidgets'):return False,'Manual approval: bundled widget contract changed.'
     for key in ('id','type','publisher','permissions','compatibility','license'):
         if key not in old or old[key]!=new.get(key):return False, 'Manual approval: changed '+key+'.'

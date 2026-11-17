@@ -17,6 +17,8 @@ _bambu_spec=importlib.util.spec_from_file_location('trusted_bambu_contract',Path
 bambu_contract=importlib.util.module_from_spec(_bambu_spec);_bambu_spec.loader.exec_module(bambu_contract)
 _bundle_spec=importlib.util.spec_from_file_location('trusted_bundle_contract',Path(__file__).with_name('bundle_contract.py'))
 bundle_contract=importlib.util.module_from_spec(_bundle_spec);_bundle_spec.loader.exec_module(bundle_contract)
+_panel_spec=importlib.util.spec_from_file_location('trusted_widget_studio_contract',Path(__file__).with_name('widget_studio_contract.py'))
+widget_studio_contract=importlib.util.module_from_spec(_panel_spec);_panel_spec.loader.exec_module(widget_studio_contract)
 class SafeRedirect(HTTPRedirectHandler):
     def redirect_request(self, req, fp, code, msg, headers, newurl):
         parsed = urlsplit(newurl)
@@ -104,7 +106,7 @@ def widget_package(raw):
     result=[];ids=set()
     for w in widgets:
         if not isinstance(w,dict):raise StoreError('widget.json / widgets: Expected widget objects. Fix: copy examples/clock/widget.json.')
-        unknown=set(w)-({'id','name','kind','background','textColor','accent','hourFormat','showSeconds','showDate','kindOptions'}|bambu_contract.FIELDS)
+        unknown=set(w)-({'id','name','kind','background','textColor','accent','hourFormat','showSeconds','showDate','kindOptions','studio'}|bambu_contract.FIELDS)
         if unknown:raise StoreError('widget.json: Unsupported widget fields: '+', '.join(sorted(unknown))+'. Fix: remove these fields; custom settings and executable code need a supported Studio integration.')
         key=w.get('id')
         if not isinstance(key,str) or not re.fullmatch(r'[a-z][a-z0-9-]{0,63}',key) or key in ids:raise StoreError('Widget IDs must be unique.')
@@ -123,6 +125,12 @@ def widget_package(raw):
             options=w['kindOptions']
             if not isinstance(options,list) or not 2<=len(options)<=3 or any(k not in ('cpu','memory','gpu') for k in options) or len(set(options))!=len(options) or w['kind'] not in options:
                 raise StoreError('Choose 2-3 distinct CPU, RAM or GPU kinds including the default kind.')
+        if 'studio' in w:
+            try:widget_studio_contract.validate(w['studio'],w['kind'])
+            except ValueError as exc:raise StoreError(str(exc)) from exc
+            if 'kindOptions' in w:
+                for field in w['studio'].get('settings',{}).get('fields',[]):
+                    if field['key']=='kind' and not {o['value'] for o in field['options']}<=set(w['kindOptions']):raise StoreError('Studio kind choices must stay within the widget measurement options.')
         result.append(dict(w,_widgetPackage=True))
     return result
 
@@ -187,6 +195,7 @@ def validate_tree(root,verify_assets=False,generated_catalog=False):
             compat=manifest['compatibility']
             if compat.get('hostApi')!=1 or valid_version(compat['minStudioVersion'])<(0,20,0):raise ValueError('Widget packages require hostApi 1 and Studio 0.20.0+')
             if kind=='corebar-widget' and (compat.get('abis')!=['armeabi-v7a'] or compat.get('models')!=['CB01'] or not compat.get('lineosVersions') or not set(compat['lineosVersions'])<= {'1.0.8','1.0.9'}):raise ValueError('Declare tested CB01/ARM32/LineOS 1.0.8 or 1.0.9 compatibility')
+            if any('studio' in w for w in widgets) and valid_version(compat['minStudioVersion'])<widget_studio_contract.MIN_VERSION:raise ValueError('App-owned Studio panels require Studio 0.49.0+')
             if any('kindOptions' in w for w in widgets) and valid_version(compat['minStudioVersion'])<(0,24,0):raise ValueError('Selectable measurements require Studio 0.24.0+')
             if any(w['kind']=='bambu' for w in widgets) and valid_version(compat['minStudioVersion'])<(0,46,0):raise ValueError('Liquid Bambu widgets require Studio 0.46.0+')
             effective=copy.deepcopy(manifest)
