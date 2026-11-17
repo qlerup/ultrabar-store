@@ -8,7 +8,26 @@
       "kind": "disk",
       "background": "#192325",
       "textColor": "#eef6f2",
-      "accent": "#94d9bb"
+      "accent": "#94d9bb",
+      "studio": {
+        "api": 1,
+        "help": "All drives shows two drives at a time and rotates to the next pair every six seconds on Core. The editor preview shows the first pair. Values describe this PC.",
+        "sources": {
+          "drive": "pc.drives"
+        },
+        "settings": {
+          "api": 1,
+          "fields": [
+            {
+              "key": "drive",
+              "label": "Drive",
+              "type": "string",
+              "maxLength": 128,
+              "default": "all"
+            }
+          ]
+        }
+      }
     }
   ]
 }
