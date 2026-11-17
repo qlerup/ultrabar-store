@@ -111,14 +111,59 @@ Vivo Screen Sync 1.1 uses the same helper with its existing sync preferences.
 Its bridge credential provisioning remains a trusted Studio integration;
 declaring fields cannot grant credentials or custom setup commands.
 
-## Native widgets and presets
+## Native widget panels (Studio 0.49+)
 
-Native widgets use integer `widgetApi: 1`, runtime `studio-native-v1` and stable
-IDs in widget.json. Supported kinds: clock, cpu, memory, gpu, disk. Studio provides
-name/background/text/accent; clock format, seconds/date; drive selection; and
-declared CPU/RAM/GPU kindOptions (Studio 0.24+). JSON presets use integer
-pluginApi 1 and supported preset fields. Do not put APK `settings` or a receiver
-in a JSON widget. New controls/renderers need a supported runtime implementation.
+Native widgets can own their Studio settings interface in each `widget.json`
+widget's optional `studio` descriptor. This is separate from Android app settings
+API 1: do not add a receiver or APK `settings` property to JSON widget manifests.
+The package owns labels, choices, defaults, help and connection field presentation.
+Studio owns rendering, validation, drafts/Undo/Save/Deploy, protected secrets,
+automatic status updates and approved local connection providers. No package
+HTML, JavaScript, Python, commands, arbitrary URLs or executable plugins run.
+
+```json
+{
+ "widgetApi":1,"runtime":"studio-native-v1",
+ "widgets":[{"id":"clock","name":"Clock","kind":"clock",
+  "studio":{"api":1,"settings":{"api":1,"fields":[
+   {"key":"showSeconds","label":"Show seconds","type":"boolean","default":true}
+  ]},"help":"Uses Core time and locale."}}]
+}
+```
+
+Declare `compatibility.minStudioVersion` **0.49.0 or later**. See
+[widget-studio.schema.json](widget-studio.schema.json); the trusted
+`scripts/widget_studio_contract.py` checks renderer-specific supported fields,
+types and choices. Descriptors are at most 32 KiB, plain text only. Settings use
+the field types and bounds above; authors should align declared defaults with
+the widget runtime defaults. Existing saved values override defaults. Stable keys and widget
+IDs preserve placed cards. Studio continues to supply common names/colors.
+
+Supported settings: clock `hourFormat`, `showSeconds`, `showDate`; system monitor
+`kind` (CPU/RAM/GPU); disk `drive`; Bambu `primary`, `secondary`, `expandedSlots`
+(integer 2-5), `showJob`, `showTemperatures`, `showLayers`, `showRemaining`,
+`showControls`, `liquidMotion`. Choices cannot introduce unsupported runtime
+behavior. A disk panel may use `sources: {"drive":"pc.drives"}` with a string
+`drive` setting (maxLength 128, default `all`); Studio offers All drives, current
+PC drives and the saved value. This approved data source is not a URL or script.
+
+A Bambu panel may declare `connection` with exactly `provider`, `key`, `label`,
+`title`, `manageLabel`, `itemLabel`, `setupHelp`, `fields`. The supported provider
+is `bambu-lan`, selection key `printerId`. Its five fields are `name`, `host`,
+`serial` (type `string`), `code` (type `secret`), `controls` (type `boolean`). Each
+has `key`, `label`, `type`, optional boolean `required`, optional plain-text `help`,
+and required nonboolean `maxLength` 1-2048. The provider enforces protocol limits
+independently of presentation. Secrets never enter drafts, exports or Core metrics.
+The shared connection dialog refreshes status automatically and preserves form
+input/focus; closing it stops refresh. New protocols require a trusted Studio
+provider implementation; a descriptor cannot grant network access or code execution.
+
+Older widget releases remain supported through Studio compatibility descriptors.
+Clock, system monitor, drive and Bambu packages now ship their own descriptors.
+Vivo Screen Sync keeps its existing app-owned Android settings API 1 unchanged.
+Native `widgetApi: 1` / `studio-native-v1` and preset `pluginApi: 1` are unchanged;
+new renderer kinds still require Studio support. Contract/provider changes require
+maintainer review; changing native `studio` descriptors is not auto-merge eligible.
 
 ## GitHub checks and your required tests
 

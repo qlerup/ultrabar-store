@@ -3,7 +3,8 @@
 **Before building:** read [APP-SETTINGS.md](APP-SETTINGS.md) for the exact Studio
 integration requirements and [complete example](examples/settings-app). Android
 apps with editable Studio settings require settings API 1 and Studio 0.45+;
-native widgets use the supported widget.json runtime controls documented there.
+native widgets can own their controls through widgets[].studio (Studio 0.49+),
+using the approved runtime/providers documented there.
 
 Your project lives in **your own public GitHub repository**. Fork
 `qlerup/ultrabar-store` to propose a listing or update. You control your source

@@ -22,6 +22,14 @@ class UpdatePolicyTests(unittest.TestCase):
    (root/'catalog.json').write_text(json.dumps(dict(schemaVersion=1,packages=[manifest])))
  def check(self,author='alice',paths=None):return eligibility(self.base,self.head,author,paths or self.paths)[0]
  def test_existing_owner_update_qualifies(self):self.assertTrue(self.check())
+ def test_changed_native_panel_contract_requires_manual_review(self):
+  old=dict(widgetApi=1,runtime='studio-native-v1',widgets=[dict(id='clock',kind='clock')])
+  new=copy.deepcopy(old);new['widgets'][0]['studio']=dict(api=1,help='New fields')
+  for root,widget in ((self.base,old),(self.head,new)):
+   (root/self.prefix/'widget.json').write_text(json.dumps(widget))
+  self.assertFalse(self.check())
+  (self.base/self.prefix/'widget.json').write_text(json.dumps(new))
+  self.assertTrue(self.check())
  def test_changed_settings_contract_requires_manual_review(self):
   self.new['settings']=dict(api=1,fields=[]);self.save();self.assertFalse(self.check())
  def test_new_or_legacy_package_stays_manual(self):
