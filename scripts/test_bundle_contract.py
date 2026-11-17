@@ -16,3 +16,11 @@ class BundleTests(unittest.TestCase):
             bundle_contract.inspect_apk(path,manifest)
             with zipfile.ZipFile(path,'w') as z:z.writestr('assets/ultrabar-widgets.json','{}')
             with self.assertRaises(ValueError):bundle_contract.inspect_apk(path,manifest)
+
+    def test_bundled_app_owned_panels_require_new_studio(self):
+        from widget_studio_contract import legacy_bambu
+        descriptor=dict(widgetApi=1,runtime='studio-native-v1',widgets=[dict(id='bambu-liquid',name='Bambu',kind='bambu',studio=legacy_bambu())])
+        manifest=dict(type='corebar-app',bundledWidgets=descriptor,android=dict(packageId='dk.ultrabar.bambu'),compatibility=dict(minStudioVersion='0.46.0'))
+        with self.assertRaisesRegex(ValueError,'0.49.0'):bundle_contract.validate(manifest,widget_package)
+        manifest['compatibility']['minStudioVersion']='0.49.0'
+        self.assertEqual(bundle_contract.validate(manifest,widget_package)[0]['studio'],legacy_bambu())
