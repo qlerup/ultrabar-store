@@ -121,15 +121,95 @@ Studio owns rendering, validation, drafts/Undo/Save/Deploy, protected secrets,
 automatic status updates and approved local connection providers. No package
 HTML, JavaScript, Python, commands, arbitrary URLs or executable plugins run.
 
+### Implement a native app-owned panel
+
+1. Put `widget.json` at your source repository root using integer `widgetApi: 1`,
+   `runtime: "studio-native-v1"` and stable widget IDs. Choose a renderer already
+   supported by Studio. This is the entire data-only native package; no APK,
+   receiver, custom JavaScript or PC installation step is required.
+2. Add `studio: {"api":1,...}` to each widget that needs a panel. Under `settings`,
+   declare `api: 1` and `fields` with stable supported keys, labels, types and
+   defaults. Add optional plain-text `help`. The shared renderer handles field
+   controls and validation. Existing saved values override defaults.
+3. Keep top-level runtime defaults aligned with the panel defaults. Keep existing
+   widget/package IDs and field meanings stable when updating. Studio handles
+   common display name/background/text/accent controls; do not duplicate them.
+4. If needed, declare an approved dynamic source or connection provider using the
+   complete examples below. A new protocol requires a reviewed Studio adapter;
+   adding a provider name or extra field in JSON cannot implement it.
+5. Set the Store manifest minimum to Studio **0.49.0** and test the actual user
+   flow. Publish/pin the upstream release before copying exact files to Store.
+
+Complete `widget.json` for a clock with all of its app-owned controls:
+
 ```json
 {
- "widgetApi":1,"runtime":"studio-native-v1",
- "widgets":[{"id":"clock","name":"Clock","kind":"clock",
-  "studio":{"api":1,"settings":{"api":1,"fields":[
-   {"key":"showSeconds","label":"Show seconds","type":"boolean","default":true}
-  ]},"help":"Uses Core time and locale."}}]
+  "widgetApi": 1,
+  "runtime": "studio-native-v1",
+  "widgets": [
+    {
+      "id": "clock",
+      "name": "Clock & date",
+      "kind": "clock",
+      "background": "#192325",
+      "textColor": "#eef6f2",
+      "accent": "#b8adff",
+      "hourFormat": "24",
+      "showSeconds": true,
+      "showDate": true,
+      "studio": {
+        "api": 1,
+        "help": "Uses Core time and locale; editor preview uses PC time. Keep Studio connected to restore the widget after Core restarts.",
+        "settings": {
+          "api": 1,
+          "fields": [
+            {
+              "key": "hourFormat",
+              "label": "Time format",
+              "type": "choice",
+              "default": "24",
+              "options": [
+                {
+                  "value": "12",
+                  "label": "12-hour"
+                },
+                {
+                  "value": "24",
+                  "label": "24-hour"
+                }
+              ]
+            },
+            {
+              "key": "showSeconds",
+              "label": "Show seconds",
+              "type": "boolean",
+              "default": true
+            },
+            {
+              "key": "showDate",
+              "label": "Show date",
+              "type": "boolean",
+              "default": true
+            }
+          ]
+        }
+      }
+    }
+  ]
 }
 ```
+
+In the package `manifest.json`, retain the normal required metadata and declare:
+
+```json
+{"type":"corebar-widget","compatibility":{"minStudioVersion":"0.49.0",
+ "hostApi":1,"models":["CB01"],"abis":["armeabi-v7a"],
+ "lineosVersions":["1.0.9"]},"permissions":[]}
+```
+
+This is a manifest fragment, not a complete submission. Only declare hardware/
+firmware you have tested. An APK carrying bundled native `studio` descriptors
+also requires Studio 0.49.0; the old bundle minimum of 0.46.0 is insufficient.
 
 Declare `compatibility.minStudioVersion` **0.49.0 or later**. See
 [widget-studio.schema.json](widget-studio.schema.json); the trusted
@@ -139,13 +219,66 @@ the field types and bounds above; authors should align declared defaults with
 the widget runtime defaults. Existing saved values override defaults. Stable keys and widget
 IDs preserve placed cards. Studio continues to supply common names/colors.
 
-Supported settings: clock `hourFormat`, `showSeconds`, `showDate`; system monitor
-`kind` (CPU/RAM/GPU); disk `drive`; Bambu `primary`, `secondary`, `expandedSlots`
-(integer 2-5), `showJob`, `showTemperatures`, `showLayers`, `showRemaining`,
-`showControls`, `liquidMotion`. Choices cannot introduce unsupported runtime
-behavior. A disk panel may use `sources: {"drive":"pc.drives"}` with a string
-`drive` setting (maxLength 128, default `all`); Studio offers All drives, current
-PC drives and the saved value. This approved data source is not a URL or script.
+### Supported settings by renderer
+
+| Renderer `kind` | Field keys and exact types | Supported values |
+| --- | --- | --- |
+| `clock` | `hourFormat`: choice; `showSeconds`, `showDate`: boolean | `hourFormat` choices `12`, `24` |
+| `cpu`, `memory`, `gpu` | `kind`: choice | `cpu`, `memory`, `gpu`; choices must stay within the widget's top-level `kindOptions` |
+| `disk` | `drive`: string, maxLength 128 | `all` or an uppercase Windows drive root such as `C:\`; approved live source below |
+| `bambu` | `primary`: choice | `progress`, `state`, `remaining`, `temperature` |
+| `bambu` | `secondary`: choice | `remaining`, `state`, `job`, `layers`, `temperature`, `none` |
+| `bambu` | `expandedSlots`: integer | min/max within 2-5, positive step, default aligned to step |
+| `bambu` | `showJob`, `showTemperatures`, `showLayers`, `showRemaining`, `showControls`, `liquidMotion`: boolean | true/false |
+
+A panel may expose a supported subset. Choice options carry stable string values
+and package-owned labels. Other fields cannot introduce unsupported runtime
+behavior. Do not rename existing saved keys to change a label.
+
+### Live PC drive choices
+
+Use the approved `pc.drives` capability to populate the drive control. The source
+is a fixed capability identifier, not a URL, code module or command. Studio offers
+All drives, current PC drive roots and the saved value even if unavailable. A
+complete drive package looks like this:
+
+```json
+{
+  "widgetApi": 1,
+  "runtime": "studio-native-v1",
+  "widgets": [
+    {
+      "id": "drive-usage",
+      "name": "Drive usage",
+      "kind": "disk",
+      "background": "#192325",
+      "textColor": "#eef6f2",
+      "accent": "#94d9bb",
+      "studio": {
+        "api": 1,
+        "help": "All drives shows two drives at a time and rotates to the next pair every six seconds on Core. The editor preview shows the first pair. Values describe this PC.",
+        "sources": {
+          "drive": "pc.drives"
+        },
+        "settings": {
+          "api": 1,
+          "fields": [
+            {
+              "key": "drive",
+              "label": "Drive",
+              "type": "string",
+              "maxLength": 128,
+              "default": "all"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}
+```
+
+### Printer connection panel and trusted provider
 
 A Bambu panel may declare `connection` with exactly `provider`, `key`, `label`,
 `title`, `manageLabel`, `itemLabel`, `setupHelp`, `fields`. The supported provider
@@ -157,6 +290,259 @@ independently of presentation. Secrets never enter drafts, exports or Core metri
 The shared connection dialog refreshes status automatically and preserves form
 input/focus; closing it stops refresh. New protocols require a trusted Studio
 provider implementation; a descriptor cannot grant network access or code execution.
+
+Complete Bambu package example; copy the provider keys/types exactly and customize
+labels/help/defaults only within the supported contract:
+
+```json
+{
+  "widgetApi": 1,
+  "runtime": "studio-native-v1",
+  "widgets": [
+    {
+      "id": "bambu-liquid",
+      "name": "Bambu",
+      "kind": "bambu",
+      "background": "#14202b",
+      "textColor": "#eff6fa",
+      "accent": "#86e4c3",
+      "primary": "progress",
+      "secondary": "remaining",
+      "expandedSlots": 3,
+      "showJob": true,
+      "showTemperatures": true,
+      "showLayers": true,
+      "showRemaining": true,
+      "showControls": true,
+      "liquidMotion": true,
+      "studio": {
+        "api": 1,
+        "settings": {
+          "api": 1,
+          "fields": [
+            {
+              "key": "primary",
+              "label": "Main reading",
+              "type": "choice",
+              "default": "progress",
+              "options": [
+                {
+                  "value": "progress",
+                  "label": "Print progress"
+                },
+                {
+                  "value": "state",
+                  "label": "Printer status"
+                },
+                {
+                  "value": "remaining",
+                  "label": "Time remaining"
+                },
+                {
+                  "value": "temperature",
+                  "label": "Nozzle temperature"
+                }
+              ]
+            },
+            {
+              "key": "secondary",
+              "label": "Secondary reading",
+              "type": "choice",
+              "default": "remaining",
+              "options": [
+                {
+                  "value": "remaining",
+                  "label": "Time remaining"
+                },
+                {
+                  "value": "state",
+                  "label": "Printer status"
+                },
+                {
+                  "value": "job",
+                  "label": "Job name"
+                },
+                {
+                  "value": "layers",
+                  "label": "Layer count"
+                },
+                {
+                  "value": "temperature",
+                  "label": "Nozzle temperature"
+                },
+                {
+                  "value": "none",
+                  "label": "None"
+                }
+              ]
+            },
+            {
+              "key": "expandedSlots",
+              "label": "Size when unfolded",
+              "type": "integer",
+              "default": 3,
+              "min": 2,
+              "max": 5,
+              "step": 1
+            },
+            {
+              "key": "showJob",
+              "label": "Job name",
+              "type": "boolean",
+              "default": true
+            },
+            {
+              "key": "showTemperatures",
+              "label": "Temperatures",
+              "type": "boolean",
+              "default": true
+            },
+            {
+              "key": "showLayers",
+              "label": "Layer count",
+              "type": "boolean",
+              "default": true
+            },
+            {
+              "key": "showRemaining",
+              "label": "Time remaining",
+              "type": "boolean",
+              "default": true
+            },
+            {
+              "key": "showControls",
+              "label": "Printer controls",
+              "type": "boolean",
+              "default": true
+            },
+            {
+              "key": "liquidMotion",
+              "label": "Liquid unfold animation",
+              "type": "boolean",
+              "default": true
+            }
+          ]
+        },
+        "connection": {
+          "provider": "bambu-lan",
+          "key": "printerId",
+          "label": "Printer",
+          "title": "Bambu printers",
+          "manageLabel": "Manage printers",
+          "itemLabel": "printer",
+          "setupHelp": "Find the IP, serial and LAN access code in the printer network settings. The PC and printer need LAN access. Some firmware requires Developer Mode for controls.",
+          "fields": [
+            {
+              "key": "name",
+              "label": "Printer name",
+              "type": "string",
+              "maxLength": 48,
+              "required": true
+            },
+            {
+              "key": "host",
+              "label": "Printer IP address",
+              "type": "string",
+              "maxLength": 48,
+              "required": true
+            },
+            {
+              "key": "serial",
+              "label": "Printer serial number",
+              "type": "string",
+              "maxLength": 32,
+              "required": true
+            },
+            {
+              "key": "code",
+              "label": "8-character LAN access code",
+              "type": "secret",
+              "maxLength": 8,
+              "required": true
+            },
+            {
+              "key": "controls",
+              "label": "Enable pause, resume, stop and light",
+              "type": "boolean",
+              "required": false
+            }
+          ]
+        },
+        "help": "Display preferences apply to this widget. Printer connections and access codes stay on this PC. Enable controls in Manage printers. Unfolding moves neighboring cards, then restores them on close."
+      }
+    }
+  ]
+}
+```
+
+The trusted `bambu-lan` adapter implements LAN discovery, a credential-free TLS
+certificate probe, certificate approval/pinning, saved connections, explicit
+reconnect, connection status and bounded printer telemetry/control. A package
+selects this adapter; it does not supply networking code. Adding another device
+protocol requires a Studio change implementing/registering that provider, contract
+validation, tests and capability handling; after that packages can use its shared
+panel without adding another custom editor form.
+
+Users enter a private printer IP, serial and eight-character LAN code. The probe
+must send no MQTT credentials. Show the returned SHA-256 fingerprint, require a
+comparison with a trusted printer connection and explicit approval before saving
+or sending credentials. Later connections require the pinned certificate. The
+provider validates fields independently of the package's display lengths. A blank
+code when editing retains the existing secret only for unchanged address/serial.
+Connection changes persist immediately on the PC; only the opaque selected
+`printerId` belongs in each widget draft. Never place the access code, host/serial
+or certificate pin in the layout, descriptor, export or metrics sent to Core.
+
+### Settings scope and lifecycle
+
+| Integration | Owner and scope | Apply behavior |
+| --- | --- | --- |
+| Native `widgets[].studio.settings` | Package defines fields; values belong to each placed widget/profile | Draft, Undo and Save preserve values; Deploy applies the layout/runtime settings |
+| Native `studio.connection` | Approved provider owns PC connection records/secrets, shared by that package's widgets | Connection edits save immediately; each widget chooses an opaque record ID |
+| Android manifest `settings` API 1 | Android app owns actual app-private global values across profiles | Read loads actual Core values; Deploy applies and requires receiver confirmation |
+
+Studio supplies the same connection dialog lifecycle for every supported provider:
+status refresh while open, no form resets or lost focus during refresh, visible
+errors and refresh cleanup when closed. The app descriptor owns presentation; the
+trusted provider owns operational validation and secrets. A hidden controls field
+or a claimed default cannot bypass the provider's action gates.
+
+### Developer verification checklist
+
+- Validate the descriptor and normal package files before publishing. From a
+  checkout of the Store repository with the new contract available:
+
+  ```sh
+  python -m pip install Pillow==12.3.0
+  python -m unittest discover -s scripts -p "test_*.py"
+  python -c "from pathlib import Path; import sys; sys.path.insert(0,'scripts'); from validate import widget_package; widget_package(Path('../my-widget/widget.json').read_bytes()); print('widget.json OK')"
+  python scripts/validate.py . --generated-catalog --verify-assets
+  ```
+
+  Replace `../my-widget/widget.json` with your source descriptor. The complete
+  Store-tree check also inspects existing APK submissions and requires trusted
+  Android `aapt`/`apksigner` tools (`ANDROID_BUILD_TOOLS` pointing at their installed
+  build-tools directory). These commands validate data and published bytes; they
+  do not execute submitted app code. Do not edit generated `catalog.json`.
+- In Studio 0.49+, install, drag and edit two copies independently. Verify every
+  label/choice/help, dynamic options, defaults, Save/reload, Undo and Deploy.
+- Upgrade an existing package and confirm placed IDs, colors, values and layout
+  persist. Test missing sensors/drives, unavailable connections and uninstall.
+- For providers, test discovery/no results, probe/fingerprint approval, changed
+  certificate rejection, saved/reloaded secrets, blank-secret edit, reconnect,
+  automatic Connected/Disconnected updates, request errors and closing/reopening
+  the panel. Confirm partially entered form values and keyboard focus survive
+  refresh. Test two package instances without secret/selection leakage.
+- For Android API 1, perform the receiver read/apply/confirmation/persistence and
+  invalid-request tests described above; native per-widget JSON is not a substitute.
+- Test physical Core and real devices for the supported matrix. State exactly
+  which paths were simulated, statically checked or remain untested in the PR.
+- Publish a new immutable upstream version, update the manifest version/minimum,
+  pin its full commit/tag, copy exact release files, update SHA-256/size metadata
+  and open one package-folder PR. Provider/contract changes need a separate
+  infrastructure PR first; passing an old trusted validator is not possible until
+  it supports the new contract. Do not lower the required Studio version to hide
+  that dependency.
 
 Older widget releases remain supported through Studio compatibility descriptors.
 Clock, system monitor, drive and Bambu packages now ship their own descriptors.

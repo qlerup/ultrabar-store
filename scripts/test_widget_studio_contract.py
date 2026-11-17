@@ -3,6 +3,7 @@ import copy
 import hashlib
 import json
 import unittest
+from pathlib import Path
 import widget_studio_contract as panels
 from validate import widget_package, StoreError
 import test_validator as fixtures
@@ -15,6 +16,18 @@ class PanelTests(unittest.TestCase):
     def parse(self, descriptor):
         widget=dict(id='clock',name='Clock',kind='clock',studio=descriptor)
         return widget_package(json.dumps(dict(widgetApi=1,runtime='studio-native-v1',widgets=[widget])).encode())
+
+    def test_contributor_guide_widget_examples_are_valid_packages(self):
+        import re
+        count=0
+        for name in ('APP-SETTINGS.md','SUBMIT-A-PACKAGE.md'):
+            text=(Path(__file__).resolve().parent.parent/name).read_text(encoding='utf-8')
+            for raw in re.findall(r'```json\s*(.*?)```',text,re.S):
+                descriptor=json.loads(raw)
+                if isinstance(descriptor,dict) and descriptor.get('widgetApi')==1:
+                    self.assertTrue(widget_package(raw.encode()))
+                    count+=1
+        self.assertGreaterEqual(count,4)
 
     def test_app_owned_labels_defaults_and_help_are_retained(self):
         descriptor=self.clock();descriptor['help']='Package-provided help'
