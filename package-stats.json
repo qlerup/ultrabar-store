@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": 1794941661,
+  "generatedAt": 1794941691,
   "packages": {
     "studio.bambu": {
       "repository": "https://github.com/qlerup/ultrabar-bambu",
@@ -11,8 +11,8 @@
     },
     "studio.clock.widget": {
       "repository": "https://github.com/qlerup/studio-clock-widget",
-      "artifact": "https://github.com/qlerup/ultrabar-store/releases/download/review-studio-clock-widget-1.0.3/widget.json",
-      "downloads": 43,
+      "artifact": "https://github.com/qlerup/ultrabar-store/releases/download/review-studio-clock-widget-1.1.0/widget.json",
+      "downloads": 2,
       "issues": 0,
       "stale": false
     },
