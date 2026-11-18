@@ -33,13 +33,15 @@ does not change printer modes. LAN Only may affect Handy/cloud functionality.
 
 ## Model presets and display
 
-Choose the model in Manage printers. The large home widget shows a small model-specific
-printer illustration; the unfolded view has no decorative printer icon. H2D labels
+Choose the model in Manage printers. With UltraBar Studio 0.52.3 or later, the
+large home widget and layout preview show a larger model image. If Bambu Studio
+is installed on the PC, UltraBar uses its thumbnail for the selected model.
+The package illustration is used when the installed thumbnail is unavailable. H2D labels
 T0 as Left nozzle and T1 as Right nozzle. Other models keep the reported tool IDs.
 Existing connections default to Other until a model is selected. Choosing a model
 changes presentation only and does not change printer firmware or capabilities.
 
-Long job filenames scroll on one line. Swipe down to close the unfolded widget,
+Long job filenames scroll on one line in a compact field. Swipe down to close the unfolded widget,
 activate its small drag handle, tap outside, or use Back. Horizontal gestures and
 ordinary taps still reach printer controls.
 
