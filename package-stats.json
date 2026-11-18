@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": 1795032033,
+  "generatedAt": 1795032703,
   "packages": {
     "studio.bambu": {
       "repository": "https://github.com/qlerup/ultrabar-bambu",
@@ -18,8 +18,8 @@
     },
     "studio.drive.widget": {
       "repository": "https://github.com/qlerup/studio-drive-usage",
-      "artifact": "https://github.com/qlerup/ultrabar-store/releases/download/review-studio-drive-widget-1.1.0/widget.json",
-      "downloads": 23,
+      "artifact": "https://github.com/qlerup/ultrabar-store/releases/download/review-studio-drive-widget-1.2.0/widget.json",
+      "downloads": 3,
       "issues": 0,
       "stale": false
     },
