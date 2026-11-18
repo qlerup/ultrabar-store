@@ -5,7 +5,7 @@ your PC**, choose a printer for each widget, then Save and Deploy. Studio sends
 live readings to Core through the same channel as CPU, RAM and drive widgets.
 No printer setup or companion app is required on Core.
 
-Requires **Studio 0.49.2+**, root-enabled ARM32 CB01 / LineOS 1.0.9, and compatible
+Requires **Studio 0.51.0+**, root-enabled ARM32 CB01 / LineOS 1.0.9, and compatible
 Bambu LAN firmware. Keep Studio running for live readings and controls.
 
 ## Connect printers
@@ -13,7 +13,7 @@ Bambu LAN firmware. Keep Studio running for live readings and controls.
 1. Install or update **Bambu** (`studio.bambu`) from Store. Existing placed widgets
    stay in your layout; new users drag the widget onto Core.
 2. Select the widget and choose **Manage printers → Add printer** in Studio.
-3. Enter a name, private IPv4 address, serial number and eight-character LAN code.
+3. Choose the printer model and enter a name, private IPv4 address, serial number and eight-character LAN code.
    **Search local network** can fill the address and serial. Enter the code yourself.
 4. Choose **Check connection**, compare the SHA-256 fingerprint with a trusted
    connection to the printer, then **Trust certificate & save**. No access code is
@@ -30,6 +30,18 @@ A blank code keeps the saved code only for the same address and serial.
 The PC must reach the printer on TLS MQTT port 8883. Find LAN settings on the
 printer; some firmware requires LAN mode and Developer Mode for controls. Studio
 does not change printer modes. LAN Only may affect Handy/cloud functionality.
+
+## Model presets and display
+
+Choose the model in Manage printers. The home widget shows a small model-specific
+printer illustration; the unfolded view has no decorative printer icon. H2D labels
+T0 as Left nozzle and T1 as Right nozzle. Other models keep the reported tool IDs.
+Existing connections default to Other until a model is selected. Choosing a model
+changes presentation only and does not change printer firmware or capabilities.
+
+Long job filenames scroll on one line. Swipe down to close the unfolded widget,
+activate its small drag handle, tap outside, or use Back. Horizontal gestures and
+ordinary taps still reach printer controls.
 
 ## Display and controls
 
@@ -100,8 +112,17 @@ No claim is made that every Bambu model or firmware has been physically tested.
 
 Publish `widget.json` and `icon.png` as immutable stable release assets. Store pins
 the source commit, copies exact README/LICENSE/icon/descriptor bytes and mirrors
-the reviewed assets with SHA-256 metadata. Studio 0.49.2+ provides the adaptive
+the reviewed assets with SHA-256 metadata. Studio 0.51.0+ provides the adaptive
 temperature layout on Core. After updating Studio, use Save and Deploy.
 
 The original Android build instructions remain in the archived Core-app README.
 They are not needed to install or use the Studio widget.
+
+## Package-owned presentation
+
+`widget.json` contains this package's model choices, nozzle labels and vector
+artwork through Studio presentation API 1. `artwork/printer_presets.py` regenerates
+them. Adding a model or changing artwork/labels is a Bambu package update, without
+a Studio code change. The same API is available to other publishers and native
+widget kinds; it is not specific to Bambu. Protocol support and new native runtime
+behaviors still require an appropriate Studio adapter/runtime update.
