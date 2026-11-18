@@ -5,14 +5,14 @@
       "schemaVersion": 1,
       "id": "studio.bambu",
       "name": "Bambu",
-      "description": "Choose your printer model in Studio for its model icon and nozzle presets. H2D shows left and right nozzle. Long filenames scroll; swipe down to close. Model choices, labels and artwork belong to this package. Connect multiple printers and select one per widget.",
-      "version": "2.2.1",
+      "description": "Compact card shows the primary printer reading and print progress. Choose Large or Small and arrange the card in the CoreBAR preview.",
+      "version": "2.3.0",
       "type": "corebar-widget",
       "license": "MIT",
       "publisher": "qlerup",
-      "source": "https://github.com/qlerup/ultrabar-bambu/blob/1df6236362c6ef39e0b25bf6edbaf8015f31be08/widget.json",
+      "source": "https://github.com/qlerup/ultrabar-bambu/blob/8ea5ab85f45e6597f418c7ce3f3a19ba0292c8d0/widget.json",
       "compatibility": {
-        "minStudioVersion": "0.51.0",
+        "minStudioVersion": "0.52.0",
         "hostApi": 1,
         "models": [
           "CB01"
@@ -26,12 +26,12 @@
       },
       "permissions": [],
       "artifact": {
-        "url": "https://github.com/qlerup/ultrabar-store/releases/download/review-bambu-2.2.1/widget.json",
-        "size": 42576,
-        "sha256": "ac1244a821dd5a33309e1a31d5b736715cd5f1989551022690d1b6e23a1ef698"
+        "url": "https://github.com/qlerup/ultrabar-store/releases/download/review-bambu-2.3.0/widget.json",
+        "size": 42635,
+        "sha256": "ecb13c88a22e6f5853c5a63228a1471231140b1b7c3f1489805e40a3839ad6ad"
       },
       "icon": {
-        "url": "https://github.com/qlerup/ultrabar-store/releases/download/review-bambu-2.2.1/icon.png",
+        "url": "https://github.com/qlerup/ultrabar-store/releases/download/review-bambu-2.3.0/icon.png",
         "size": 11485,
         "sha256": "6c55cb63db1f36c7f58a1e29cbda82cf5d9bfcf8030ce19bdba884a5befa50c2"
       }
