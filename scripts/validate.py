@@ -106,7 +106,7 @@ def widget_package(raw):
     result=[];ids=set()
     for w in widgets:
         if not isinstance(w,dict):raise StoreError('widget.json / widgets: Expected widget objects. Fix: copy examples/clock/widget.json.')
-        unknown=set(w)-({'id','name','kind','background','textColor','accent','hourFormat','showSeconds','showDate','kindOptions','studio'}|bambu_contract.FIELDS)
+        unknown=set(w)-({'id','name','kind','background','textColor','accent','hourFormat','showSeconds','showDate','kindOptions','studio','preset'}|bambu_contract.FIELDS)
         if unknown:raise StoreError('widget.json: Unsupported widget fields: '+', '.join(sorted(unknown))+'. Fix: remove these fields; custom settings and executable code need a supported Studio integration.')
         key=w.get('id')
         if not isinstance(key,str) or not re.fullmatch(r'[a-z][a-z0-9-]{0,63}',key) or key in ids:raise StoreError('Widget IDs must be unique.')
@@ -196,6 +196,7 @@ def validate_tree(root,verify_assets=False,generated_catalog=False):
             if compat.get('hostApi')!=1 or valid_version(compat['minStudioVersion'])<(0,20,0):raise ValueError('Widget packages require hostApi 1 and Studio 0.20.0+')
             if kind=='corebar-widget' and (compat.get('abis')!=['armeabi-v7a'] or compat.get('models')!=['CB01'] or not compat.get('lineosVersions') or not set(compat['lineosVersions'])<= {'1.0.8','1.0.9'}):raise ValueError('Declare tested CB01/ARM32/LineOS 1.0.8 or 1.0.9 compatibility')
             if any(f.get('key')=='model' for w in widgets for f in w.get('studio',{}).get('connection',{}).get('fields',[])) and valid_version(compat['minStudioVersion'])<(0,50,0):raise ValueError('Printer model presets require Studio 0.50.0+')
+            if any('presentation' in w.get('studio',{}) or any(f['key']=='preset' for f in w.get('studio',{}).get('settings',{}).get('fields',[])) for w in widgets) and valid_version(compat['minStudioVersion'])<(0,51,0):raise ValueError('Package-owned presentation presets require Studio 0.51.0+')
             if any('studio' in w for w in widgets) and valid_version(compat['minStudioVersion'])<widget_studio_contract.MIN_VERSION:raise ValueError('App-owned Studio panels require Studio 0.49.0+')
             if any('kindOptions' in w for w in widgets) and valid_version(compat['minStudioVersion'])<(0,24,0):raise ValueError('Selectable measurements require Studio 0.24.0+')
             if any(w['kind']=='bambu' for w in widgets) and valid_version(compat['minStudioVersion'])<(0,46,0):raise ValueError('Liquid Bambu widgets require Studio 0.46.0+')

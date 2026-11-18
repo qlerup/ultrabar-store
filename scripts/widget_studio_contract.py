@@ -9,6 +9,9 @@ _settings=importlib.util.module_from_spec(_settings_spec);_settings_spec.loader.
 validate_schema=_settings.validate_schema
 
 
+_presentation_spec=importlib.util.spec_from_file_location('trusted_widget_presentation',Path(__file__).with_name('widget_presentation.py'))
+_presentation=importlib.util.module_from_spec(_presentation_spec);_presentation_spec.loader.exec_module(_presentation)
+
 MIN_VERSION = (0, 49, 0)
 SETTINGS = {
     'clock': {'hourFormat': ('choice', {'12', '24'}), 'showSeconds': ('boolean', None), 'showDate': ('boolean', None)},
@@ -24,7 +27,8 @@ SETTINGS = {
 CONNECTION_FIELDS = {
     'bambu-lan': {'name': 'string', 'host': 'string', 'serial': 'string', 'code': 'secret', 'controls': 'boolean', 'model': 'choice'},
 }
-PRINTER_MODELS = {'generic', 'a1', 'a1-mini', 'p1p', 'p1s', 'x1c', 'x1e', 'h2d', 'h2s', 'h2c', 'h3c'}
+for _settings in SETTINGS.values():
+    _settings['preset'] = ('choice', None)
 
 
 def _text(value, name, limit=100):
@@ -33,7 +37,7 @@ def _text(value, name, limit=100):
 
 
 def validate(descriptor, kind):
-    if not isinstance(descriptor, dict) or set(descriptor)-{'api', 'settings', 'help', 'connection', 'sources'} or type(descriptor.get('api')) is not int or descriptor['api'] != 1:
+    if not isinstance(descriptor, dict) or set(descriptor)-{'api', 'settings', 'help', 'connection', 'sources', 'presentation'} or type(descriptor.get('api')) is not int or descriptor['api'] != 1:
         raise ValueError('studio: use declarative panel API 1; code and custom transports are unsupported.')
     if not {'settings', 'connection'} & set(descriptor):
         raise ValueError('studio: declare settings or a connection panel.')
@@ -84,16 +88,17 @@ def validate(descriptor, kind):
                 raise ValueError('studio: required must be a boolean.')
             if field['type'] == 'choice':
                 options = field.get('options')
-                if key != 'model' or not isinstance(options, list) or not 1 <= len(options) <= len(PRINTER_MODELS):
+                if not isinstance(options, list) or not 1 <= len(options) <= 32:
                     raise ValueError('studio: invalid printer model choices.')
                 choices = set()
                 for option in options:
-                    if not isinstance(option, dict) or set(option) != {'value', 'label'} or not isinstance(option['value'], str) or option['value'] not in PRINTER_MODELS or option['value'] in choices:
+                    identifier = _presentation.identifier
+                    if not isinstance(option, dict) or set(option) != {'value', 'label'} or not identifier(option['value']) or option['value'] in choices:
                         raise ValueError('studio: unsupported printer model.')
                     choices.add(option['value'])
                     _text(option['label'], 'model label')
-                if 'generic' not in choices or 'maxLength' in field:
-                    raise ValueError('studio: model choices must include generic.')
+                if 'maxLength' in field:
+                    raise ValueError('studio: choice fields cannot have maxLength.')
             elif 'options' in field:
                 raise ValueError('studio: options require a choice field.')
             elif field['type'] == 'boolean':
@@ -103,6 +108,9 @@ def validate(descriptor, kind):
                 raise ValueError('studio: specify a bounded connection field length.')
         if seen != set(expected) and seen != set(expected)-{'model'}:
             raise ValueError('studio: declare every provider connection field exactly once.')
+    if 'presentation' in descriptor:
+        validate_presentation = _presentation.validate
+        validate_presentation(descriptor['presentation'], descriptor)
     if len(json.dumps(descriptor, allow_nan=False).encode()) > 32768:
         raise ValueError('studio: panel descriptor exceeds 32 KiB.')
     return copy.deepcopy(descriptor)

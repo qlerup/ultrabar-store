@@ -58,6 +58,19 @@ class PanelTests(unittest.TestCase):
 
 
 class PanelVersionTests(unittest.TestCase):
+    def test_independent_clock_presentation_requires_shared_framework_version(self):
+        fixture=fixtures.Checks('test_draft_submission_needs_owner_publication');fixture.setUp();self.addCleanup(fixture.doCleanups)
+        descriptor=dict(api=1,settings=dict(api=1,fields=[dict(key='preset',label='Style',type='choice',default='custom',options=[dict(value='custom',label='Custom')])]),presentation=dict(api=1,source=dict(scope='setting',key='preset'),presets=[dict(value='custom',labels=dict(title='Independent clock'),artwork=[dict(type='oval',points=[5,5,95,95],fill='accent')])]))
+        panels.validate(descriptor,'clock')
+        raw=json.dumps(dict(widgetApi=1,runtime='studio-native-v1',widgets=[dict(id='clock',name='Independent clock',kind='clock',studio=descriptor)])).encode()
+        (fixture.folder/'widget.json').write_bytes(raw)
+        fixture.manifest['artifact']=dict(url='https://github.com/qlerup/ultrabar-store/releases/download/v1/widget.json',size=len(raw),sha256=hashlib.sha256(raw).hexdigest())
+        fixture.manifest['compatibility']['minStudioVersion']='0.50.0';fixture.save()
+        from validate import validate_tree
+        self.assertTrue(any('0.51.0' in e for e in validate_tree(fixture.root,generated_catalog=True)[0]))
+        fixture.manifest['compatibility']['minStudioVersion']='0.51.0';fixture.save()
+        self.assertEqual(validate_tree(fixture.root,generated_catalog=True)[0],[])
+
     def test_model_dropdown_requires_studio_050_and_preserves_old_panels(self):
         fixture=fixtures.Checks('test_draft_submission_needs_owner_publication');fixture.setUp();self.addCleanup(fixture.doCleanups)
         descriptor=panels.legacy_bambu()
@@ -70,7 +83,7 @@ class PanelVersionTests(unittest.TestCase):
         self.assertTrue(any('0.50.0' in e for e in validate_tree(fixture.root,generated_catalog=True)[0]))
         fixture.manifest['compatibility']['minStudioVersion']='0.50.0';fixture.save()
         self.assertEqual(validate_tree(fixture.root,generated_catalog=True)[0],[])
-        descriptor['connection']['fields'][-1]['options'].append(dict(value='shell',label='Unsupported'))
+        descriptor['connection']['fields'][-1]['options'].append(dict(value='not/a/model',label='Unsupported'))
         with self.assertRaises(ValueError):panels.validate(descriptor,'bambu')
 
     def test_native_panel_requires_minimum_studio_version(self):

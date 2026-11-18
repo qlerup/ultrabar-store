@@ -567,13 +567,102 @@ without data loss; rejection/timeout; install/launch/removal. State untested pat
 Static checks do not run app code or prove runtime behavior or source/binary
 equivalence. An app that needs special trusted provisioning must document it.
 
-## Printer model presets (Studio 0.50.0+)
+## Package-owned presentation presets (Studio 0.51.0+)
 
-The bambu-lan connection panel may additionally declare `model` as a `choice`
-field with bounded `options` (`value` and `label`). Include `generic` as the
-fallback. Accepted values are generic, a1, a1-mini, p1p, p1s, x1c, x1e, h2d,
-h2s, h2c and h3c. This field requires minStudioVersion 0.50.0 or newer. Older
-panels without model remain valid. The provider saves the selection on this PC
-and sends its non-secret model identifier with telemetry. Existing connections
-default to generic; widgets keep their printerId and placed layout. The model
-selects presentation presets only, never firmware capabilities or commands.
+Every publisher can use this data-only API with any supported native widget kind.
+Studio does not maintain a list of product models or product artwork. A package
+owns choice values/labels and its `studio.presentation` presets. Source scope is
+`setting` (a declared widget choice) or `connection` (a declared provider choice).
+The framework resolves it per widget; it reads no secret or address fields.
+Only the selected preset is sent to Core. Presets are resolved from the installed
+package, never trusted from a draft's `_presentation` field. IDs and user settings
+remain stable across package updates.
+
+`labels` supplies plain text display labels. Common `title` is supported by the
+clock/PC renderers; the printer renderer supports `nozzle.<reported tool number>`.
+`artwork` is a list of bounded vector primitives, shared by Studio preview and Core:
+rect/oval use [left, top, right, bottom]; roundRect adds [radiusX, radiusY]; polygon
+uses coordinate pairs. Coordinates are 0-100. Fill is a hex RGB color or `accent`.
+No scripts, HTML, external images or networking are executed. A preset can have
+up to 64 shapes and 32 plain text labels; at most 32 presets and 24 KiB per set.
+
+This independent clock example uses the same mechanism as a printer package:
+
+```json
+{
+  "widgetApi": 1,
+  "runtime": "studio-native-v1",
+  "widgets": [
+    {
+      "id": "workshop-clock",
+      "name": "Workshop clock",
+      "kind": "clock",
+      "studio": {
+        "api": 1,
+        "settings": {
+          "api": 1,
+          "fields": [
+            {
+              "key": "preset",
+              "label": "Appearance",
+              "type": "choice",
+              "default": "day",
+              "options": [
+                {
+                  "value": "day",
+                  "label": "Day"
+                },
+                {
+                  "value": "night",
+                  "label": "Night"
+                }
+              ]
+            }
+          ]
+        },
+        "presentation": {
+          "api": 1,
+          "source": {
+            "scope": "setting",
+            "key": "preset"
+          },
+          "presets": [
+            {
+              "value": "day",
+              "labels": {
+                "title": "Day clock"
+              },
+              "artwork": [
+                {
+                  "type": "oval",
+                  "points": [
+                    10,
+                    10,
+                    90,
+                    90
+                  ],
+                  "fill": "accent"
+                }
+              ]
+            },
+            {
+              "value": "night",
+              "labels": {
+                "title": "Night clock"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}
+```
+
+Connection choice fields declare their own bounded `options` values and labels;
+they are not selected from a Studio vendor/model enum. Existing Bambu `model`
+metadata remains backward compatible. New protocols still need trusted provider
+adapters; new executable renderer behavior still needs a runtime update. Changing
+package choices, labels or artwork within this API needs only a package update.
+This is independent of Android app settings API 1, where apps implement their own
+settings receiver and runtime in their own repository.
