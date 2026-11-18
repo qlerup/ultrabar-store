@@ -3,11 +3,11 @@
   "id": "studio.bambu",
   "name": "Bambu",
   "description": "Compact card shows the primary printer reading and print progress. Choose Large or Small and arrange the card in the CoreBAR preview.",
-  "version": "2.3.2",
+  "version": "2.3.3",
   "type": "corebar-widget",
   "license": "MIT",
   "publisher": "qlerup",
-  "source": "https://github.com/qlerup/ultrabar-bambu/blob/4eacb90cddb337847927a7e20094272a54eac277/widget.json",
+  "source": "https://github.com/qlerup/ultrabar-bambu/blob/5ab4b2d80d2879c4cc4eac1b102757ce128a294b/widget.json",
   "compatibility": {
     "minStudioVersion": "0.52.0",
     "hostApi": 1,
@@ -23,9 +23,9 @@
   },
   "permissions": [],
   "artifact": {
-    "url": "https://github.com/qlerup/ultrabar-store/releases/download/review-bambu-2.3.2/widget.json",
-    "size": 62965,
-    "sha256": "8ea209c173d160672798e9d3203c68a7b193fa786acc5c15e33bfd94b7ea4b2f"
+    "url": "https://github.com/qlerup/ultrabar-store/releases/download/review-bambu-2.3.3/widget.json",
+    "size": 60596,
+    "sha256": "15a7a3afb6de5abcf0869d573e7302b4839fda4765ab87ae4f64f7be028dde3d"
   },
   "icon": {
     "url": "https://github.com/qlerup/ultrabar-store/releases/download/review-bambu-2.3.0/icon.png",
