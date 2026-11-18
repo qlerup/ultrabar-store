@@ -5,7 +5,7 @@ your PC**, choose a printer for each widget, then Save and Deploy. Studio sends
 live readings to Core through the same channel as CPU, RAM and drive widgets.
 No printer setup or companion app is required on Core.
 
-Requires **Studio 0.51.0+**, root-enabled ARM32 CB01 / LineOS 1.0.9, and compatible
+Requires **Studio 0.52.0+**, root-enabled ARM32 CB01 / LineOS 1.0.9, and compatible
 Bambu LAN firmware. Keep Studio running for live readings and controls.
 
 ## Connect printers
@@ -112,7 +112,7 @@ No claim is made that every Bambu model or firmware has been physically tested.
 
 Publish `widget.json` and `icon.png` as immutable stable release assets. Store pins
 the source commit, copies exact README/LICENSE/icon/descriptor bytes and mirrors
-the reviewed assets with SHA-256 metadata. Studio 0.51.0+ provides the adaptive
+the reviewed assets with SHA-256 metadata. Studio 0.52.0+ provides the adaptive
 temperature layout on Core. After updating Studio, use Save and Deploy.
 
 The original Android build instructions remain in the archived Core-app README.
@@ -126,3 +126,9 @@ them. Adding a model or changing artwork/labels is a Bambu package update, witho
 a Studio code change. The same API is available to other publishers and native
 widget kinds; it is not specific to Bambu. Protocol support and new native runtime
 behaviors still require an appropriate Studio adapter/runtime update.
+
+## Widget size
+
+In Small size, the card shows the primary printer reading and print progress. Tap either size to open printer details.
+
+Choose the size in Studio under Widget settings. Mixed sizes require LineOS 1.0.9.
