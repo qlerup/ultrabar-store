@@ -161,12 +161,24 @@
                   "label": "A1 mini"
                 },
                 {
+                  "value": "a2l",
+                  "label": "A2L"
+                },
+                {
                   "value": "p1p",
                   "label": "P1P"
                 },
                 {
                   "value": "p1s",
                   "label": "P1S"
+                },
+                {
+                  "value": "p2s",
+                  "label": "P2S"
+                },
+                {
+                  "value": "x1",
+                  "label": "X1"
                 },
                 {
                   "value": "x1c",
@@ -177,8 +189,16 @@
                   "label": "X1E"
                 },
                 {
+                  "value": "x2d",
+                  "label": "X2D"
+                },
+                {
                   "value": "h2d",
                   "label": "H2D"
+                },
+                {
+                  "value": "h2d-pro",
+                  "label": "H2D Pro"
                 },
                 {
                   "value": "h2s",
@@ -452,6 +472,98 @@
               "labels": {}
             },
             {
+              "value": "a2l",
+              "artwork": [
+                {
+                  "type": "roundRect",
+                  "points": [
+                    8,
+                    82,
+                    92,
+                    93,
+                    4,
+                    4
+                  ],
+                  "fill": "#afb9bc"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    18,
+                    70,
+                    70,
+                    82
+                  ],
+                  "fill": "#526166"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    73,
+                    10,
+                    80,
+                    85
+                  ],
+                  "fill": "#d5dbdd"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    18,
+                    10,
+                    25,
+                    85
+                  ],
+                  "fill": "#d5dbdd"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    12,
+                    19,
+                    86,
+                    25
+                  ],
+                  "fill": "#d5dbdd"
+                },
+                {
+                  "type": "roundRect",
+                  "points": [
+                    37,
+                    16,
+                    51,
+                    34,
+                    3,
+                    3
+                  ],
+                  "fill": "#e9edef"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    41,
+                    31,
+                    47,
+                    36
+                  ],
+                  "fill": "accent"
+                },
+                {
+                  "type": "roundRect",
+                  "points": [
+                    74,
+                    74,
+                    89,
+                    83,
+                    2,
+                    2
+                  ],
+                  "fill": "#263238"
+                }
+              ],
+              "labels": {}
+            },
+            {
               "value": "p1p",
               "artwork": [
                 {
@@ -599,6 +711,278 @@
                     3
                   ],
                   "fill": "#505c61"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    21,
+                    22,
+                    69,
+                    84
+                  ],
+                  "fill": "#172329"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    24,
+                    27,
+                    66,
+                    81
+                  ],
+                  "fill": "#334950"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    28,
+                    32,
+                    62,
+                    77
+                  ],
+                  "fill": "#142126"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    28,
+                    37,
+                    62,
+                    40
+                  ],
+                  "fill": "#a9b4b8"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    38.0,
+                    38,
+                    52.0,
+                    51
+                  ],
+                  "fill": "#69787f"
+                },
+                {
+                  "type": "roundRect",
+                  "points": [
+                    63,
+                    50,
+                    66,
+                    61,
+                    1,
+                    1
+                  ],
+                  "fill": "#a8b8bc"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    27,
+                    76,
+                    63,
+                    80
+                  ],
+                  "fill": "#8b9c9f"
+                },
+                {
+                  "type": "polygon",
+                  "points": [
+                    36.0,
+                    75,
+                    36.0,
+                    64,
+                    45.0,
+                    59,
+                    54.0,
+                    64,
+                    54.0,
+                    75
+                  ],
+                  "fill": "#334b42"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    21,
+                    13,
+                    33,
+                    18
+                  ],
+                  "fill": "accent"
+                }
+              ],
+              "labels": {}
+            },
+            {
+              "value": "p2s",
+              "artwork": [
+                {
+                  "type": "polygon",
+                  "points": [
+                    74,
+                    10,
+                    96,
+                    19,
+                    96,
+                    85,
+                    74,
+                    94
+                  ],
+                  "fill": "#263238"
+                },
+                {
+                  "type": "roundRect",
+                  "points": [
+                    16,
+                    10,
+                    74,
+                    94,
+                    3,
+                    3
+                  ],
+                  "fill": "#69767c"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    21,
+                    22,
+                    69,
+                    84
+                  ],
+                  "fill": "#172329"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    24,
+                    27,
+                    66,
+                    81
+                  ],
+                  "fill": "#334950"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    28,
+                    32,
+                    62,
+                    77
+                  ],
+                  "fill": "#142126"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    28,
+                    37,
+                    62,
+                    40
+                  ],
+                  "fill": "#a9b4b8"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    38.0,
+                    38,
+                    52.0,
+                    51
+                  ],
+                  "fill": "#69787f"
+                },
+                {
+                  "type": "roundRect",
+                  "points": [
+                    63,
+                    50,
+                    66,
+                    61,
+                    1,
+                    1
+                  ],
+                  "fill": "#a8b8bc"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    27,
+                    76,
+                    63,
+                    80
+                  ],
+                  "fill": "#8b9c9f"
+                },
+                {
+                  "type": "polygon",
+                  "points": [
+                    36.0,
+                    75,
+                    36.0,
+                    64,
+                    45.0,
+                    59,
+                    54.0,
+                    64,
+                    54.0,
+                    75
+                  ],
+                  "fill": "#334b42"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    21,
+                    13,
+                    33,
+                    18
+                  ],
+                  "fill": "accent"
+                },
+                {
+                  "type": "roundRect",
+                  "points": [
+                    38,
+                    12,
+                    54,
+                    20,
+                    2,
+                    2
+                  ],
+                  "fill": "#172329"
+                }
+              ],
+              "labels": {}
+            },
+            {
+              "value": "x1",
+              "artwork": [
+                {
+                  "type": "polygon",
+                  "points": [
+                    74,
+                    10,
+                    96,
+                    19,
+                    96,
+                    85,
+                    74,
+                    94
+                  ],
+                  "fill": "#263238"
+                },
+                {
+                  "type": "roundRect",
+                  "points": [
+                    16,
+                    10,
+                    74,
+                    94,
+                    3,
+                    3
+                  ],
+                  "fill": "#d7dad6"
                 },
                 {
                   "type": "rect",
@@ -972,6 +1356,168 @@
               "labels": {}
             },
             {
+              "value": "x2d",
+              "artwork": [
+                {
+                  "type": "polygon",
+                  "points": [
+                    74,
+                    10,
+                    96,
+                    19,
+                    96,
+                    85,
+                    74,
+                    94
+                  ],
+                  "fill": "#263238"
+                },
+                {
+                  "type": "roundRect",
+                  "points": [
+                    16,
+                    10,
+                    74,
+                    94,
+                    3,
+                    3
+                  ],
+                  "fill": "#9ca4a6"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    21,
+                    22,
+                    69,
+                    84
+                  ],
+                  "fill": "#172329"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    24,
+                    27,
+                    66,
+                    81
+                  ],
+                  "fill": "#334950"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    28,
+                    32,
+                    62,
+                    77
+                  ],
+                  "fill": "#142126"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    28,
+                    37,
+                    62,
+                    40
+                  ],
+                  "fill": "#a9b4b8"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    38.0,
+                    38,
+                    52.0,
+                    51
+                  ],
+                  "fill": "#69787f"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    39.0,
+                    50,
+                    43.0,
+                    54
+                  ],
+                  "fill": "accent"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    47.0,
+                    50,
+                    51.0,
+                    54
+                  ],
+                  "fill": "accent"
+                },
+                {
+                  "type": "roundRect",
+                  "points": [
+                    63,
+                    50,
+                    66,
+                    61,
+                    1,
+                    1
+                  ],
+                  "fill": "#a8b8bc"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    27,
+                    76,
+                    63,
+                    80
+                  ],
+                  "fill": "#8b9c9f"
+                },
+                {
+                  "type": "polygon",
+                  "points": [
+                    36.0,
+                    75,
+                    36.0,
+                    64,
+                    45.0,
+                    59,
+                    54.0,
+                    64,
+                    54.0,
+                    75
+                  ],
+                  "fill": "#334b42"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    21,
+                    13,
+                    33,
+                    18
+                  ],
+                  "fill": "accent"
+                },
+                {
+                  "type": "roundRect",
+                  "points": [
+                    38,
+                    12,
+                    54,
+                    20,
+                    2,
+                    2
+                  ],
+                  "fill": "#172329"
+                }
+              ],
+              "labels": {}
+            },
+            {
               "value": "h2d",
               "artwork": [
                 {
@@ -1117,6 +1663,171 @@
                     18
                   ],
                   "fill": "accent"
+                }
+              ],
+              "labels": {
+                "nozzle.0": "LEFT NOZZLE",
+                "nozzle.1": "RIGHT NOZZLE"
+              }
+            },
+            {
+              "value": "h2d-pro",
+              "artwork": [
+                {
+                  "type": "polygon",
+                  "points": [
+                    81,
+                    10,
+                    96,
+                    19,
+                    96,
+                    85,
+                    81,
+                    94
+                  ],
+                  "fill": "#263238"
+                },
+                {
+                  "type": "roundRect",
+                  "points": [
+                    5,
+                    10,
+                    81,
+                    94,
+                    3,
+                    3
+                  ],
+                  "fill": "#747c82"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    10,
+                    22,
+                    76,
+                    84
+                  ],
+                  "fill": "#172329"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    13,
+                    27,
+                    73,
+                    81
+                  ],
+                  "fill": "#334950"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    17,
+                    32,
+                    69,
+                    77
+                  ],
+                  "fill": "#142126"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    17,
+                    37,
+                    69,
+                    40
+                  ],
+                  "fill": "#a9b4b8"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    36.0,
+                    38,
+                    50.0,
+                    51
+                  ],
+                  "fill": "#69787f"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    37.0,
+                    50,
+                    41.0,
+                    54
+                  ],
+                  "fill": "accent"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    45.0,
+                    50,
+                    49.0,
+                    54
+                  ],
+                  "fill": "accent"
+                },
+                {
+                  "type": "roundRect",
+                  "points": [
+                    70,
+                    50,
+                    73,
+                    61,
+                    1,
+                    1
+                  ],
+                  "fill": "#a8b8bc"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    16,
+                    76,
+                    70,
+                    80
+                  ],
+                  "fill": "#8b9c9f"
+                },
+                {
+                  "type": "polygon",
+                  "points": [
+                    34.0,
+                    75,
+                    34.0,
+                    64,
+                    43.0,
+                    59,
+                    52.0,
+                    64,
+                    52.0,
+                    75
+                  ],
+                  "fill": "#334b42"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    10,
+                    13,
+                    22,
+                    18
+                  ],
+                  "fill": "accent"
+                },
+                {
+                  "type": "roundRect",
+                  "points": [
+                    27,
+                    12,
+                    43,
+                    20,
+                    2,
+                    2
+                  ],
+                  "fill": "#172329"
                 }
               ],
               "labels": {
