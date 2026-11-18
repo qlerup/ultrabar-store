@@ -33,7 +33,7 @@ does not change printer modes. LAN Only may affect Handy/cloud functionality.
 
 ## Model presets and display
 
-Choose the model in Manage printers. The home widget shows a small model-specific
+Choose the model in Manage printers. The large home widget shows a small model-specific
 printer illustration; the unfolded view has no decorative printer icon. H2D labels
 T0 as Left nozzle and T1 as Right nozzle. Other models keep the reported tool IDs.
 Existing connections default to Other until a model is selected. Choosing a model
@@ -47,7 +47,8 @@ ordinary taps still reach printer controls.
 
 Choose main and secondary readings, details, controls visibility, reduced motion
 and 2–5 unfolded slots separately for each widget. Tap the widget on Core to unfold;
-neighboring cards move temporarily and return when closed. Editor previews use
+on the standard single row, nearby cards shift as it unfolds. In a mixed layout,
+printer details open over the cards. Editor previews use
 clearly marked sample data.
 
 Live readings include print progress, job, remaining time, layers and reported
@@ -104,7 +105,8 @@ freshness, control gates and corresponding telemetry confirmation. Browser tests
 cover setup, desktop/mobile layouts, Save and Undo. Native geometry and D8 build
 checks cover liquid widgets.
 
-Real H2D/H3C firmware, discovery on the owner's network, physical Core control
+Both card sizes rendered on physical CB01 with LineOS 1.0.9 in a temporary
+mixed layout. Real H2D/H3C firmware, local discovery, physical Core control
 events and the complete Store install → Deploy flow still need hardware acceptance.
 No claim is made that every Bambu model or firmware has been physically tested.
 
@@ -112,8 +114,7 @@ No claim is made that every Bambu model or firmware has been physically tested.
 
 Publish `widget.json` and `icon.png` as immutable stable release assets. Store pins
 the source commit, copies exact README/LICENSE/icon/descriptor bytes and mirrors
-the reviewed assets with SHA-256 metadata. Studio 0.52.0+ provides the adaptive
-temperature layout on Core. After updating Studio, use Save and Deploy.
+the reviewed assets with SHA-256 metadata. Studio provides the adaptive temperature layout on Core. After updating Studio, use Save and Deploy.
 
 The original Android build instructions remain in the archived Core-app README.
 They are not needed to install or use the Studio widget.
@@ -131,4 +132,6 @@ behaviors still require an appropriate Studio adapter/runtime update.
 
 In Small size, the card shows the primary printer reading and print progress. Tap either size to open printer details.
 
-Choose the size in Studio under Widget settings. Mixed sizes require LineOS 1.0.9.
+Choose the size under **Widget settings**. Hover over an empty spot and use
+**+** to make a 2×2 grid in Studio 0.52.1 or newer. Drop Bambu into a grid cell
+to select Small. Small and mixed layouts require LineOS 1.0.9.
