@@ -4,7 +4,7 @@ One integrated Core widget for PC drive usage. Install this package once in Stud
 
 Settings: display name, background color, text color, accent color and Drive (an available PC drive or All drives). A single drive shows percent used, used/total GB and free GB. All drives shows two drives at a time and rotates to the next pair every six seconds on Core when more are available. The Studio preview shows the first pair. It does not aggregate all drives into one total. Defaults to All drives. Drive names and values come from the connected PC, not Core's internal storage.
 
-Requires Studio 0.49.0+, root-enabled ARM32 CB01 and LineOS 1.0.8 or 1.0.9. Keep Studio connected for live PC readings; reconnect Studio after Core restarts. No separate APK or executable is installed by this package. widget.json is the complete declarative source; the shared runtime supplies rendering and collection.
+Requires Studio 0.52.0+, root-enabled ARM32 CB01 and LineOS 1.0.8 or 1.0.9. Keep Studio connected for live PC readings; reconnect Studio after Core restarts. No separate APK or executable is installed by this package. widget.json is the complete declarative source; the shared runtime supplies rendering and collection.
 
 The package itself requests no Android permissions. Studio reads PC drive capacity locally and sends usage metrics to the connected Core. This widget does not read, modify or delete files on those drives.
 
@@ -40,3 +40,9 @@ JSON widget, separate from Android settings API 1; there is no Android receiver.
 Requirements: https://github.com/qlerup/ultrabar-store/blob/main/APP-SETTINGS.md .
 The descriptor is tested against Studio and Store contracts. Physical Core
 rendering and the complete Store update/Deploy flow still require owner testing.
+
+## Widget size
+
+In Small size, the card shows one drive label and usage percentage. The large layout includes capacity and can show two drives.
+
+Choose the size in Studio under Widget settings. Mixed sizes require LineOS 1.0.9.
