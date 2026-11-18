@@ -566,3 +566,14 @@ existing values; edit every field; apply/confirm; restart/persistence; upgrade
 without data loss; rejection/timeout; install/launch/removal. State untested paths.
 Static checks do not run app code or prove runtime behavior or source/binary
 equivalence. An app that needs special trusted provisioning must document it.
+
+## Printer model presets (Studio 0.50.0+)
+
+The bambu-lan connection panel may additionally declare `model` as a `choice`
+field with bounded `options` (`value` and `label`). Include `generic` as the
+fallback. Accepted values are generic, a1, a1-mini, p1p, p1s, x1c, x1e, h2d,
+h2s, h2c and h3c. This field requires minStudioVersion 0.50.0 or newer. Older
+panels without model remain valid. The provider saves the selection on this PC
+and sends its non-secret model identifier with telemetry. Existing connections
+default to generic; widgets keep their printerId and placed layout. The model
+selects presentation presets only, never firmware capabilities or commands.

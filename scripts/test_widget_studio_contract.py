@@ -58,6 +58,21 @@ class PanelTests(unittest.TestCase):
 
 
 class PanelVersionTests(unittest.TestCase):
+    def test_model_dropdown_requires_studio_050_and_preserves_old_panels(self):
+        fixture=fixtures.Checks('test_draft_submission_needs_owner_publication');fixture.setUp();self.addCleanup(fixture.doCleanups)
+        descriptor=panels.legacy_bambu()
+        descriptor['connection']['fields'].append(dict(key='model',label='Printer model',type='choice',options=[dict(value='generic',label='Other'),dict(value='h2d',label='H2D')]))
+        raw=json.dumps(dict(widgetApi=1,runtime='studio-native-v1',widgets=[dict(id='bambu',name='Bambu',kind='bambu',studio=descriptor)])).encode()
+        (fixture.folder/'widget.json').write_bytes(raw)
+        fixture.manifest['artifact']=dict(url='https://github.com/qlerup/ultrabar-store/releases/download/v1/widget.json',size=len(raw),sha256=hashlib.sha256(raw).hexdigest())
+        fixture.manifest['compatibility']['minStudioVersion']='0.49.3';fixture.save()
+        from validate import validate_tree
+        self.assertTrue(any('0.50.0' in e for e in validate_tree(fixture.root,generated_catalog=True)[0]))
+        fixture.manifest['compatibility']['minStudioVersion']='0.50.0';fixture.save()
+        self.assertEqual(validate_tree(fixture.root,generated_catalog=True)[0],[])
+        descriptor['connection']['fields'][-1]['options'].append(dict(value='shell',label='Unsupported'))
+        with self.assertRaises(ValueError):panels.validate(descriptor,'bambu')
+
     def test_native_panel_requires_minimum_studio_version(self):
         fixture=fixtures.Checks('test_draft_submission_needs_owner_publication');fixture.setUp();self.addCleanup(fixture.doCleanups)
         self.raw,self.folder,self.manifest,self.root,self.save=fixture.raw,fixture.folder,fixture.manifest,fixture.root,fixture.save

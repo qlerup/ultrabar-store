@@ -195,6 +195,7 @@ def validate_tree(root,verify_assets=False,generated_catalog=False):
             compat=manifest['compatibility']
             if compat.get('hostApi')!=1 or valid_version(compat['minStudioVersion'])<(0,20,0):raise ValueError('Widget packages require hostApi 1 and Studio 0.20.0+')
             if kind=='corebar-widget' and (compat.get('abis')!=['armeabi-v7a'] or compat.get('models')!=['CB01'] or not compat.get('lineosVersions') or not set(compat['lineosVersions'])<= {'1.0.8','1.0.9'}):raise ValueError('Declare tested CB01/ARM32/LineOS 1.0.8 or 1.0.9 compatibility')
+            if any(f.get('key')=='model' for w in widgets for f in w.get('studio',{}).get('connection',{}).get('fields',[])) and valid_version(compat['minStudioVersion'])<(0,50,0):raise ValueError('Printer model presets require Studio 0.50.0+')
             if any('studio' in w for w in widgets) and valid_version(compat['minStudioVersion'])<widget_studio_contract.MIN_VERSION:raise ValueError('App-owned Studio panels require Studio 0.49.0+')
             if any('kindOptions' in w for w in widgets) and valid_version(compat['minStudioVersion'])<(0,24,0):raise ValueError('Selectable measurements require Studio 0.24.0+')
             if any(w['kind']=='bambu' for w in widgets) and valid_version(compat['minStudioVersion'])<(0,46,0):raise ValueError('Liquid Bambu widgets require Studio 0.46.0+')
