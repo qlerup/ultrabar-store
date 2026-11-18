@@ -3,10 +3,10 @@
   "id": "studio.system.widget",
   "name": "Studio System Monitor",
   "description": "Compact card shows CPU, RAM or GPU usage. Choose Large or Small and arrange the card in the CoreBAR preview.",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "type": "corebar-widget",
   "license": "Proprietary; unmodified official releases may be used",
-  "source": "https://github.com/qlerup/studio-system-monitor/blob/0000d7f53817f04b911d06803d8b04e80e14d7ab/widget.json",
+  "source": "https://github.com/qlerup/studio-system-monitor/blob/07743018eff1906eb877013c566526ab47a3b6af/widget.json",
   "compatibility": {
     "minStudioVersion": "0.52.0",
     "hostApi": 1,
