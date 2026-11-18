@@ -112,13 +112,13 @@
       "schemaVersion": 1,
       "id": "studio.system.widget",
       "name": "Studio System Monitor",
-      "description": "One widget, your choice: CPU, RAM or GPU usage. Add blocks, choose what each shows in settings, then Deploy.",
-      "version": "1.1.0",
+      "description": "Compact card shows CPU, RAM or GPU usage. Choose Large or Small and arrange the card in the CoreBAR preview.",
+      "version": "1.2.0",
       "type": "corebar-widget",
       "license": "Proprietary; unmodified official releases may be used",
-      "source": "https://github.com/qlerup/studio-system-monitor/blob/f92d23ad1be2f1adb2e84697d271c9b0ffa86a31/widget.json",
+      "source": "https://github.com/qlerup/studio-system-monitor/blob/0000d7f53817f04b911d06803d8b04e80e14d7ab/widget.json",
       "compatibility": {
-        "minStudioVersion": "0.49.0",
+        "minStudioVersion": "0.52.0",
         "hostApi": 1,
         "models": [
           "CB01"
@@ -133,12 +133,12 @@
       },
       "permissions": [],
       "artifact": {
-        "url": "https://github.com/qlerup/ultrabar-store/releases/download/review-studio-system-monitor-1.1.0/widget.json",
-        "size": 1134,
-        "sha256": "6ef38e5b24bf29eb82e0f096327458889184c4d167c11ea342374c20812cbe49"
+        "url": "https://github.com/qlerup/ultrabar-store/releases/download/review-studio-system-monitor-1.2.0/widget.json",
+        "size": 1193,
+        "sha256": "cdf26430e3f9fe6fd35f88f8586086a787cdc7e11f89114704ccba7464a94577"
       },
       "icon": {
-        "url": "https://github.com/qlerup/ultrabar-store/releases/download/review-studio-system-monitor-1.1.0/icon.png",
+        "url": "https://github.com/qlerup/ultrabar-store/releases/download/review-studio-system-monitor-1.2.0/icon.png",
         "size": 4975,
         "sha256": "546a82523597d51537bc88e6d2d3ea5f1e0eb24a7401b49f7ed79f2139a65764"
       },
