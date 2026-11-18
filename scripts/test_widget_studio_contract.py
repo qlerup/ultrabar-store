@@ -10,6 +10,15 @@ import test_validator as fixtures
 
 
 class PanelTests(unittest.TestCase):
+    def test_widget_sizes_accept_each_supported_combination(self):
+        def parse(sizes):
+            widget = dict(id='clock', name='Clock', kind='clock', sizes=sizes)
+            return widget_package(json.dumps(dict(widgetApi=1, runtime='studio-native-v1', widgets=[widget])).encode())
+        for sizes in (['large'], ['small'], ['large', 'small']):
+            self.assertEqual(parse(sizes)[0]['sizes'], sizes)
+        for invalid in ([], ['small', 'small'], ['medium'], 'small', [{}]):
+            with self.subTest(invalid=invalid), self.assertRaises(StoreError):
+                parse(invalid)
     def clock(self):
         return dict(api=1,settings=dict(api=1,fields=[dict(key='showSeconds',label='Seconds',type='boolean',default=True)]))
 

@@ -357,3 +357,17 @@ still reviews the removal PR.
 Studio 0.32+ can install a local package with **Install from folder**. See
 https://github.com/qlerup/ultrabar-studio/blob/main/docs/LOCAL-PACKAGE-TESTING.md .
 Local development packages are explicitly marked and are not published to Store.
+
+
+## Widget sizes
+
+A `studio-native-v1` widget descriptor may declare `"sizes": ["large", "small"]`
+on an individual entry in `widgets`. Use `["large"]` or `["small"]` to limit
+that widget to one size. Studio picks the matching native presentation and
+offers only the supported sizes. New widgets default to large when supported.
+When the field is omitted, both sizes are available in Studio 0.52.0 and later.
+
+Set `compatibility.minStudioVersion` to at least `0.52.0` when declaring sizes.
+For a small-only package, list only LineOS `1.0.9` in
+`compatibility.lineosVersions`. Mixed layouts require root-enabled CB01 with
+LineOS 1.0.9. Verify readability in both sizes you declare before submitting.
