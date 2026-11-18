@@ -8,7 +8,7 @@ Settings: display name, background/text/accent colors, 12/24-hour time, seconds
 and date visibility. The clock uses Core's time and locale; Studio previews PC
 time and locale. It needs no network or extra Android permissions.
 
-Requires Studio 0.49.0+, root-enabled ARM32 CB01 and LineOS 1.0.8 or 1.0.9.
+Requires Studio 0.52.0+, root-enabled ARM32 CB01 and LineOS 1.0.8 or 1.0.9.
 The shared studio-native-v1 runtime is supplied by Studio during Deploy. Keep
 Studio connected for runtime restoration after Core restarts. The clock keeps
 ticking locally while its renderer remains attached; this is not an independent
@@ -53,3 +53,9 @@ JSON widget, separate from Android settings API 1; there is no Android receiver.
 Requirements: https://github.com/qlerup/ultrabar-store/blob/main/APP-SETTINGS.md .
 The descriptor is tested against Studio and Store contracts. Physical Core
 rendering and the complete Store update/Deploy flow still require owner testing.
+
+## Widget size
+
+In Small size, the clock shows hours and minutes and an optional short date. The large layout includes the configured seconds and full date.
+
+Choose the size in Studio under Widget settings. Mixed sizes require LineOS 1.0.9.
