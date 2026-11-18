@@ -1,30 +1,41 @@
 # UltraBar Store
 
-Studio downloads the approved catalog and immutable package files directly,
-without GitHub API requests. Download/issue counts are published separately as
-`catalog/package-stats.json`. The trusted publication workflow collects those
-counts centrally with its Actions token, at most once every 15 minutes for an
-unchanged package set. PCs only read the public snapshot; no token is distributed.
-Unavailable counts retain their last known values and never block installation.
+The Store distributes reviewed widgets, Core apps and declarative presets for
+[UltraBar Studio](https://github.com/qlerup/ultrabar-studio).
 
-Reviewed widget packages for [UltraBar Studio](https://github.com/qlerup/ultrabar-studio).
-One package appears in the widget library: drag it onto Core, configure it in the
-right panel, then Deploy. New approved packages appear without updating Studio.
+## Install and use packages
 
-**[Submit a package: step-by-step guide](SUBMIT-A-PACKAGE.md)**
+1. In Studio, open **App & Plugin Store** and install a compatible package.
+2. Go to **Design & actions**. Drag widgets from the **App Store** library onto
+   the CoreBAR preview. Supported Core apps can also go into **Background apps**.
+3. Configure the placed item and choose **Deploy to Core** to review and apply it on CoreBAR.
 
-**[Studio integration requirements and settings specification](APP-SETTINGS.md)**
-and [complete Android example](examples/settings-app). Read these before building
-an app with editable Studio settings. The PR checklist and Actions enforce the
-declarative contract; physical behavior must also be tested.
+Studio shows the minimum Studio version required by each package. On root-enabled
+ARM32 CB01 with LineOS 1.0.9, compatible widgets can use large or small slots.
+Studio 0.52.1 adds **+** on empty slots, where you can choose a 2×2 grid.
+See the [Vivo Screen Sync guide](https://github.com/qlerup/vivo-screen-sync#use)
+for the background app setup.
 
-GitHub automatically checks submissions. New packages require owner approval;
-eligible updates to registered packages receive bot approval and auto-merge after
-green checks. The live catalog is generated from approved package manifests on the `catalog` branch. See CONTRIBUTING.md for the policy.
-Studio 0.20 supports clock/date and PC hardware widgets through the shared native
-runtime. Arbitrary executable plugins are not supported. See the guide for limits.
+## Submit a package
 
-Studio's proprietary license does not apply automatically to contributors' work.
-Every submitted package must have its own explicit distribution/use license.
+Keep the source in your own public repository, publish a stable release and
+open one Store pull request for that package. Use the [submission guide](SUBMIT-A-PACKAGE.md)
+for required files, compatibility and declaring supported widget sizes.
+For editable Studio settings, see the [integration requirements](APP-SETTINGS.md)
+and the [complete Android example](examples/settings-app).
 
-Package PRs change only their own submissions folder. Never edit catalog.json: the main-branch copy is a frozen compatibility snapshot. Studio 0.31+ uses the generated feed; see CONTRIBUTING.md for publication and recovery details.
+GitHub Actions validates package metadata, upstream ownership and published bytes.
+New packages require maintainer acceptance. Eligible updates to registered
+packages can auto-merge after successful checks. Each package needs its own
+distribution license. See [CONTRIBUTING.md](CONTRIBUTING.md) for review policy.
+
+## Published catalog
+
+The publication workflow generates the live catalog from approved manifests on
+the `catalog` branch. The main-branch copy of `catalog.json` is a frozen
+compatibility snapshot. Package PRs change only their own submission folder.
+
+Studio fetches the public catalog, immutable package files and the separate
+`catalog/package-stats.json` snapshot directly. GitHub Actions collects download
+and issue counts centrally. Unavailable counts retain their previous values
+and package installation can proceed.
