@@ -10,6 +10,17 @@ def git(root, *args):
     return subprocess.check_output(['git', '-C', str(root), *args])
 
 
+def changed_files(root, base, head):
+    changes = git(root, 'diff', '--raw', '-z', '--no-renames', base, head).split(b'\0')
+    paths = []
+    for metadata, path in zip(changes[0:-1:2], changes[1:-1:2]):
+        old_mode, new_mode = metadata.split()[:2]
+        if old_mode[1:] not in (b'000000', b'100644', b'100755') or new_mode not in (b'100644', b'100755'):
+            raise ValueError('Removed file, symbolic link or submodule.')
+        paths.append(path.decode())
+    return paths
+
+
 def eligibility(base, submitted, author, paths):
     def load(root, name):return json.loads((root/name).read_text(encoding='utf-8'))
     folders={p.split('/')[1] for p in paths if p.startswith('submissions/') and len(p.split('/'))>=3}
@@ -73,11 +84,10 @@ def main():
     if git(base,'rev-parse','HEAD').decode().strip()!=base_sha or git(submitted,'rev-parse','HEAD').decode().strip()!=head:
         raise ValueError('Checked out commits differ from validation.')
     # Compare the exact trees, including file modes: symlinks/submodules never qualify.
-    paths=git(submitted,'diff','--name-only','--no-renames',base_sha,head).decode().splitlines()
-    for line in git(submitted,'diff','--raw','--no-abbrev','--no-renames',base_sha,head).decode().splitlines():
-        old_mode,new_mode=line.split()[:2]
-        if old_mode[1:] not in ('000000','100644','100755') or new_mode not in ('100644','100755'):
-            print('Manual approval: removed file, symbolic link or submodule.');return
+    try:
+        paths = changed_files(submitted, base_sha, head)
+    except ValueError as error:
+        print(f'Manual approval: {error}');return
     ready,message=eligibility(base,submitted,pr['user']['login'],paths)
     print(message)
     if not ready:return
@@ -93,7 +103,7 @@ def main():
     if not any(r['user']['login']=='github-actions[bot]' and r['state']=='APPROVED' and r.get('commit_id')==head for r in reviews):
         api('/pulls/'+number+'/reviews','POST',dict(event='APPROVE',commit_id=head,body='Automatic approval: existing registered-owner update, unchanged identity/permissions/compatibility, and all Store checks passed.'))
     subprocess.run(['gh','pr','merge',number,'--repo',repo,'--auto','--squash','--match-head-commit',head],check=True)
-    print('Automatic merge queued; GitHub still requires green checks and an up-to-date branch.')
+    print('Automatic merge requested; GitHub still requires green checks and an up-to-date branch.')
 
 
 if __name__=='__main__':main()

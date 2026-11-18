@@ -62,7 +62,7 @@ class UpdatePolicyTests(unittest.TestCase):
    return json.dumps(reviews or [] if '/reviews' in args[2] else pr).encode()
   def git(root,*args):
    if args[0]=='rev-parse':return (('b' if root==self.base else 'h')*40).encode()
-   return '\n'.join(self.paths).encode() if '--name-only' in args else b''
+   return b''.join(b':100644 100644 1234567 7654321 M\0'+path.encode()+b'\0' for path in self.paths)
   env=dict(GITHUB_REPOSITORY='owner/store',PR_NUMBER='12',REVIEW_SHA='h'*40,REVIEW_BASE_SHA='b'*40)
   with patch.dict('os.environ',env),patch('sys.argv',['auto_update.py',str(self.base),str(self.head)]),patch.object(auto_update,'git',side_effect=git),patch.object(auto_update.subprocess,'check_output',side_effect=api),patch.object(auto_update.subprocess,'run') as merge:
    auto_update.main();return calls,merge.call_args

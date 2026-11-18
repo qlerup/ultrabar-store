@@ -143,6 +143,13 @@ after all required checks pass. The trusted Actions job approves the exact check
 commit and enables GitHub auto-merge. GitHub still requires green checks and an
 up-to-date branch. The bot never runs submitted code.
 
+Store Actions can synchronize one eligible Store-repository branch at a time,
+starting with the oldest PR that is behind `main`. After synchronization, the
+exact new commit must pass package validation before the bot can approve it and
+request auto-merge. A completed automatic merge starts another queue run, and a
+scheduled run also checks for waiting updates. Fork branches and merge conflicts
+need to be updated by their maintainers before the regular checks can run again.
+
 Automatic approval requires the same registered repository, publishing account,
 package ID/type, license, permissions and compatibility. Android updates must
 also preserve package ID, signer and minimum SDK while increasing versionCode.

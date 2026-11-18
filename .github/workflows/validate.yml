@@ -2,28 +2,60 @@ name: Store submission checks
 on:
   pull_request_target:
     types: [opened, synchronize, reopened, edited]
+  push:
+    branches: [main]
+  schedule:
+    - cron: '3/5 * * * *'
+  repository_dispatch:
+    types: [store-update-merged]
   workflow_dispatch:
     inputs:
       pr_number:
-        description: Pull request number to review again
-        required: true
+        description: Pull request number to review again (leave blank to run the update queue)
+        required: false
         type: string
 permissions:
   contents: read
   pull-requests: write
 concurrency:
-  group: store-review-${{ github.event.pull_request.number || inputs.pr_number }}
-  cancel-in-progress: true
+  group: store-review-${{ github.event.pull_request.number || inputs.pr_number || 'sync' }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request_target' || inputs.pr_number != '' }}
 jobs:
+  sync:
+    if: github.event_name != 'pull_request_target' && inputs.pr_number == ''
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    permissions:
+      contents: write
+      pull-requests: write
+    outputs:
+      number: ${{ steps.sync.outputs.number }}
+      head: ${{ steps.sync.outputs.head }}
+      base: ${{ steps.sync.outputs.base }}
+    steps:
+      - name: Checkout current Store policy
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: main
+          persist-credentials: false
+      - name: Update the oldest eligible branch that is behind main
+        id: sync
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 -E scripts/sync_update.py
   validate:
     name: Validate package
+    needs: sync
+    if: >-
+      !cancelled() && (github.event_name == 'pull_request_target' ||
+      inputs.pr_number != '' || needs.sync.outputs.number != '')
     runs-on: ubuntu-latest
     timeout-minutes: 5
     outputs:
       review_sha: ${{ steps.review.outputs.head }}
       base_sha: ${{ steps.review.outputs.base }}
     env:
-      PR_NUMBER: ${{ github.event.pull_request.number || inputs.pr_number }}
+      PR_NUMBER: ${{ github.event.pull_request.number || inputs.pr_number || needs.sync.outputs.number }}
       STORE_RESULT: ${{ github.workspace }}/validation-result.json
     steps:
       - name: Validate PR number
@@ -31,14 +63,14 @@ jobs:
       - name: Checkout trusted validator
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
-          ref: ${{ github.event.repository.default_branch }}
+          ref: ${{ needs.sync.outputs.base || github.event.repository.default_branch }}
           path: trusted
           persist-credentials: false
       - name: Checkout submission as data only
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
           repository: ${{ github.repository }}
-          ref: refs/pull/${{ github.event.pull_request.number || inputs.pr_number }}/head
+          ref: ${{ needs.sync.outputs.head || format('refs/pull/{0}/head', env.PR_NUMBER) }}
           path: submitted
           persist-credentials: false
       - name: Record reviewed commit
@@ -73,9 +105,41 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: python3 -I trusted/scripts/comment.py
+  report-validation:
+    needs: [sync, validate]
+    if: >-
+      !cancelled() && needs.validate.outputs.review_sha != '' &&
+      (needs.sync.outputs.number != '' || inputs.pr_number != '')
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    permissions:
+      checks: write
+      contents: read
+      pull-requests: read
+    env:
+      GH_TOKEN: ${{ github.token }}
+      PR_NUMBER: ${{ inputs.pr_number || needs.sync.outputs.number }}
+      REVIEW_SHA: ${{ needs.validate.outputs.review_sha }}
+      BASE_SHA: ${{ needs.validate.outputs.base_sha }}
+      VALIDATION: ${{ needs.validate.result }}
+    steps:
+      - name: Report the trusted result on the validated PR commit
+        run: |
+          pr=$(gh api "repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER")
+          jq -e --arg head "$REVIEW_SHA" --arg base "$BASE_SHA" \
+            '.state == "open" and .head.sha == $head and .base.ref == "main" and .base.sha == $base' <<< "$pr"
+          comparison=$(gh api "repos/$GITHUB_REPOSITORY/compare/$BASE_SHA...$REVIEW_SHA" --jq .status)
+          test "$comparison" = ahead
+          gh api --method POST "repos/$GITHUB_REPOSITORY/check-runs" \
+            -f name='Validate package' -f head_sha="$REVIEW_SHA" -f status=completed \
+            -f conclusion="$VALIDATION" \
+            -f details_url="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" --silent
   auto-update:
     name: Merge eligible package update
-    needs: validate
+    needs: [sync, validate, report-validation]
+    if: >-
+      !cancelled() && needs.validate.result == 'success' &&
+      (github.event_name == 'pull_request_target' || needs.report-validation.result == 'success')
     runs-on: ubuntu-latest
     timeout-minutes: 3
     permissions:
@@ -83,7 +147,7 @@ jobs:
       pull-requests: write
     env:
       GH_TOKEN: ${{ github.token }}
-      PR_NUMBER: ${{ github.event.pull_request.number || inputs.pr_number }}
+      PR_NUMBER: ${{ github.event.pull_request.number || inputs.pr_number || needs.sync.outputs.number }}
       REVIEW_SHA: ${{ needs.validate.outputs.review_sha }}
       REVIEW_BASE_SHA: ${{ needs.validate.outputs.base_sha }}
     steps:
@@ -103,3 +167,16 @@ jobs:
           persist-credentials: false
       - name: Approve and queue an eligible existing-package update
         run: python3 -I trusted/scripts/auto_update.py trusted submitted
+      - name: Start the next queue run after the merge lands
+        run: |
+          for attempt in {1..6}; do
+            state=$(gh pr view "$PR_NUMBER" --repo "$GITHUB_REPOSITORY" --json state --jq .state)
+            if [[ "$state" == MERGED ]]; then
+              gh api --method POST "repos/$GITHUB_REPOSITORY/dispatches" -f event_type=store-update-merged
+              exit 0
+            fi
+            if [[ "$state" != OPEN ]]; then
+              exit 0
+            fi
+            sleep 3
+          done
