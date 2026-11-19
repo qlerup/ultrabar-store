@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": 1795062864,
+  "generatedAt": 1795064011,
   "packages": {
     "studio.bambu": {
       "repository": "https://github.com/qlerup/ultrabar-bambu",
