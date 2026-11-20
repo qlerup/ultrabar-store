@@ -134,6 +134,7 @@ behaviors still require an appropriate Studio adapter/runtime update.
 
 In Small size, the card shows the primary printer reading and print progress. Tap either size to open printer details.
 
-Choose the size under **Widget settings**. Hover over an empty spot and use
-**+** to make a 2×2 grid in Studio 0.52.1 or newer. Drop Bambu into a grid cell
-to select Small. Small and mixed layouts require LineOS 1.0.9.
+Hover over an empty spot and use **+** to make a 2×2 grid. Drop Bambu into a
+grid cell to use the small card. In Studio 0.52.11 or newer, drag it into an
+empty large slot to switch back. Earlier Studio versions also have a size
+selector in **Widget settings**. Small and mixed layouts require LineOS 1.0.9.
