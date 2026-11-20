@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
-  "generatedAt": 1795211347,
+  "generatedAt": 1795212360,
   "packages": {
     "studio.bambu": {
       "repository": "https://github.com/qlerup/ultrabar-bambu",
-      "artifact": "https://github.com/qlerup/ultrabar-store/releases/download/review-bambu-2.3.3/widget.json",
-      "downloads": 4,
+      "artifact": "https://github.com/qlerup/ultrabar-store/releases/download/review-bambu-2.3.4/widget.json",
+      "downloads": 2,
       "issues": 0,
       "stale": false
     },
