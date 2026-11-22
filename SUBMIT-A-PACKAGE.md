@@ -410,3 +410,13 @@ Panel API 2 accepts a `layout` object with a `large` and a `small` array. Each a
 For printer presets with at least two temperature rows, Studio 0.52.21 supports an optional `nozzleGrid` with integer pixel dimensions. Set `materialSize` (10 to 20), `swatchSize` (8 to 22) and `verticalInset` (4 to 14). Reducing the vertical inset leaves more height for the tiles.
 
 Studio 0.52.22 can show a separate column of up to three temperature readings. Set `nozzleGrid.sideTemperatures` to an ordered array of temperature fields and name each field in the preset labels.
+
+### Package-owned expanded panels and sounds
+
+Studio 0.52.23 supports a third layout entry, `expanded`. The same installed JSON renders the expanded view in Studio and on Core. A standalone data-only widget may use `kind: "scene"` and supply its own layout.
+
+Small and large cards can use the same layout language by putting their array under `elements`. Earlier flat layouts continue to work.
+
+Each element has an `op` and a `box` of x, y, width and height in thousandths of its parent. Draw in array order. Use text, rectangles, swatches, progress bars, groups and repeated grids. Grid cells contain child elements. Bind a grid to an array with `source`; choose columns or rows, spacing, and optional fixed keyed slots. Text interpolates paths such as `{item.temperature}`. Paths start at settings, values, printer, metrics, labels or the current grid item. Set `when`, `equals` or `unless` to control visibility. The scope contains current measurements and per-instance settings. Colors accept literal RGB, a setting prefixed by a dollar sign or a data path prefixed by @. The Bambu source package includes a complete working layout.
+
+The optional `studio.sounds` object maps event names to arrays of [frequencyHz, durationMs]. A zero frequency is silence. Printer success and error events use the package's success and error sequences. Supported event sources and device operations are platform capabilities. Package design, text, colors, arrangement, and melodies can change in a package-only update. Keep the minimum Studio version pinned to the capabilities the package actually uses.

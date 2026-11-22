@@ -10,6 +10,8 @@ def validate(manifest,parse):
     templates=parse(json.dumps(descriptor).encode())
     if descriptor.get('runtime') == 'android-appwidget-v1' and tuple(map(int, manifest['compatibility']['minStudioVersion'].split('.'))) < (0, 52, 18):
         raise ValueError('Android widget providers require Studio 0.52.18+.')
+    if any(w.get('kind')=='scene' or 'sounds' in w.get('studio',{}) or 'expanded' in w.get('studio',{}).get('layout',{}) or any(isinstance(v,dict) for v in w.get('studio',{}).get('layout',{}).values()) for w in templates) and tuple(map(int, manifest['compatibility']['minStudioVersion'].split('.'))) < (0,52,23):
+        raise ValueError('Package panels and sounds require Studio 0.52.23+.')
     if any('sideTemperatures' in preset.get('nozzleGrid', {}) for w in templates for preset in w.get('studio', {}).get('presentation', {}).get('presets', [])) and tuple(map(int, manifest['compatibility']['minStudioVersion'].split('.'))) < (0,52,22):
         raise ValueError('Side temperature boxes require Studio 0.52.22+.')
     if any('nozzleGrid' in preset for w in templates for preset in w.get('studio', {}).get('presentation', {}).get('presets', [])) and tuple(map(int, manifest['compatibility']['minStudioVersion'].split('.'))) < (0,52,21):
