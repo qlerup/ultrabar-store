@@ -80,6 +80,9 @@ def inspect(path, entry):
     manifest=subprocess.run([str(root/('aapt'+suffix)),'dump','xmltree',str(path),'AndroidManifest.xml'],capture_output=True,timeout=30)
     if manifest.returncode:issues.append('app.apk: Cannot inspect compiled AndroidManifest.xml. Fix: build and upload a complete signed APK.')
     else:issues.extend(launcher_issues(manifest.stdout.decode('utf-8',errors='replace'),info,meta['packageId']))
+    if embedded and not manifest.returncode:
+        try:bundle.validate_providers(manifest.stdout.decode('utf-8',errors='replace'),embedded,meta['packageId'])
+        except ValueError as exc:issues.append(str(exc))
     if contract and not manifest.returncode:
         try:contract.validate_receiver(manifest.stdout.decode('utf-8',errors='replace'),meta['packageId'])
         except ValueError as exc:issues.append(str(exc))

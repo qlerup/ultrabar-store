@@ -19,6 +19,8 @@ _bundle_spec=importlib.util.spec_from_file_location('trusted_bundle_contract',Pa
 bundle_contract=importlib.util.module_from_spec(_bundle_spec);_bundle_spec.loader.exec_module(bundle_contract)
 _panel_spec=importlib.util.spec_from_file_location('trusted_widget_studio_contract',Path(__file__).with_name('widget_studio_contract.py'))
 widget_studio_contract=importlib.util.module_from_spec(_panel_spec);_panel_spec.loader.exec_module(widget_studio_contract)
+_widget_spec=importlib.util.spec_from_file_location('trusted_android_widget',Path(__file__).with_name('android_widget.py'))
+android_widget=importlib.util.module_from_spec(_widget_spec);_widget_spec.loader.exec_module(android_widget)
 class SafeRedirect(HTTPRedirectHandler):
     def redirect_request(self, req, fp, code, msg, headers, newurl):
         parsed = urlsplit(newurl)
@@ -99,6 +101,9 @@ def plugin_templates(raw):
 def widget_package(raw):
     try:data=json.loads(raw)
     except (ValueError,UnicodeError) as exc:raise StoreError('Invalid widget package JSON.') from exc
+    if isinstance(data,dict) and data.get('runtime')==android_widget.RUNTIME:
+        try:return android_widget.templates(data)
+        except ValueError as exc:raise StoreError(str(exc)) from exc
     if not isinstance(data,dict) or set(data)!={'widgetApi','runtime','widgets'} or type(data['widgetApi']) is not int or data['widgetApi']!=1 or data['runtime']!='studio-native-v1':
         raise StoreError('widget.json: Unsupported widget package runtime. Fix: use integer widgetApi 1, runtime "studio-native-v1" and a widgets array. Custom runtime code is not supported.')
     widgets=data['widgets']
@@ -176,7 +181,9 @@ def validate_tree(root,verify_assets=False,generated_catalog=False):
             filename={'corebar-widget':'widget.json','studio-plugin':'plugin.json','corebar-app':'app.apk'}.get(kind)
             if not filename:raise ValueError('Unknown package type')
             raw=read(folder/filename,MAX_SIZE if kind=='corebar-app' else 65536)
-            if kind=='corebar-widget':widgets=widget_package(raw)
+            if kind=='corebar-widget':
+                widgets=widget_package(raw)
+                if any(w['kind']=='androidWidget' for w in widgets):raise ValueError('An Android widget requires its signed app package.')
             elif kind=='studio-plugin':plugin_templates(raw)
             else:
                 # Load only this trusted checkout's inspector, even with python -I.

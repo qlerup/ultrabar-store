@@ -22,6 +22,8 @@ def manifest_issues(manifest):
             if kind!='corebar-app':raise ValueError('settings belongs to corebar-app; native widgets use widget.json settings.')
             version=manifest.get('compatibility',{}).get('minStudioVersion','')
             if not isinstance(version,str) or not __import__('re').fullmatch(r'\d+\.\d+\.\d+',version) or tuple(map(int,version.split('.'))) < (0,45,0):raise ValueError('Settings API 1 requires minStudioVersion 0.45.0 or newer.')
+            if any(field['type'] == 'color' for field in manifest['settings']['fields']) and tuple(map(int, version.split('.'))) < (0, 52, 18):
+                raise ValueError('Color settings require minStudioVersion 0.52.18 or newer.')
         except (ValueError,AttributeError) as exc:problem('settings',str(exc),'Follow APP-SETTINGS.md and include the identical studio-settings.json in the source and APK assets.')
     if kind not in ('corebar-app','corebar-widget','studio-plugin'):problem('type','Unsupported package type.','Choose corebar-app, corebar-widget or studio-plugin.')
     compatibility=manifest.get('compatibility')

@@ -8,6 +8,8 @@ def validate(manifest,parse):
     descriptor=manifest['bundledWidgets']
     if not isinstance(descriptor,dict):raise ValueError('bundledWidgets must be a widget.json object.')
     templates=parse(json.dumps(descriptor).encode())
+    if descriptor.get('runtime') == 'android-appwidget-v1' and tuple(map(int, manifest['compatibility']['minStudioVersion'].split('.'))) < (0, 52, 18):
+        raise ValueError('Android widget providers require Studio 0.52.18+.')
     if any('splitFlap' in p for w in templates for p in w.get('studio', {}).get('presentation', {}).get('presets', [])) and tuple(map(int, manifest['compatibility']['minStudioVersion'].split('.'))) < (0, 52, 17):
         raise ValueError('Split-flap displays require Studio 0.52.17+.')
     if any('sizes' in w for w in templates) and tuple(map(int,manifest['compatibility']['minStudioVersion'].split('.')))<(0,52,0):
@@ -28,3 +30,40 @@ def inspect_apk(path,manifest):
         descriptor=json.loads(archive.read(matches[0]))
         if 'bundledWidgets' in manifest and descriptor!=manifest['bundledWidgets']:raise ValueError('APK widget descriptor differs from its recorded bundle.')
         return descriptor
+
+def validate_providers(xml, descriptor, package_id):
+    """Check the widget declaration against receivers in the compiled APK."""
+    if not descriptor or descriptor.get('runtime') != 'android-appwidget-v1':
+        return
+    import re
+    from xml.etree.ElementTree import Element, SubElement
+    root = Element('dump')
+    stack = [(-1, root)]
+    for line in xml.splitlines():
+        element = re.match(r'(\s*)E: ([\w-]+)', line)
+        if element:
+            indent = len(element[1])
+            while stack[-1][0] >= indent:
+                stack.pop()
+            stack.append((indent, SubElement(stack[-1][1], element[2])))
+            continue
+        attr = re.match(r'\s*A: android:([\w-]+)(?:\(0x[0-9a-f]+\))?=(?:"([^"]*)"|(\S+.*))', line)
+        if attr:
+            stack[-1][1].set(attr[1], attr[2] if attr[2] is not None else attr[3])
+    available = set()
+    for receiver in root.findall('./manifest/application/receiver'):
+        name = receiver.get('name', '')
+        if name.startswith('.'):
+            name = package_id + name
+        elif '.' not in name:
+            name = package_id + '.' + name
+        if receiver.get('enabled') == '(type 0x12)0x0':
+            continue
+        if receiver.find("./intent-filter/action[@name='android.appwidget.action.APPWIDGET_UPDATE']") is None:
+            continue
+        metadata = receiver.find("./meta-data[@name='android.appwidget.provider']")
+        if metadata is not None and re.fullmatch(r'@0x[0-9a-fA-F]+', metadata.get('resource', '')):
+            available.add(name)
+    for widget in descriptor['widgets']:
+        if package_id + '.' + widget['provider'] not in available:
+            raise ValueError('Missing Android widget provider declaration for ' + widget['provider'])
