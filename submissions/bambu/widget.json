@@ -549,17 +549,7 @@
                 "filament.GFB50": "ABS-GF",
                 "filament.GFG50": "PETG-CF",
                 "filament.GFC00": "PC"
-              },
-              "nozzleGrid": {
-                "materialSize": 17,
-                "swatchSize": 18,
-                "verticalInset": 5,
-                "sideTemperatures": [
-                  "chamber_temper",
-                  "bed_temper"
-                ]
-              },
-              "minTemperatureRows": 2
+              }
             },
             {
               "value": "h3c",
@@ -607,17 +597,7 @@
                 "filament.GFB50": "ABS-GF",
                 "filament.GFG50": "PETG-CF",
                 "filament.GFC00": "PC"
-              },
-              "nozzleGrid": {
-                "materialSize": 17,
-                "swatchSize": 18,
-                "verticalInset": 5,
-                "sideTemperatures": [
-                  "chamber_temper",
-                  "bed_temper"
-                ]
-              },
-              "minTemperatureRows": 3
+              }
             }
           ]
         },
@@ -765,6 +745,576 @@
               "track": "#394347",
               "radius": 3
             }
+          ],
+          "expanded": [
+            {
+              "op": "text",
+              "text": "{values.title}",
+              "box": [
+                18,
+                4,
+                735,
+                95
+              ],
+              "size": 17,
+              "bold": true
+            },
+            {
+              "op": "text",
+              "text": "{values.status}",
+              "box": [
+                765,
+                4,
+                210,
+                95
+              ],
+              "size": 13,
+              "align": "right",
+              "color": "$accent"
+            },
+            {
+              "op": "text",
+              "text": "{values.progress}%",
+              "box": [
+                18,
+                270,
+                225,
+                240
+              ],
+              "size": 42,
+              "bold": true,
+              "when": "printer.fresh"
+            },
+            {
+              "op": "text",
+              "text": "\u2014",
+              "box": [
+                18,
+                270,
+                225,
+                240
+              ],
+              "size": 42,
+              "bold": true,
+              "unless": "printer.fresh"
+            },
+            {
+              "op": "text",
+              "text": "{values.job}",
+              "box": [
+                18,
+                520,
+                225,
+                95
+              ],
+              "size": 14,
+              "when": "settings.showJob"
+            },
+            {
+              "op": "bar",
+              "box": [
+                18,
+                635,
+                225,
+                22
+              ],
+              "source": "values.progress",
+              "color": "$accent",
+              "radius": 3
+            },
+            {
+              "op": "text",
+              "text": "{values.remaining}",
+              "box": [
+                18,
+                685,
+                225,
+                88
+              ],
+              "size": 13,
+              "color": "#a5b9c3",
+              "when": "settings.showRemaining"
+            },
+            {
+              "op": "text",
+              "text": "Layer {values.layers}",
+              "box": [
+                18,
+                785,
+                225,
+                88
+              ],
+              "size": 13,
+              "color": "#a5b9c3",
+              "when": "settings.showLayers"
+            },
+            {
+              "op": "group",
+              "box": [
+                260,
+                125,
+                725,
+                850
+              ],
+              "children": [
+                {
+                  "op": "grid",
+                  "box": [
+                    0,
+                    0,
+                    785,
+                    1000
+                  ],
+                  "source": "printer.nozzle_readings",
+                  "children": [
+                    {
+                      "op": "rect",
+                      "box": [
+                        0,
+                        0,
+                        1000,
+                        1000
+                      ],
+                      "color": "#23333f",
+                      "radius": 14
+                    },
+                    {
+                      "op": "text",
+                      "text": "nozzle.{item.tool}",
+                      "box": [
+                        15,
+                        50,
+                        970,
+                        525
+                      ],
+                      "size": 22,
+                      "bold": true,
+                      "align": "center",
+                      "lookup": "labels",
+                      "fallback": "T{item.tool}",
+                      "suffix": "   {item.temperature}\u00b0C",
+                      "unless": "narrow"
+                    },
+                    {
+                      "op": "text",
+                      "text": "T{item.tool}   {item.temperature}\u00b0C",
+                      "box": [
+                        15,
+                        50,
+                        970,
+                        525
+                      ],
+                      "size": 21,
+                      "bold": true,
+                      "align": "center",
+                      "when": "narrow"
+                    },
+                    {
+                      "op": "text",
+                      "text": "{item.material}",
+                      "box": [
+                        8,
+                        610,
+                        750,
+                        350
+                      ],
+                      "size": 17,
+                      "when": "item.material",
+                      "align": "center",
+                      "bold": true
+                    },
+                    {
+                      "op": "text",
+                      "text": "filament.{item.filamentProfile}",
+                      "box": [
+                        8,
+                        610,
+                        750,
+                        350
+                      ],
+                      "size": 17,
+                      "unless": "item.material",
+                      "lookup": "labels",
+                      "align": "center",
+                      "bold": true
+                    },
+                    {
+                      "op": "swatch",
+                      "box": [
+                        760,
+                        610,
+                        195,
+                        350
+                      ],
+                      "size": 18,
+                      "color": "@item.color",
+                      "radius": 2,
+                      "when": "item.color"
+                    }
+                  ],
+                  "gap": 4,
+                  "columns": 3,
+                  "key": "tool",
+                  "slots": 9,
+                  "when": "printer.model",
+                  "equals": "h3c"
+                },
+                {
+                  "op": "grid",
+                  "box": [
+                    0,
+                    0,
+                    785,
+                    1000
+                  ],
+                  "source": "printer.nozzle_readings",
+                  "children": [
+                    {
+                      "op": "rect",
+                      "box": [
+                        0,
+                        0,
+                        1000,
+                        1000
+                      ],
+                      "color": "#23333f",
+                      "radius": 14
+                    },
+                    {
+                      "op": "text",
+                      "text": "nozzle.{item.tool}",
+                      "box": [
+                        15,
+                        50,
+                        970,
+                        525
+                      ],
+                      "size": 22,
+                      "bold": true,
+                      "align": "center",
+                      "lookup": "labels",
+                      "fallback": "T{item.tool}",
+                      "suffix": "   {item.temperature}\u00b0C",
+                      "unless": "narrow"
+                    },
+                    {
+                      "op": "text",
+                      "text": "T{item.tool}   {item.temperature}\u00b0C",
+                      "box": [
+                        15,
+                        50,
+                        970,
+                        525
+                      ],
+                      "size": 21,
+                      "bold": true,
+                      "align": "center",
+                      "when": "narrow"
+                    },
+                    {
+                      "op": "text",
+                      "text": "{item.material}",
+                      "box": [
+                        8,
+                        610,
+                        750,
+                        350
+                      ],
+                      "size": 17,
+                      "when": "item.material",
+                      "align": "center",
+                      "bold": true
+                    },
+                    {
+                      "op": "text",
+                      "text": "filament.{item.filamentProfile}",
+                      "box": [
+                        8,
+                        610,
+                        750,
+                        350
+                      ],
+                      "size": 17,
+                      "unless": "item.material",
+                      "lookup": "labels",
+                      "align": "center",
+                      "bold": true
+                    },
+                    {
+                      "op": "swatch",
+                      "box": [
+                        760,
+                        610,
+                        195,
+                        350
+                      ],
+                      "size": 18,
+                      "color": "@item.color",
+                      "radius": 2,
+                      "when": "item.color"
+                    }
+                  ],
+                  "gap": 4,
+                  "rows": 2,
+                  "when": "printer.model",
+                  "equals": "h2c"
+                },
+                {
+                  "op": "grid",
+                  "box": [
+                    0,
+                    0,
+                    785,
+                    1000
+                  ],
+                  "source": "printer.nozzle_readings",
+                  "children": [
+                    {
+                      "op": "rect",
+                      "box": [
+                        0,
+                        0,
+                        1000,
+                        1000
+                      ],
+                      "color": "#23333f",
+                      "radius": 14
+                    },
+                    {
+                      "op": "text",
+                      "text": "nozzle.{item.tool}",
+                      "box": [
+                        15,
+                        50,
+                        970,
+                        525
+                      ],
+                      "size": 22,
+                      "bold": true,
+                      "align": "center",
+                      "lookup": "labels",
+                      "fallback": "T{item.tool}",
+                      "suffix": "   {item.temperature}\u00b0C",
+                      "unless": "narrow"
+                    },
+                    {
+                      "op": "text",
+                      "text": "T{item.tool}   {item.temperature}\u00b0C",
+                      "box": [
+                        15,
+                        50,
+                        970,
+                        525
+                      ],
+                      "size": 21,
+                      "bold": true,
+                      "align": "center",
+                      "when": "narrow"
+                    },
+                    {
+                      "op": "text",
+                      "text": "{item.material}",
+                      "box": [
+                        8,
+                        610,
+                        750,
+                        350
+                      ],
+                      "size": 17,
+                      "when": "item.material",
+                      "align": "center",
+                      "bold": true
+                    },
+                    {
+                      "op": "text",
+                      "text": "filament.{item.filamentProfile}",
+                      "box": [
+                        8,
+                        610,
+                        750,
+                        350
+                      ],
+                      "size": 17,
+                      "unless": "item.material",
+                      "lookup": "labels",
+                      "align": "center",
+                      "bold": true
+                    },
+                    {
+                      "op": "swatch",
+                      "box": [
+                        760,
+                        610,
+                        195,
+                        350
+                      ],
+                      "size": 18,
+                      "color": "@item.color",
+                      "radius": 2,
+                      "when": "item.color"
+                    }
+                  ],
+                  "gap": 4,
+                  "rows": 1,
+                  "unless": "printer.model",
+                  "oneOf": [
+                    "h2c",
+                    "h3c"
+                  ]
+                },
+                {
+                  "op": "group",
+                  "box": [
+                    795,
+                    0,
+                    205,
+                    485
+                  ],
+                  "children": [
+                    {
+                      "op": "rect",
+                      "box": [
+                        0,
+                        0,
+                        1000,
+                        1000
+                      ],
+                      "color": "#23333f",
+                      "radius": 14
+                    },
+                    {
+                      "op": "text",
+                      "text": "Chamber",
+                      "box": [
+                        10,
+                        90,
+                        980,
+                        310
+                      ],
+                      "size": 13,
+                      "align": "center",
+                      "color": "#a5b9c3"
+                    },
+                    {
+                      "op": "text",
+                      "text": "{printer.chamber_temper}\u00b0C",
+                      "box": [
+                        10,
+                        400,
+                        980,
+                        490
+                      ],
+                      "size": 26,
+                      "align": "center",
+                      "bold": true
+                    }
+                  ]
+                },
+                {
+                  "op": "group",
+                  "box": [
+                    795,
+                    510,
+                    205,
+                    490
+                  ],
+                  "children": [
+                    {
+                      "op": "rect",
+                      "box": [
+                        0,
+                        0,
+                        1000,
+                        1000
+                      ],
+                      "color": "#23333f",
+                      "radius": 14
+                    },
+                    {
+                      "op": "text",
+                      "text": "Bed",
+                      "box": [
+                        10,
+                        90,
+                        980,
+                        310
+                      ],
+                      "size": 13,
+                      "align": "center",
+                      "color": "#a5b9c3"
+                    },
+                    {
+                      "op": "text",
+                      "text": "{printer.bed_temper}\u00b0C",
+                      "box": [
+                        10,
+                        400,
+                        980,
+                        490
+                      ],
+                      "size": 26,
+                      "align": "center",
+                      "bold": true
+                    }
+                  ]
+                }
+              ],
+              "when": "settings.showTemperatures"
+            }
+          ]
+        },
+        "sounds": {
+          "success": [
+            [
+              523.25,
+              160
+            ],
+            [
+              0,
+              30
+            ],
+            [
+              659.25,
+              160
+            ],
+            [
+              0,
+              30
+            ],
+            [
+              783.99,
+              160
+            ],
+            [
+              0,
+              30
+            ]
+          ],
+          "error": [
+            [
+              740,
+              160
+            ],
+            [
+              0,
+              30
+            ],
+            [
+              440,
+              160
+            ],
+            [
+              0,
+              30
+            ],
+            [
+              440,
+              160
+            ],
+            [
+              0,
+              30
+            ]
           ]
         }
       },
