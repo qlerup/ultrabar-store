@@ -1,0 +1,110 @@
+{
+  "schemaVersion": 1,
+  "id": "qlerup.core.flip-clock-hd",
+  "name": "Flip Clock HD",
+  "type": "corebar-app",
+  "description": "A fullscreen photographic flip-clock screensaver. Choose a theme, date, seconds and idle delay in Studio. Deploy replaces the LineOS screensaver. Tap Core to dismiss it.",
+  "version": "1.0.0",
+  "publisher": "qlerup",
+  "source": "https://github.com/qlerup/ultrabar-flip-clock-hd/blob/cf09b0ecd4f25b1f17e5569436e0267fea1c1b3c/AndroidManifest.xml",
+  "license": "Proprietary; unmodified official releases may be used",
+  "compatibility": {
+    "minStudioVersion": "0.52.29",
+    "hostApi": 1,
+    "models": [
+      "CB01"
+    ],
+    "lineosVersions": [
+      "1.0.9"
+    ],
+    "abis": [
+      "armeabi-v7a"
+    ]
+  },
+  "permissions": [],
+  "android": {
+    "packageId": "dk.qlerup.flipclock",
+    "versionCode": 100,
+    "minSdk": 26,
+    "signerSha256": "a2ffc4fd3545404750bd482b0332a30727e581dc70fd4f0cc6d34b22837f1fc8"
+  },
+  "settings": {
+    "api": 1,
+    "fields": [
+      {
+        "key": "theme",
+        "label": "Theme",
+        "help": "Choose the photographed clock face and its materials.",
+        "type": "choice",
+        "default": "GRAPHITE",
+        "options": [
+          {
+            "value": "GRAPHITE",
+            "label": "Graphite"
+          },
+          {
+            "value": "IVORY",
+            "label": "Ivory"
+          },
+          {
+            "value": "MIDNIGHT",
+            "label": "Midnight"
+          }
+        ]
+      },
+      {
+        "key": "showDate",
+        "label": "Show date",
+        "help": "Show the weekday and date beside the clock.",
+        "type": "boolean",
+        "default": true
+      },
+      {
+        "key": "showSeconds",
+        "label": "Show seconds",
+        "help": "Use the matching six-flap clock face with live seconds.",
+        "type": "boolean",
+        "default": false
+      },
+      {
+        "key": "idleDelay",
+        "label": "Show screensaver after",
+        "help": "How long Core has been idle before displaying the clock. Screen sleep is separate.",
+        "type": "choice",
+        "default": "60",
+        "options": [
+          {
+            "value": "20",
+            "label": "20 seconds"
+          },
+          {
+            "value": "40",
+            "label": "40 seconds"
+          },
+          {
+            "value": "60",
+            "label": "60 seconds"
+          },
+          {
+            "value": "80",
+            "label": "80 seconds"
+          },
+          {
+            "value": "100",
+            "label": "100 seconds"
+          }
+        ]
+      }
+    ]
+  },
+  "artifact": {
+    "url": "https://github.com/qlerup/ultrabar-store/releases/download/review-flip-clock-hd-1.0.0/app.apk",
+    "size": 1098731,
+    "sha256": "dbdc5626ae1a04fdef7707c34934c8dfa5dfafdce232205475a9aae5704df799"
+  },
+  "icon": {
+    "url": "https://github.com/qlerup/ultrabar-store/releases/download/review-flip-clock-hd-1.0.0/icon.png",
+    "size": 4071,
+    "sha256": "4be8cf927edd8302c63de6e7162658600ea33265e70ca53f8580c3f7b8a6a3e4"
+  }
+}

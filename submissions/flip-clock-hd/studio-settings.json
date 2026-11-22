@@ -1,0 +1,69 @@
+{
+  "api": 1,
+  "fields": [
+    {
+      "key": "theme",
+      "label": "Theme",
+      "help": "Choose the photographed clock face and its materials.",
+      "type": "choice",
+      "default": "GRAPHITE",
+      "options": [
+        {
+          "value": "GRAPHITE",
+          "label": "Graphite"
+        },
+        {
+          "value": "IVORY",
+          "label": "Ivory"
+        },
+        {
+          "value": "MIDNIGHT",
+          "label": "Midnight"
+        }
+      ]
+    },
+    {
+      "key": "showDate",
+      "label": "Show date",
+      "help": "Show the weekday and date beside the clock.",
+      "type": "boolean",
+      "default": true
+    },
+    {
+      "key": "showSeconds",
+      "label": "Show seconds",
+      "help": "Use the matching six-flap clock face with live seconds.",
+      "type": "boolean",
+      "default": false
+    },
+    {
+      "key": "idleDelay",
+      "label": "Show screensaver after",
+      "help": "How long Core has been idle before displaying the clock. Screen sleep is separate.",
+      "type": "choice",
+      "default": "60",
+      "options": [
+        {
+          "value": "20",
+          "label": "20 seconds"
+        },
+        {
+          "value": "40",
+          "label": "40 seconds"
+        },
+        {
+          "value": "60",
+          "label": "60 seconds"
+        },
+        {
+          "value": "80",
+          "label": "80 seconds"
+        },
+        {
+          "value": "100",
+          "label": "100 seconds"
+        }
+      ]
+    }
+  ]
+}
