@@ -37,10 +37,16 @@ def _text(value, name, limit=100):
 
 
 def validate(descriptor, kind):
-    if not isinstance(descriptor, dict) or set(descriptor)-{'api', 'settings', 'help', 'connection', 'sources', 'presentation'} or type(descriptor.get('api')) is not int or descriptor['api'] not in (1, 2):
+    if not isinstance(descriptor, dict) or set(descriptor)-{'api', 'settings', 'help', 'connection', 'sources', 'presentation', 'layout'} or type(descriptor.get('api')) is not int or descriptor['api'] not in (1, 2):
         raise ValueError('studio: use declarative panel API 1; code and custom transports are unsupported.')
     if not {'settings', 'connection'} & set(descriptor):
         raise ValueError('studio: declare settings or a connection panel.')
+    if 'layout' in descriptor:
+        if descriptor['api'] != 2:raise ValueError('Widget layouts require panel API 2.')
+        module_spec=importlib.util.spec_from_file_location('trusted_scene_contract',Path(__file__).with_name('scene_contract.py'))
+        module=importlib.util.module_from_spec(module_spec);module_spec.loader.exec_module(module)
+        validate_layout=module.validate
+        validate_layout(descriptor['layout'])
     if 'help' in descriptor:
         _text(descriptor['help'], 'help', 2000)
     if 'settings' in descriptor:
