@@ -1,6 +1,6 @@
 # Bambu for UltraBar Studio
 
-This release uses Studio 0.52.18 or newer. Install the package in Studio. The
+This release uses Studio 0.52.23 or newer. Install the package in Studio. The
 package supplies its settings panel, including the available choices, colors
 and defaults. Save and Deploy applies each placed card's settings to Core.
 H2C and H3C temperature presets use at least two rows.
@@ -10,7 +10,7 @@ your PC**, choose a printer for each widget, then Save and Deploy. Studio sends
 live readings to Core through the same channel as CPU, RAM and drive widgets.
 No printer setup or companion app is required on Core.
 
-Requires **Studio 0.52.18+**, root-enabled ARM32 CB01 / LineOS 1.0.9, and compatible
+Requires **Studio 0.52.23+**, root-enabled ARM32 CB01 / LineOS 1.0.9, and compatible
 Bambu LAN firmware. Keep Studio running for live readings and controls.
 
 ## Connect printers
@@ -148,7 +148,7 @@ behaviors still require an appropriate Studio adapter/runtime update.
 
 ## Nozzle details
 
-H3C shows its nine rack positions in a 3 by 3 grid. H2C uses two rows for reported tools. Each tile shows temperature, material and a color swatch when the printer identifies the filament. A dash marks an unknown material. Chamber and bed temperatures each have their own box in the right-hand column. The material label and filament swatch use larger sizes for readability. Requires Studio 0.52.22.
+H3C shows its nine rack positions in a 3 by 3 grid. H2C uses two rows for reported tools. Each tile shows temperature, material and a color swatch when the printer identifies the filament. A dash marks an unknown material. Chamber and bed temperatures each have their own box in the right-hand column. The material label and filament swatch use larger sizes for readability. Version 2.8.0 uses the shared panel host in Studio 0.52.23. The widget package defines the expanded layout and print alert melodies. Future changes to those definitions use the same host.
 
 ## Widget size
 
