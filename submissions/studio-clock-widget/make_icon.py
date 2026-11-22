@@ -1,10 +1,18 @@
-"""Original Studio Clock icon, drawn from geometric primitives. Requires Pillow."""
+"""Generate the package icon using two hinged numeral plates."""
 from pathlib import Path
-from PIL import Image,ImageDraw
-im=Image.new('RGB',(1024,1024),'#242235');d=ImageDraw.Draw(im)
-d.ellipse((204,112,820,728),outline='#b8adff',width=40)
-for box in [(500,152,524,200),(500,640,524,688),(244,408,292,432),(732,408,780,432)]:d.rectangle(box,fill='#b8adff')
-d.line([(512,252),(512,420),(636,492)],fill='#f4f1ff',width=38)
-d.ellipse((485,393,539,447),fill='#f4f1ff')
-d.rectangle((292,808,732,840),fill='#b8adff');d.rectangle((372,884,652,908),fill='#9891b3')
-im.resize((512,512),Image.Resampling.LANCZOS).save(Path(__file__).with_name('icon.png'),optimize=True)
+from PIL import Image, ImageDraw
+
+image = Image.new("RGB", (512, 512), "#191c1d")
+draw = ImageDraw.Draw(image)
+for x in (38, 265):
+    draw.rounded_rectangle((x, 115, x + 207, 395), radius=18, fill="#3b3e40")
+    draw.rounded_rectangle((x, 250, x + 207, 395), radius=18, fill="#313437")
+    draw.rectangle((x, 250, x + 207, 279), fill="#313437")
+ink = "#f5f0df"
+draw.polygon([(84,208),(132,164),(166,164),(166,343),(131,343),(131,210),(104,232)], fill=ink)
+draw.rounded_rectangle((311,163,427,345), radius=46, fill=ink)
+draw.rounded_rectangle((343,192,395,315), radius=20, fill="#373a3b")
+for x in (38,265):
+    draw.rectangle((x,252,x+207,258), fill="#131616")
+draw.rounded_rectangle((40,79,100,87), radius=4, fill="#dfb37b")
+image.save(Path(__file__).with_name("icon.png"), optimize=True)

@@ -1,6 +1,6 @@
 {
   "repository": "qlerup/studio-clock-widget",
-  "commit": "5cdcb2caa0b0cdbb652ddfc69dd9ce94e51e36dd",
-  "release": "v1.2.1",
+  "commit": "6065ea5414745c8620709f3da2800d2683a8328b",
+  "release": "v1.3.0",
   "type": "corebar-widget"
 }

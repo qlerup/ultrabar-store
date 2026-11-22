@@ -1,5 +1,7 @@
 # Studio Clock & Date
 
+A split-flap clock with paired hour and minute plates. On large cards the optional seconds have their own plate. Only changed plates turn. Dates and AM/PM follow the local clock.
+
 One integrated widget package for the existing Core bar, not a standalone APK.
 Install it once from the Store. It appears in the **App Store** group in the Design & actions library. Drag it onto the bar, edit settings on the right, then Deploy.
 
@@ -7,7 +9,7 @@ Settings: display name, background/text/accent colors, 12/24-hour time, seconds
 and date visibility. The clock uses Core's time and locale; Studio previews PC
 time and locale. It needs no network or extra Android permissions.
 
-Requires Studio 0.52.0+, root-enabled ARM32 CB01 and LineOS 1.0.8 or 1.0.9.
+Requires Studio 0.52.17+, root-enabled ARM32 CB01 and LineOS 1.0.8 or 1.0.9.
 The shared studio-native-v1 runtime is supplied by Studio during Deploy. Keep
 Studio connected for runtime restoration after Core restarts. The clock keeps
 ticking locally while its renderer remains attached; this is not an independent

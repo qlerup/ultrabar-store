@@ -6,9 +6,9 @@
       "id": "clock",
       "name": "Clock & date",
       "kind": "clock",
-      "background": "#192325",
-      "textColor": "#eef6f2",
-      "accent": "#b8adff",
+      "background": "#171919",
+      "textColor": "#f5f0df",
+      "accent": "#dfb37b",
       "hourFormat": "24",
       "showSeconds": true,
       "showDate": true,
@@ -45,6 +45,29 @@
               "label": "Show date",
               "type": "boolean",
               "default": true
+            }
+          ]
+        },
+        "presentation": {
+          "api": 1,
+          "source": {
+            "scope": "setting",
+            "key": "hourFormat"
+          },
+          "presets": [
+            {
+              "value": "12",
+              "splitFlap": {
+                "plateColor": "#353839",
+                "durationMs": 360
+              }
+            },
+            {
+              "value": "24",
+              "splitFlap": {
+                "plateColor": "#353839",
+                "durationMs": 360
+              }
             }
           ]
         }
