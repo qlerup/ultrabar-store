@@ -10,12 +10,18 @@ def validate_type_update(prior,manifest,pr):
  if prior['type']==manifest['type']:return
  labels={item['name'] for item in pr.get('labels',[]) if isinstance(item,dict) and 'name' in item}
  compatible=manifest.get('compatibility',{}).get('minStudioVersion','')
- allowed=(pr['user']['login'].lower()=='qlerup' and 'store-type-migration' in labels
-          and prior['type']=='corebar-app' and manifest['type']=='corebar-widget'
-          and prior['id']==manifest['id'] and prior.get('publisher')==manifest.get('publisher')
-          and manifest.get('permissions')==[] and 'android' not in manifest
-          and re.fullmatch(r'\d+\.\d+\.\d+',compatible) and tuple(map(int,compatible.split('.'))) >= (0,48,1))
- if not allowed:raise ValueError('Updates keep their approved package type unless the Store maintainer explicitly labels an app-to-widget migration store-type-migration. Keep the package ID and repository; require a Studio release supporting the migration.')
+ maintained=(pr['user']['login'].lower()=='qlerup' and 'store-type-migration' in labels
+             and prior['id']==manifest['id'] and prior.get('publisher')==manifest.get('publisher'))
+ if maintained and re.fullmatch(r'\d+\.\d+\.\d+',compatible):
+  minimum=tuple(map(int,compatible.split('.')))
+  if (prior['type']=='corebar-app' and manifest['type']=='corebar-widget'
+      and manifest.get('permissions')==[] and 'android' not in manifest and minimum >= (0,48,1)):
+   return
+  if (prior['type']=='corebar-widget' and manifest['type']=='corebar-app'
+      and manifest.get('android',{}).get('signerSha256') and manifest.get('bundledWidgets',{}).get('widgets')
+      and minimum >= (0,46,0)):
+   return
+ raise ValueError('Changing package type requires a labelled maintainer migration under the original ID and publisher. An app replacing a widget must bundle the widget.')
 def get_json(url):
  headers={'User-Agent':'UltraBar-Store-Checks','Accept':'application/vnd.github+json'}
  token=os.environ.get('GH_TOKEN')
@@ -82,6 +88,10 @@ def run(root,trusted,pr):
     prior=json.loads((old/'manifest.json').read_text())
     if prior['id']!=manifest['id']:raise ValueError('Keep the approved package ID.')
     validate_type_update(prior,manifest,pr)
+    if prior['type']=='corebar-widget' and manifest['type']=='corebar-app':
+     old_keys={w['id'] for w in json.loads((old/'widget.json').read_bytes())['widgets']}
+     new_keys={w['id'] for w in manifest['bundledWidgets']['widgets']}
+     if not old_keys <= new_keys:raise ValueError('The bundled app must retain existing widget IDs.')
     def valid_version(value):
      if not isinstance(value,str) or not re.fullmatch(r'(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)',value):raise ValueError('Invalid version.')
      return tuple(map(int,value.split('.')))
@@ -108,8 +118,8 @@ def run(root,trusted,pr):
     if raw!=file.read_bytes():raise ValueError(name+' differs from the linked release source. Copy the exact reviewed bytes.')
    if kind=='corebar-app':
     verify_apk_source(folder,repo,commit,tag)
-    if old.exists() and prior.get('android',{}).get('signerSha256')!=manifest['android']['signerSha256']:raise ValueError('APK updates must keep the approved signing identity.')
-    if old.exists() and (prior['android']['packageId']!=manifest['android']['packageId'] or prior['android']['versionCode']>=manifest['android']['versionCode']):raise ValueError('APK updates keep Android package ID and increase versionCode.')
+    if old.exists() and prior['type']=='corebar-app' and prior['android'].get('signerSha256')!=manifest['android']['signerSha256']:raise ValueError('APK updates must keep the approved signing identity.')
+    if old.exists() and prior['type']=='corebar-app' and (prior['android']['packageId']!=manifest['android']['packageId'] or prior['android']['versionCode']>=manifest['android']['versionCode']):raise ValueError('APK updates keep Android package ID and increase versionCode.')
    notes.append(folder.name+': repository owner, stable release commit and upstream files verified.')
   except Exception as exc:errors.append(folder.name+': '+str(exc))
  for folder in base.iterdir():

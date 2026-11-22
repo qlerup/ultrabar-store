@@ -12,6 +12,16 @@ class OwnershipTests(unittest.TestCase):
   for change in (dict(id='another.package'),dict(type='studio-plugin'),dict(permissions=['android.permission.INTERNET']),dict(android={}),dict(compatibility=dict(minStudioVersion='0.48.0'))):
    with self.assertRaises(ValueError):validate_type_update(old,dict(new,**change),pr)
   with self.assertRaises(ValueError):validate_type_update(new,old,pr)
+ def test_existing_widget_can_become_a_reviewed_app_under_the_same_id(self):
+  from repository_check import validate_type_update
+  old=dict(type='corebar-widget',id='owner.clock',publisher='owner')
+  new=dict(old,type='corebar-app',android=dict(signerSha256='a'*64),
+           bundledWidgets=dict(widgets=[dict(id='clock')]),compatibility=dict(minStudioVersion='0.52.17'))
+  pr=dict(user=dict(login='qlerup'),labels=[dict(name='store-type-migration')])
+  validate_type_update(old,new,pr)
+  for change in (dict(bundledWidgets={}),dict(android={}),dict(id='owner.another')):
+   with self.assertRaises(ValueError):validate_type_update(old,dict(new,**change),pr)
+  with self.assertRaises(ValueError):validate_type_update(old,new,dict(pr,labels=[]))
  def setUp(self):
   self.link=dict(repository='alice/widget',commit='a'*40,release='v1.0.0')
   self.manifest=dict(publisher='alice',source='https://github.com/alice/widget/blob/'+'a'*40+'/widget.json')
