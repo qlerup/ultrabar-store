@@ -994,41 +994,39 @@
                       "op": "text",
                       "text": "hotend.{item.tool}",
                       "box": [
-                        35,
-                        22,
-                        930,
-                        248
+                        65,
+                        180,
+                        465,
+                        265
                       ],
                       "size": 13,
                       "bold": true,
                       "lookup": "labels",
                       "fallback": "Hotend {item.tool}",
-                      "align": "center",
                       "color": "#a5b9c3"
                     },
                     {
                       "op": "text",
                       "text": "{item.temperature}\u00b0C",
                       "box": [
-                        35,
-                        265,
-                        930,
-                        235
+                        65,
+                        480,
+                        465,
+                        340
                       ],
-                      "size": 13,
-                      "bold": true,
-                      "align": "center"
+                      "size": 14,
+                      "bold": true
                     },
                     {
                       "op": "text",
                       "text": "{item.material}",
                       "box": [
-                        35,
-                        500,
-                        930,
-                        215
+                        550,
+                        180,
+                        390,
+                        265
                       ],
-                      "size": 10,
+                      "size": 12,
                       "when": "item.material",
                       "align": "center"
                     },
@@ -1036,12 +1034,12 @@
                       "op": "text",
                       "text": "filament.{item.filamentProfile}",
                       "box": [
-                        35,
-                        500,
-                        930,
-                        215
+                        550,
+                        180,
+                        390,
+                        265
                       ],
-                      "size": 10,
+                      "size": 12,
                       "unless": "item.material",
                       "lookup": "labels",
                       "align": "center"
@@ -1049,12 +1047,12 @@
                     {
                       "op": "swatch",
                       "box": [
-                        35,
-                        730,
-                        930,
-                        230
+                        550,
+                        480,
+                        390,
+                        340
                       ],
-                      "size": 10,
+                      "size": 13,
                       "color": "@item.color",
                       "radius": 2,
                       "when": "item.color"
@@ -1063,10 +1061,10 @@
                       "op": "text",
                       "text": "\u2014",
                       "box": [
-                        35,
-                        730,
-                        930,
-                        230
+                        550,
+                        480,
+                        390,
+                        340
                       ],
                       "size": 9,
                       "unless": "item.color",
@@ -1106,41 +1104,39 @@
                       "op": "text",
                       "text": "hotend.{item.tool}",
                       "box": [
-                        35,
-                        22,
-                        930,
-                        248
+                        65,
+                        180,
+                        465,
+                        265
                       ],
                       "size": 13,
                       "bold": true,
                       "lookup": "labels",
                       "fallback": "Hotend {item.tool}",
-                      "align": "center",
                       "color": "#a5b9c3"
                     },
                     {
                       "op": "text",
                       "text": "{item.temperature}\u00b0C",
                       "box": [
-                        35,
-                        265,
-                        930,
-                        235
+                        65,
+                        480,
+                        465,
+                        340
                       ],
-                      "size": 13,
-                      "bold": true,
-                      "align": "center"
+                      "size": 14,
+                      "bold": true
                     },
                     {
                       "op": "text",
                       "text": "{item.material}",
                       "box": [
-                        35,
-                        500,
-                        930,
-                        215
+                        550,
+                        180,
+                        390,
+                        265
                       ],
-                      "size": 10,
+                      "size": 12,
                       "when": "item.material",
                       "align": "center"
                     },
@@ -1148,12 +1144,12 @@
                       "op": "text",
                       "text": "filament.{item.filamentProfile}",
                       "box": [
-                        35,
-                        500,
-                        930,
-                        215
+                        550,
+                        180,
+                        390,
+                        265
                       ],
-                      "size": 10,
+                      "size": 12,
                       "unless": "item.material",
                       "lookup": "labels",
                       "align": "center"
@@ -1161,12 +1157,12 @@
                     {
                       "op": "swatch",
                       "box": [
-                        35,
-                        730,
-                        930,
-                        230
+                        550,
+                        480,
+                        390,
+                        340
                       ],
-                      "size": 10,
+                      "size": 13,
                       "color": "@item.color",
                       "radius": 2,
                       "when": "item.color"
@@ -1175,10 +1171,10 @@
                       "op": "text",
                       "text": "\u2014",
                       "box": [
-                        35,
-                        730,
-                        930,
-                        230
+                        550,
+                        480,
+                        390,
+                        340
                       ],
                       "size": 9,
                       "unless": "item.color",
@@ -1216,41 +1212,39 @@
                       "op": "text",
                       "text": "hotend.{item.tool}",
                       "box": [
-                        35,
-                        22,
-                        930,
-                        248
+                        65,
+                        180,
+                        465,
+                        265
                       ],
                       "size": 13,
                       "bold": true,
                       "lookup": "labels",
                       "fallback": "Hotend {item.tool}",
-                      "align": "center",
                       "color": "#a5b9c3"
                     },
                     {
                       "op": "text",
                       "text": "{item.temperature}\u00b0C",
                       "box": [
-                        35,
-                        265,
-                        930,
-                        235
+                        65,
+                        480,
+                        465,
+                        340
                       ],
-                      "size": 13,
-                      "bold": true,
-                      "align": "center"
+                      "size": 14,
+                      "bold": true
                     },
                     {
                       "op": "text",
                       "text": "{item.material}",
                       "box": [
-                        35,
-                        500,
-                        930,
-                        215
+                        550,
+                        180,
+                        390,
+                        265
                       ],
-                      "size": 10,
+                      "size": 12,
                       "when": "item.material",
                       "align": "center"
                     },
@@ -1258,12 +1252,12 @@
                       "op": "text",
                       "text": "filament.{item.filamentProfile}",
                       "box": [
-                        35,
-                        500,
-                        930,
-                        215
+                        550,
+                        180,
+                        390,
+                        265
                       ],
-                      "size": 10,
+                      "size": 12,
                       "unless": "item.material",
                       "lookup": "labels",
                       "align": "center"
@@ -1271,12 +1265,12 @@
                     {
                       "op": "swatch",
                       "box": [
-                        35,
-                        730,
-                        930,
-                        230
+                        550,
+                        480,
+                        390,
+                        340
                       ],
-                      "size": 10,
+                      "size": 13,
                       "color": "@item.color",
                       "radius": 2,
                       "when": "item.color"
@@ -1285,10 +1279,10 @@
                       "op": "text",
                       "text": "\u2014",
                       "box": [
-                        35,
-                        730,
-                        930,
-                        230
+                        550,
+                        480,
+                        390,
+                        340
                       ],
                       "size": 9,
                       "unless": "item.color",
