@@ -221,6 +221,32 @@
                 "type": "integer",
                 "minimum": 1,
                 "maximum": 3
+              },
+              "nozzleGrid": {
+                "type": "object",
+                "required": [
+                  "materialSize",
+                  "swatchSize",
+                  "verticalInset"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "materialSize": {
+                    "type": "integer",
+                    "minimum": 10,
+                    "maximum": 20
+                  },
+                  "swatchSize": {
+                    "type": "integer",
+                    "minimum": 8,
+                    "maximum": 22
+                  },
+                  "verticalInset": {
+                    "type": "integer",
+                    "minimum": 4,
+                    "maximum": 14
+                  }
+                }
               }
             }
           }
