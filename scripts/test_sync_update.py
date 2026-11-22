@@ -93,6 +93,8 @@ class SynchronizeUpdateTests(unittest.TestCase):
                 return real_git(root,'fetch','--quiet','.',heads[n])
             return real_git(root,*args)
         def api(repo,path,*args):
+            if path == 'git/ref/heads/main':
+                return dict(object=dict(sha=base))
             if path.startswith('git/commits/'):
                 return dict(sha=heads[2],tree=dict(sha=self.git('rev-parse',heads[2]+'^{tree}')),parents=[dict(sha=second),dict(sha=base)])
             n=int(path.split('/')[1])
@@ -102,7 +104,7 @@ class SynchronizeUpdateTests(unittest.TestCase):
                 self.git('merge','--no-edit',base)
                 heads[n]=self.git('rev-parse','HEAD')
                 self.git('checkout','--detach','-q',base)
-            return dict(base=dict(sha=base,ref='main'),head=dict(sha=heads[n]),state='open',draft=False,labels=[],user=dict(login='alice'))
+            return dict(base=dict(sha=self.initial,ref='main'),head=dict(sha=heads[n]),state='open',draft=False,labels=[],user=dict(login='alice'))
         output=self.root/'queue-output'
         # Mock only the GitHub listing, while keeping all local Git operations real.
         original_output = subprocess.check_output

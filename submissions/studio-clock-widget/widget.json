@@ -13,7 +13,7 @@
       "showSeconds": true,
       "showDate": true,
       "studio": {
-        "api": 1,
+        "api": 2,
         "help": "Uses Core time and locale; editor preview uses PC time. Keep Studio connected to restore the widget after Core restarts.",
         "settings": {
           "api": 1,
@@ -45,6 +45,30 @@
               "label": "Show date",
               "type": "boolean",
               "default": true
+            },
+            {
+              "key": "background",
+              "type": "color",
+              "label": "Background color",
+              "default": "#171919"
+            },
+            {
+              "key": "textColor",
+              "type": "color",
+              "label": "Digit and text color",
+              "default": "#f5f0df"
+            },
+            {
+              "key": "accent",
+              "type": "color",
+              "label": "Accent color",
+              "default": "#dfb37b"
+            },
+            {
+              "key": "plateColor",
+              "type": "color",
+              "label": "Plate color",
+              "default": "#353839"
             }
           ]
         },
@@ -59,16 +83,34 @@
               "value": "12",
               "splitFlap": {
                 "plateColor": "#353839",
-                "durationMs": 360
+                "durationMs": 360,
+                "plateColorSetting": "plateColor"
               }
             },
             {
               "value": "24",
               "splitFlap": {
                 "plateColor": "#353839",
-                "durationMs": 360
+                "durationMs": 360,
+                "plateColorSetting": "plateColor"
               }
             }
+          ]
+        },
+        "layout": {
+          "large": [
+            {"op":"text","box":[18,19,180,31],"text":"@title","font":16,"color":"$textColor","bold":true},
+            {"op":"time","box":[216,22,32,24],"value":"period","font":12,"color":"$textColor"},
+            {"op":"time","box":[18,76,79,92],"value":"hours","font":63,"color":"$textColor","plate":"$plateColor","radius":6,"bold":true,"duration":360},
+            {"op":"time","box":[103,76,79,92],"value":"minutes","font":63,"color":"$textColor","plate":"$plateColor","radius":6,"bold":true,"duration":360},
+            {"op":"time","box":[189,101,53,67],"value":"seconds","font":44,"color":"$textColor","plate":"$plateColor","radius":6,"bold":true,"duration":360,"when":"showSeconds"},
+            {"op":"time","box":[18,187,230,30],"value":"date","font":16,"color":"$textColor","when":"showDate"}
+          ],
+          "small": [
+            {"op":"text","box":[8,4,115,23],"text":"@title","font":13,"color":"$textColor","bold":false},
+            {"op":"time","box":[8,35,54,48],"value":"hours","font":36,"color":"$textColor","plate":"$plateColor","radius":6,"bold":true,"duration":360},
+            {"op":"time","box":[67,35,54,48],"value":"minutes","font":36,"color":"$textColor","plate":"$plateColor","radius":6,"bold":true,"duration":360},
+            {"op":"time","box":[8,90,112,20],"value":"shortDate","font":12,"color":"$textColor","when":"showDate"}
           ]
         }
       },
