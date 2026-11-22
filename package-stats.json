@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "generatedAt": 1795383626,
+  "generatedAt": 1795384336,
   "packages": {
     "studio.bambu": {
       "repository": "https://github.com/qlerup/ultrabar-bambu",
-      "artifact": "https://github.com/qlerup/ultrabar-store/releases/download/review-bambu-2.6.0/widget.json",
+      "artifact": "https://github.com/qlerup/ultrabar-store/releases/download/review-bambu-2.6.1/widget.json",
       "downloads": 0,
       "issues": 0,
       "stale": false
@@ -12,28 +12,28 @@
     "studio.clock.widget": {
       "repository": "https://github.com/qlerup/studio-clock-widget",
       "artifact": "https://github.com/qlerup/ultrabar-store/releases/download/review-studio-clock-widget-1.4.0/widget.json",
-      "downloads": 17,
+      "downloads": 18,
       "issues": 0,
       "stale": false
     },
     "studio.drive.widget": {
       "repository": "https://github.com/qlerup/studio-drive-usage",
       "artifact": "https://github.com/qlerup/ultrabar-store/releases/download/review-studio-drive-widget-1.3.0/widget.json",
-      "downloads": 13,
+      "downloads": 14,
       "issues": 0,
       "stale": false
     },
     "studio.system.widget": {
       "repository": "https://github.com/qlerup/studio-system-monitor",
       "artifact": "https://github.com/qlerup/ultrabar-store/releases/download/review-studio-system-monitor-1.3.0/widget.json",
-      "downloads": 12,
+      "downloads": 13,
       "issues": 0,
       "stale": false
     },
     "studio.vivo.screensync": {
       "repository": "https://github.com/qlerup/vivo-screen-sync",
       "artifact": "https://github.com/qlerup/ultrabar-store/releases/download/review-vivo-screen-sync-1.1.0/app.apk",
-      "downloads": 135,
+      "downloads": 136,
       "issues": 0,
       "stale": false
     }
