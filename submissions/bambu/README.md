@@ -148,7 +148,7 @@ behaviors still require an appropriate Studio adapter/runtime update.
 
 ## Nozzle details
 
-H3C shows its nine rack positions in a 3 by 3 grid. H2C uses two rows for reported tools. Each tile shows temperature, material and a color swatch when the printer identifies the filament. A dash marks an unknown material. Chamber and bed temperatures each have their own box in the right-hand column. Compact hotend tiles stack their numbered title, temperature, filament material and color. The expanded card leaves space for the rounded corners and places the printer heading and tools side by side. Version 2.8.0 uses the shared panel host in Studio 0.52.23. The widget package defines the expanded layout and print alert melodies. Future changes to those definitions use the same host.
+H3C shows its nine rack positions in a 3 by 3 grid. H2C uses two rows for reported tools. Each tile shows temperature, material and a color swatch when the printer identifies the filament. A dash marks an unknown material. Chamber and bed temperatures each have their own box in the right-hand column. Each hotend tile shows its numbered title above the temperature on the left and filament material above its color swatch on the right. The expanded card leaves space for the rounded corners and places the printer heading and tools side by side. Version 2.8.0 uses the shared panel host in Studio 0.52.23. The widget package defines the expanded layout and print alert melodies. Future changes to those definitions use the same host.
 
 ## Widget size
 
