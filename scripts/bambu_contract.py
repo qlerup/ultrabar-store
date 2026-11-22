@@ -1,9 +1,15 @@
 """Supported, data-only Bambu widget options. No contributor code or credentials."""
 FIELDS = {'primary', 'secondary', 'expandedSlots', 'showJob', 'showTemperatures',
-          'showLayers', 'showRemaining', 'showControls', 'liquidMotion'}
+          'showLayers', 'showRemaining', 'showControls', 'liquidMotion', 'printAlerts', 'wakeOnAlert'}
+ALERT_FIELDS = {'printAlerts', 'wakeOnAlert'}
 DEFAULTS = dict(primary='progress', secondary='remaining', expandedSlots=3,
                 showJob=True, showTemperatures=True, showLayers=True,
                 showRemaining=True, showControls=True, liquidMotion=True)
+
+
+def has_alert_settings(widget):
+    fields = widget.get('studio', {}).get('settings', {}).get('fields', [])
+    return bool(ALERT_FIELDS & (set(widget) | {field['key'] for field in fields}))
 
 
 def validate(spec):

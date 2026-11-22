@@ -230,6 +230,7 @@ IDs preserve placed cards. Studio continues to supply common names/colors.
 | `bambu` | `secondary`: choice | `remaining`, `state`, `job`, `layers`, `temperature`, `none` |
 | `bambu` | `expandedSlots`: integer | min/max within 2-5, positive step, default aligned to step |
 | `bambu` | `showJob`, `showTemperatures`, `showLayers`, `showRemaining`, `showControls`, `liquidMotion`: boolean | true/false |
+| `bambu` | `printAlerts`, `wakeOnAlert`: boolean (Studio 0.52.13+) | true/false |
 
 A panel may expose a supported subset. Choice options carry stable string values
 and package-owned labels. Other fields cannot introduce unsupported runtime
