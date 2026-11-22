@@ -3,13 +3,13 @@
   "id": "qlerup.core.flip-clock-hd",
   "name": "Flip Clock HD",
   "type": "corebar-app",
-  "description": "A fullscreen photographic flip-clock screensaver. Choose a theme, date, seconds and idle delay in Studio. Deploy replaces the LineOS screensaver. Tap Core to dismiss it.",
-  "version": "1.0.0",
+  "description": "A fullscreen photographic flip-clock screensaver that runs on Core even when Studio is closed. Deploy once and choose the theme, date, seconds and idle delay in Studio.",
+  "version": "1.1.0",
   "publisher": "qlerup",
-  "source": "https://github.com/qlerup/ultrabar-flip-clock-hd/blob/cf09b0ecd4f25b1f17e5569436e0267fea1c1b3c/AndroidManifest.xml",
+  "source": "https://github.com/qlerup/ultrabar-flip-clock-hd/blob/5c9f1dca204f5179e49cbfb26b1a8f3aefe69f2c/AndroidManifest.xml",
   "license": "Proprietary; unmodified official releases may be used",
   "compatibility": {
-    "minStudioVersion": "0.52.29",
+    "minStudioVersion": "0.52.30",
     "hostApi": 1,
     "models": [
       "CB01"
@@ -24,7 +24,7 @@
   "permissions": [],
   "android": {
     "packageId": "dk.qlerup.flipclock",
-    "versionCode": 100,
+    "versionCode": 110,
     "minSdk": 26,
     "signerSha256": "a2ffc4fd3545404750bd482b0332a30727e581dc70fd4f0cc6d34b22837f1fc8"
   },
@@ -98,9 +98,9 @@
     ]
   },
   "artifact": {
-    "url": "https://github.com/qlerup/ultrabar-store/releases/download/review-flip-clock-hd-1.0.0/app.apk",
-    "size": 1098731,
-    "sha256": "dbdc5626ae1a04fdef7707c34934c8dfa5dfafdce232205475a9aae5704df799"
+    "url": "https://github.com/qlerup/ultrabar-store/releases/download/review-flip-clock-hd-1.1.0/app.apk",
+    "size": 1098879,
+    "sha256": "efdcb9b39863ce4ea945634b7f04589bd81bef6397431ea0038f8cd339bd1f27"
   },
   "icon": {
     "url": "https://github.com/qlerup/ultrabar-store/releases/download/review-flip-clock-hd-1.0.0/icon.png",

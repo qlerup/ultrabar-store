@@ -6,7 +6,7 @@ photographed plates fold at the hinge when the time changes.
 
 ## Install and configure
 
-Requires UltraBar Studio 0.52.29 or newer and Core CB01 with root-enabled
+Requires UltraBar Studio 0.52.30 or newer and Core CB01 with root-enabled
 WiFi ADB and LineOS 1.0.9.
 
 1. Install **Flip Clock HD** in the Studio Store. Add it to **Background apps**
@@ -17,14 +17,11 @@ WiFi ADB and LineOS 1.0.9.
    and selects Flip Clock HD in place of the previous LineOS screensaver.
 4. Tap Core while the clock is showing to dismiss it. Launching the app
    directly on Core also opens the full-screen clock.
-Keep Studio connected, including in the Windows tray, so it can re-arm the
-LineOS 1.0.9 idle timer when the clock is dismissed.
-
 5. To restore the previous screensaver, remove Flip Clock HD from the layout
    and Background apps and deploy again.
 
-LineOS triggers the screensaver while the display is awake. PC Standby can
-still turn the display off. Flip Clock HD does not change Android's screen-off
+The Core app owns the idle timer, repeat activation and touch dismissal.
+It keeps working when Studio is closed. PC Standby can still turn the display off. Flip Clock HD does not change Android's screen-off
 timeout or PC Standby's connection checks.
 
 ## Themes
@@ -39,11 +36,15 @@ and 12/24-hour setting. Artwork and generation prompts are in [ARTWORK.md](ARTWO
 
 ## Settings and data
 
-The app declares no requested Android permissions and uses no network or
-analytics. It stores the display choices in app-private preferences. Settings
+The app uses no network, analytics or runtime permissions. Deploy enables its
+Android accessibility service for idle detection. It uses touch and window
+timing and cannot read other apps' view contents. It stores the display choices in app-private preferences. Settings
 API 1 uses an Android broadcast receiver protected by `android.permission.DUMP`
 and requires Studio to confirm the values saved on Core. All visual settings
 are edited in Studio. The Core clock itself shows no settings controls.
+
+The same [Core screensaver contract](CORE-SCREENSAVER.md) is available to other
+reviewed screensaver apps.
 
 ## Build
 
