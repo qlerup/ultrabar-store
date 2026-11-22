@@ -877,9 +877,9 @@
               "text": "{values.title}  \u00b7  {values.status}",
               "box": [
                 50,
-                49,
-                410,
-                75
+                52,
+                205,
+                85
               ],
               "size": 14,
               "bold": true
@@ -964,9 +964,9 @@
               "op": "group",
               "box": [
                 280,
-                133,
+                62,
                 670,
-                774
+                845
               ],
               "children": [
                 {
