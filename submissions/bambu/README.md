@@ -159,4 +159,4 @@ grid cell to use the small card. In Studio 0.52.11 or newer, drag it into an
 empty large slot to switch back. Earlier Studio versions also have a size
 selector in **Widget settings**. Small and mixed layouts require LineOS 1.0.9.
 
-Bambu 2.8.1 defines its printer image choices and model-specific sizing in the package. On a large card the H3C photo aligns its cabinet with the other printers and keeps the AMS above it. Image presets require UltraBar Studio 0.52.24 or newer.
+Bambu 2.8.1 defines its printer image choices and model-specific sizing in the package. On a large card the H3C photo matches the cabinet height of the H2D and centers the full printer and AMS beside the print percentage. Image presets require UltraBar Studio 0.52.24 or newer.
