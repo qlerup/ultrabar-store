@@ -205,6 +205,8 @@ def validate_tree(root,verify_assets=False,generated_catalog=False):
             compat=manifest['compatibility']
             if compat.get('hostApi')!=1 or valid_version(compat['minStudioVersion'])<(0,20,0):raise ValueError('Widget packages require hostApi 1 and Studio 0.20.0+')
             if kind=='corebar-widget' and (compat.get('abis')!=['armeabi-v7a'] or compat.get('models')!=['CB01'] or not compat.get('lineosVersions') or not set(compat['lineosVersions'])<= {'1.0.8','1.0.9'}):raise ValueError('Declare tested CB01/ARM32/LineOS 1.0.8 or 1.0.9 compatibility')
+            if any(w.get('studio', {}).get('api') == 2 for w in widgets) and valid_version(compat['minStudioVersion']) < (0,52,18):
+                raise ValueError('Package-defined widget settings require Studio 0.52.18+.')
             if any('splitFlap' in p for w in widgets for p in w.get('studio', {}).get('presentation', {}).get('presets', [])) and valid_version(compat['minStudioVersion']) < (0, 52, 17):
                 raise ValueError('Split-flap displays require Studio 0.52.17+.')
             if any('sizes' in w for w in widgets) and valid_version(compat['minStudioVersion']) < (0, 52, 0):

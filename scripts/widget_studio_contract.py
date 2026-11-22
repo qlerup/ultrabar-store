@@ -37,7 +37,7 @@ def _text(value, name, limit=100):
 
 
 def validate(descriptor, kind):
-    if not isinstance(descriptor, dict) or set(descriptor)-{'api', 'settings', 'help', 'connection', 'sources', 'presentation'} or type(descriptor.get('api')) is not int or descriptor['api'] != 1:
+    if not isinstance(descriptor, dict) or set(descriptor)-{'api', 'settings', 'help', 'connection', 'sources', 'presentation'} or type(descriptor.get('api')) is not int or descriptor['api'] not in (1, 2):
         raise ValueError('studio: use declarative panel API 1; code and custom transports are unsupported.')
     if not {'settings', 'connection'} & set(descriptor):
         raise ValueError('studio: declare settings or a connection panel.')
@@ -48,6 +48,12 @@ def validate(descriptor, kind):
         allowed = SETTINGS.get(kind, {})
         for field in schema['fields']:
             key = field['key']
+            if descriptor['api'] == 2 and key not in allowed:
+                if key in {'accent', 'background', 'textColor'} and field['type'] != 'color':
+                    raise ValueError('Widget colors must use a color field.')
+                if key in {'constructor', 'prototype', '__proto__'}:
+                    raise ValueError('Invalid package setting name.')
+                continue
             if key not in allowed or field['type'] != allowed[key][0]:
                 raise ValueError('studio: unsupported setting for '+str(kind)+': '+key+'.')
             choices = allowed[key][1]

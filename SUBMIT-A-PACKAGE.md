@@ -379,3 +379,26 @@ Set `compatibility.minStudioVersion` to at least `0.52.0` when declaring sizes.
 For a small-only package, list only LineOS `1.0.9` in
 `compatibility.lineosVersions`. Mixed layouts require root-enabled CB01 with
 LineOS 1.0.9. Verify readability in both sizes you declare before submitting.
+
+## Package-defined settings in Studio 0.52.18
+
+A widget installed in Studio can set `widgets[].studio.api` to `2`. Declare the
+editor controls in `studio.settings.fields`. Each field supplies its own key,
+label, type and default. The same Studio version reads added fields, choices
+and defaults when the package is updated. Values belong to each placed card.
+Use a stable package ID, widget ID and field key across releases.
+
+For example, a package can declare a color as
+`{"key":"plate","label":"Plate color","type":"color","default":"#353839"}`
+and set `plateColorSetting` to `plate` in its split-flap presentation preset.
+A choice field can select a package-defined presentation through
+`presentation.source`. A printer presentation preset can specify
+`minTemperatureRows` from 1 to 3. The existing Core layout applies these values
+on Deploy. Publish changes to the widget JSON through the existing Store listing.
+
+Supported field types are boolean, integer, number, string, URL, choice and
+color. New field keys are stored under `packageSettings`, separately from the
+card identity and transport settings. A field supplies configuration. A feature
+that uses it also needs a renderer, presentation or device capability that
+consumes its value. Declare `compatibility.minStudioVersion` of at least
+`0.52.18` for panel API 2.

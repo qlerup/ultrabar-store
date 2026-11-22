@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Native widget Studio panel API 1",
+  "title": "Native widget Studio panels",
   "description": "Embed in widget.json widgets[].studio. scripts/widget_studio_contract.py enforces renderer-specific keys/types/choices, approved sources/provider fields and size limits. Requires Studio 0.49.0.",
   "type": "object",
   "additionalProperties": false,
@@ -21,7 +21,10 @@
   ],
   "properties": {
     "api": {
-      "const": 1
+      "enum": [
+        1,
+        2
+      ]
     },
     "settings": {
       "$ref": "settings.schema.json"
@@ -208,8 +211,16 @@
                     "type": "integer",
                     "minimum": 0,
                     "maximum": 600
+                  },
+                  "plateColorSetting": {
+                    "type": "string"
                   }
                 }
+              },
+              "minTemperatureRows": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 3
               }
             }
           }
