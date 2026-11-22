@@ -120,7 +120,9 @@ def widget_package(raw):
         if not isinstance(key,str) or not re.fullmatch(r'[a-z][a-z0-9-]{0,63}',key) or key in ids:raise StoreError('Widget IDs must be unique.')
         ids.add(key)
         base={k:v for k,v in w.items() if k in ('name','kind','background','textColor','accent')}
-        if w.get('kind')=='bambu':
+        if w.get('kind')=='scene' and (not isinstance(w.get('studio'),dict) or 'layout' not in w['studio']):
+            raise StoreError('A scene widget requires its own layout.')
+        if w.get('kind') in ('bambu','scene'):
             if not isinstance(w.get('name'),str) or not 1<=len(w['name'])<=100:raise StoreError('Invalid printer widget name.')
             for color in ('background','textColor','accent'):
                 if color in w and not re.fullmatch(r'#[a-fA-F0-9]{6}',str(w[color])):raise StoreError('Invalid widget color.')
@@ -205,6 +207,8 @@ def validate_tree(root,verify_assets=False,generated_catalog=False):
             compat=manifest['compatibility']
             if compat.get('hostApi')!=1 or valid_version(compat['minStudioVersion'])<(0,20,0):raise ValueError('Widget packages require hostApi 1 and Studio 0.20.0+')
             if kind=='corebar-widget' and (compat.get('abis')!=['armeabi-v7a'] or compat.get('models')!=['CB01'] or not compat.get('lineosVersions') or not set(compat['lineosVersions'])<= {'1.0.8','1.0.9'}):raise ValueError('Declare tested CB01/ARM32/LineOS 1.0.8 or 1.0.9 compatibility')
+            if any(w.get('kind')=='scene' or 'sounds' in w.get('studio',{}) or 'expanded' in w.get('studio',{}).get('layout',{}) or any(isinstance(v,dict) for v in w.get('studio',{}).get('layout',{}).values()) for w in widgets) and valid_version(compat['minStudioVersion']) < (0,52,23):
+                raise ValueError('Package panels and sounds require Studio 0.52.23+.')
             if any('sideTemperatures' in preset.get('nozzleGrid', {}) for w in widgets for preset in w.get('studio', {}).get('presentation', {}).get('presets', [])) and valid_version(compat['minStudioVersion']) < (0,52,22):
                 raise ValueError('Side temperature boxes require Studio 0.52.22+.')
             if any('nozzleGrid' in preset for w in widgets for preset in w.get('studio', {}).get('presentation', {}).get('presets', [])) and valid_version(compat['minStudioVersion']) < (0,52,21):
