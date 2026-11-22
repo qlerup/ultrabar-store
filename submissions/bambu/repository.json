@@ -1,6 +1,6 @@
 {
   "repository": "qlerup/ultrabar-bambu",
-  "commit": "fe385efe3dee99729fa778706639e1f112815d86",
-  "release": "v2.6.0",
+  "commit": "446f3848a3ea78c15320ce0da987ae85b174d234",
+  "release": "v2.6.1",
   "type": "corebar-widget"
 }

@@ -148,7 +148,7 @@ behaviors still require an appropriate Studio adapter/runtime update.
 
 ## Nozzle details
 
-H3C shows its nine rack positions in a 3 by 3 grid. H2C uses two rows for reported tools. Each tile shows temperature, material and a color swatch when the printer identifies the filament. A dash marks an unknown material. Bed and chamber temperatures appear with the print summary. Requires Studio 0.52.20.
+H3C shows its nine rack positions in a 3 by 3 grid. H2C uses two rows for reported tools. Each tile shows temperature, material and a color swatch when the printer identifies the filament. A dash marks an unknown material. Bed and chamber temperatures appear with the print summary. The material label and filament swatch use larger sizes for readability. Requires Studio 0.52.21.
 
 ## Widget size
 

@@ -548,6 +548,11 @@
                 "filament.GFG50": "PETG-CF",
                 "filament.GFC00": "PC"
               },
+              "nozzleGrid": {
+                "materialSize": 17,
+                "swatchSize": 18,
+                "verticalInset": 5
+              },
               "minTemperatureRows": 2
             },
             {
@@ -594,6 +599,11 @@
                 "filament.GFB50": "ABS-GF",
                 "filament.GFG50": "PETG-CF",
                 "filament.GFC00": "PC"
+              },
+              "nozzleGrid": {
+                "materialSize": 17,
+                "swatchSize": 18,
+                "verticalInset": 5
               },
               "minTemperatureRows": 3
             }
