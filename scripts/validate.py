@@ -207,6 +207,8 @@ def validate_tree(root,verify_assets=False,generated_catalog=False):
             compat=manifest['compatibility']
             if compat.get('hostApi')!=1 or valid_version(compat['minStudioVersion'])<(0,20,0):raise ValueError('Widget packages require hostApi 1 and Studio 0.20.0+')
             if kind=='corebar-widget' and (compat.get('abis')!=['armeabi-v7a'] or compat.get('models')!=['CB01'] or not compat.get('lineosVersions') or not set(compat['lineosVersions'])<= {'1.0.8','1.0.9'}):raise ValueError('Declare tested CB01/ARM32/LineOS 1.0.8 or 1.0.9 compatibility')
+            if any(preset.get('images') for w in widgets for preset in w.get('studio', {}).get('presentation', {}).get('presets', [])) and valid_version(compat['minStudioVersion']) < (0,52,24):
+                raise ValueError('Package image presets require Studio 0.52.24+.')
             if any(w.get('kind')=='scene' or 'sounds' in w.get('studio',{}) or 'expanded' in w.get('studio',{}).get('layout',{}) or any(isinstance(v,dict) for v in w.get('studio',{}).get('layout',{}).values()) for w in widgets) and valid_version(compat['minStudioVersion']) < (0,52,23):
                 raise ValueError('Package panels and sounds require Studio 0.52.23+.')
             if any('sideTemperatures' in preset.get('nozzleGrid', {}) for w in widgets for preset in w.get('studio', {}).get('presentation', {}).get('presets', [])) and valid_version(compat['minStudioVersion']) < (0,52,22):
