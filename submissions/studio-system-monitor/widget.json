@@ -15,7 +15,7 @@
       "textColor": "#eef6f2",
       "accent": "#94d9bb",
       "studio": {
-        "api": 1,
+        "api": 2,
         "help": "CPU, RAM and GPU readings describe this PC. GPU readings require NVIDIA nvidia-smi; unavailable sensors show unavailable.",
         "settings": {
           "api": 1,
@@ -39,7 +39,41 @@
                   "label": "GPU usage"
                 }
               ]
+            },
+            {
+              "key": "background",
+              "type": "color",
+              "label": "Background color",
+              "default": "#192325"
+            },
+            {
+              "key": "textColor",
+              "type": "color",
+              "label": "Text color",
+              "default": "#eef6f2"
+            },
+            {
+              "key": "accent",
+              "type": "color",
+              "label": "Accent color",
+              "default": "#94d9bb"
             }
+          ]
+        },
+        "layout": {
+          "large": [
+            {"op":"text","box":[19,12,222,25],"text":"@title","font":16,"color":"$textColor","bold":true},
+            {"op":"text","box":[19,54,222,28],"text":"@source","font":16,"color":"$accent","bold":false},
+            {"op":"text","box":[19,82,221,61],"text":"@value","font":49,"color":"$textColor","bold":true},
+            {"op":"text","box":[19,148,224,28],"text":"@detail","font":14,"color":"$textColor","bold":false},
+            {"op":"bar","box":[19,186,222,5],"value":"usage","color":"$accent","track":"#394347","radius":3},
+            {"op":"text","box":[19,200,224,24],"text":"@foot","font":12,"color":"$accent","bold":false}
+          ],
+          "small": [
+            {"op":"text","box":[8,5,114,23],"text":"@source","font":13,"color":"$textColor","bold":true},
+            {"op":"text","box":[8,32,114,44],"text":"@value","font":35,"color":"$textColor","bold":false},
+            {"op":"text","box":[8,77,114,19],"text":"@detail","font":11,"color":"$accent","bold":false},
+            {"op":"bar","box":[8,105,114,4],"value":"usage","color":"$accent","track":"#394347","radius":3}
           ]
         }
       },

@@ -55,7 +55,8 @@ def main():
         number = pull['number']
         path = f'pulls/{number}'
         current = api(repo, path)
-        if current['base']['sha'] != base:
+        # An open PR can keep the base SHA from its last synchronize event.
+        if api(repo, 'git/ref/heads/main')['object']['sha'] != base:
             print('Main advanced during selection. The next run will use the new base.')
             return
         if (current['state'] != 'open' or current['draft'] or current['base']['ref'] != 'main'
@@ -86,7 +87,7 @@ def main():
             updated = api(repo, path)
             if updated['head']['sha'] == head:
                 continue
-            if updated['base']['sha'] != base:
+            if api(repo, 'git/ref/heads/main')['object']['sha'] != base:
                 print(f'Main advanced while synchronizing PR #{number}.')
                 return
             commit = api(repo, f"git/commits/{updated['head']['sha']}")

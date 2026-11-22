@@ -1,5 +1,10 @@
 # Studio Clock & Date
 
+This release uses Studio 0.52.18 or newer. Install the package in Studio. The
+package supplies its settings panel, including the available choices, colors
+and defaults. Save and Deploy applies each placed card's settings to Core.
+The plate and digit colors have separate pickers.
+
 A split-flap clock with paired hour and minute plates. On large cards the optional seconds have their own plate. Only changed plates turn. Dates and AM/PM follow the local clock.
 
 One integrated widget package for the existing Core bar, not a standalone APK.
@@ -9,7 +14,7 @@ Settings: display name, background/text/accent colors, 12/24-hour time, seconds
 and date visibility. The clock uses Core's time and locale; Studio previews PC
 time and locale. It needs no network or extra Android permissions.
 
-Requires Studio 0.52.17+, root-enabled ARM32 CB01 and LineOS 1.0.8 or 1.0.9.
+Requires Studio 0.52.18+, root-enabled ARM32 CB01 and LineOS 1.0.8 or 1.0.9.
 The shared studio-native-v1 runtime is supplied by Studio during Deploy. Keep
 Studio connected for runtime restoration after Core restarts. The clock keeps
 ticking locally while its renderer remains attached; this is not an independent
@@ -48,7 +53,7 @@ the trusted native renderer. No package-supplied code or script is executed.
 
 Settings belong to each placed block and survive package updates. Package and
 widget IDs are unchanged. Existing saved values take precedence over defaults.
-The common name and color controls remain supplied by Studio. This is a native
+The package declares the color controls. Studio supplies the display name field. This is a native
 JSON widget, separate from Android settings API 1; there is no Android receiver.
 
 Requirements: https://github.com/qlerup/ultrabar-store/blob/main/APP-SETTINGS.md .
