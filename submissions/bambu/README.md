@@ -146,6 +146,10 @@ a Studio code change. The same API is available to other publishers and native
 widget kinds; it is not specific to Bambu. Protocol support and new native runtime
 behaviors still require an appropriate Studio adapter/runtime update.
 
+## Nozzle details
+
+H3C shows its nine rack positions in a 3 by 3 grid. H2C uses two rows for reported tools. Each tile shows temperature, material and a color swatch when the printer identifies the filament. A dash marks an unknown material. Bed and chamber temperatures appear with the print summary. Requires Studio 0.52.20.
+
 ## Widget size
 
 In Small size, the card shows the primary printer reading and print progress. Tap either size to open printer details.
