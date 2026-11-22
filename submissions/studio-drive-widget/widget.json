@@ -10,7 +10,7 @@
       "textColor": "#eef6f2",
       "accent": "#94d9bb",
       "studio": {
-        "api": 1,
+        "api": 2,
         "help": "All drives shows two drives at a time and rotates to the next pair every six seconds on Core. The editor preview shows the first pair. Values describe this PC.",
         "sources": {
           "drive": "pc.drives"
@@ -24,7 +24,47 @@
               "type": "string",
               "maxLength": 128,
               "default": "all"
+            },
+            {
+              "key": "background",
+              "type": "color",
+              "label": "Background color",
+              "default": "#192325"
+            },
+            {
+              "key": "textColor",
+              "type": "color",
+              "label": "Text color",
+              "default": "#eef6f2"
+            },
+            {
+              "key": "accent",
+              "type": "color",
+              "label": "Accent color",
+              "default": "#94d9bb"
             }
+          ]
+        },
+        "layout": {
+          "large": [
+            {"op":"text","box":[19,12,222,25],"text":"@title","font":16,"color":"$textColor","bold":true},
+            {"op":"text","box":[19,54,222,28],"text":"@source","font":16,"color":"$accent","bold":false,"when":"!paired"},
+            {"op":"text","box":[19,82,221,61],"text":"@value","font":49,"color":"$textColor","bold":true,"when":"!paired"},
+            {"op":"text","box":[19,148,224,28],"text":"@detail","font":14,"color":"$textColor","bold":false,"when":"!paired"},
+            {"op":"bar","box":[19,186,222,5],"value":"usage","color":"$accent","track":"#394347","radius":3,"when":"!paired"},
+            {"op":"text","box":[19,200,224,24],"text":"@foot","font":12,"color":"$accent","bold":false,"when":"!paired"},
+            {"op":"text","box":[19,48,220,29],"text":"@one","font":21,"color":"$textColor","bold":true,"when":"paired"},
+            {"op":"bar","box":[19,83,222,5],"value":"oneUsage","color":"$accent","track":"#394347","radius":3,"when":"paired"},
+            {"op":"text","box":[19,93,220,23],"text":"@oneDetail","font":13,"color":"$accent","bold":false,"when":"paired"},
+            {"op":"text","box":[19,135,220,29],"text":"@two","font":21,"color":"$textColor","bold":true,"when":"paired"},
+            {"op":"bar","box":[19,170,222,5],"value":"twoUsage","color":"$accent","track":"#394347","radius":3,"when":"paired"},
+            {"op":"text","box":[19,180,220,23],"text":"@twoDetail","font":13,"color":"$accent","bold":false,"when":"paired"}
+          ],
+          "small": [
+            {"op":"text","box":[8,5,114,23],"text":"@source","font":13,"color":"$textColor","bold":true},
+            {"op":"text","box":[8,32,114,44],"text":"@value","font":35,"color":"$textColor","bold":false},
+            {"op":"text","box":[8,77,114,19],"text":"@detail","font":11,"color":"$accent","bold":false},
+            {"op":"bar","box":[8,105,114,4],"value":"usage","color":"$accent","track":"#394347","radius":3}
           ]
         }
       },
