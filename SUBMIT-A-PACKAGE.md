@@ -24,6 +24,14 @@ Clock & Date, Drive Usage and System Monitor are **corebar-widget** packages.
 A widget package can offer multiple choices; each placed block has its own settings.
 The preset format supports declarative settings only, without executable PC plugins.
 
+For a standalone Core app, implement the app's setup, storage and runtime in its
+own APK. Provide an exported Android launcher activity. Use the optional
+[Studio settings API](APP-SETTINGS.md) for settings that benefit from being
+edited on the PC. Keep credentials and device-specific setup in the app.
+Studio 0.52.15 and later can install a staged standalone app with **Install on
+Core**, including an app added from a local folder. This installation leaves
+the Core layout alone. Open the app on Core after installation.
+
 All types use `submissions/<unique-package-folder>/`. Declare the same **type** in
 `repository.json` and `manifest.json`; Actions rejects mismatches. Each PR may
 change only one package folder. Separate types do not need separate folder trees.
