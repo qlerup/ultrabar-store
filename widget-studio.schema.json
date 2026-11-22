@@ -245,6 +245,16 @@
                     "type": "integer",
                     "minimum": 4,
                     "maximum": 14
+                  },
+                  "sideTemperatures": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 3,
+                    "uniqueItems": true,
+                    "items": {
+                      "type": "string",
+                      "pattern": "^[a-z][a-z0-9_]{0,30}_temper$"
+                    }
                   }
                 }
               }
