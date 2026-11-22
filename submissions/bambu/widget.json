@@ -534,6 +534,8 @@
                 {"type": "oval", "points": [60, 5, 64, 9], "fill": "#bfc6c9"}
               ],
               "labels": {
+                "chamber_temper": "Chamber",
+                "bed_temper": "Bed",
                 "filament.GFG02": "PETG HF",
                 "filament.GFG96": "PETG HF",
                 "filament.GFG00": "PETG",
@@ -551,7 +553,11 @@
               "nozzleGrid": {
                 "materialSize": 17,
                 "swatchSize": 18,
-                "verticalInset": 5
+                "verticalInset": 5,
+                "sideTemperatures": [
+                  "chamber_temper",
+                  "bed_temper"
+                ]
               },
               "minTemperatureRows": 2
             },
@@ -586,6 +592,8 @@
                 "nozzle.6": "NOZZLE T6",
                 "nozzle.7": "NOZZLE T7",
                 "nozzle.8": "NOZZLE T8",
+                "chamber_temper": "Chamber",
+                "bed_temper": "Bed",
                 "filament.GFG02": "PETG HF",
                 "filament.GFG96": "PETG HF",
                 "filament.GFG00": "PETG",
@@ -603,7 +611,11 @@
               "nozzleGrid": {
                 "materialSize": 17,
                 "swatchSize": 18,
-                "verticalInset": 5
+                "verticalInset": 5,
+                "sideTemperatures": [
+                  "chamber_temper",
+                  "bed_temper"
+                ]
               },
               "minTemperatureRows": 3
             }
