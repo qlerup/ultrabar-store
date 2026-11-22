@@ -1,12 +1,16 @@
 # Studio System Monitor
 
+This release uses Studio 0.52.18 or newer. Install the package in Studio. The
+package supplies its settings panel, including the available choices, colors
+and defaults. Save and Deploy applies each placed card's settings to Core.
+
 One Store installation adds one System Monitor widget to the library. Drag it onto the bar and choose Show: CPU usage, RAM usage or GPU usage in the right panel, then Deploy. Add multiple blocks and choose independently for each block. The library continues to list one template.
 
 CPU shows Windows processor utilization. RAM shows utilization and used/total memory. GPU shows NVIDIA GPU utilization and used/total video memory through nvidia-smi; currently only the first returned GPU is used. AMD/Intel and machines without nvidia-smi have no GPU readings. Missing sensors show unavailable rather than fabricated zeroes. CPU needs two samples to calculate usage. These values describe the connected Windows PC. Studio 0.52.2 refreshes live readings while the layout preview is visible.
 
 Each block supports its own Show choice, display name, background color, text color and accent color. There are no executable scripts in this package. widget.json is the complete source; Studio's shared native runtime supplies the data collection, renderer and settings.
 
-Requires Studio 0.52.0+, root-enabled ARM32 CB01 and LineOS 1.0.8 or 1.0.9. Keep Studio connected for live metrics; reconnect after Core restarts. No separate APK is installed. Package requests no Android permissions. Studio reads performance counters locally and sends metrics to the selected Core; no file contents are read by these widgets.
+Requires Studio 0.52.18+, root-enabled ARM32 CB01 and LineOS 1.0.8 or 1.0.9. Keep Studio connected for live metrics; reconnect after Core restarts. No separate APK is installed. Package requests no Android permissions. Studio reads performance counters locally and sends metrics to the selected Core; no file contents are read by these widgets.
 
 Validation covered package parsing and editor settings. Both card sizes rendered
 on physical CB01 with LineOS 1.0.9 in a temporary mixed layout. Installing a
@@ -36,7 +40,7 @@ the trusted native renderer. No package-supplied code or script is executed.
 
 Settings belong to each placed block and survive package updates. Package and
 widget IDs are unchanged. Existing saved values take precedence over defaults.
-The common name and color controls remain supplied by Studio. This is a native
+The package declares the color controls. Studio supplies the display name field. This is a native
 JSON widget, separate from Android settings API 1; there is no Android receiver.
 
 Requirements: https://github.com/qlerup/ultrabar-store/blob/main/APP-SETTINGS.md .
