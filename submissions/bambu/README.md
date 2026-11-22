@@ -5,7 +5,7 @@ your PC**, choose a printer for each widget, then Save and Deploy. Studio sends
 live readings to Core through the same channel as CPU, RAM and drive widgets.
 No printer setup or companion app is required on Core.
 
-Requires **Studio 0.52.0+**, root-enabled ARM32 CB01 / LineOS 1.0.9, and compatible
+Requires **Studio 0.52.13+**, root-enabled ARM32 CB01 / LineOS 1.0.9, and compatible
 Bambu LAN firmware. Keep Studio running for live readings and controls.
 
 ## Connect printers
@@ -26,6 +26,17 @@ immediately on the PC. Widget selections follow the normal draft/Undo/Save/Deplo
 workflow. **Manage printers** also supports editing, removal and explicit reconnect.
 Status updates automatically while the dialog is open, without resetting the form.
 A blank code keeps the saved code only for the same address and serial.
+
+## Print alerts
+
+Enable **Print alert sounds** in the widget settings, then choose **Save** and
+**Deploy**. CoreBAR plays different tones for completed prints and printer-reported
+print failures or errors. Keep Studio running and connected. It sends the audio
+when the printer reports the event. CoreBAR plays it at 80% media volume and
+restores the previous level afterwards.
+
+**Wake screen for print alerts** is on by default when sounds are enabled.
+Turn it off to play the sounds while leaving the display asleep.
 
 The PC must reach the printer on TLS MQTT port 8883. Find LAN settings on the
 printer; some firmware requires LAN mode and Developer Mode for controls. Studio

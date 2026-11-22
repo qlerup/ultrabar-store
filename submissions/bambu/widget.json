@@ -18,6 +18,8 @@
       "showRemaining": true,
       "showControls": true,
       "liquidMotion": true,
+      "printAlerts": false,
+      "wakeOnAlert": true,
       "studio": {
         "api": 1,
         "settings": {
@@ -121,6 +123,19 @@
             {
               "key": "liquidMotion",
               "label": "Liquid unfold animation",
+              "type": "boolean",
+              "default": true
+            },
+            {
+              "key": "printAlerts",
+              "label": "Print alert sounds",
+              "type": "boolean",
+              "default": false,
+              "help": "Play a distinct tone on CoreBAR for a print failure, printer-reported print error, or completed print. Studio must stay connected."
+            },
+            {
+              "key": "wakeOnAlert",
+              "label": "Wake screen for print alerts",
               "type": "boolean",
               "default": true
             }
