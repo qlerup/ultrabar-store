@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "id": "qlerup.core.pc-standby",
+  "name": "PC Standby",
+  "description": "Keep UltraBar Core awake while your paired Windows PC is reachable. Sleep after a sustained connection loss and wake when the PC replies again. Requires the Windows companion.",
+  "version": "1.0.0",
+  "type": "corebar-app",
+  "publisher": "qlerup",
+  "source": "https://github.com/qlerup/ultrabar-core-standby/blob/887132d79a0826e3b1ef7e86b1e33489b631a5f1/AndroidManifest.xml",
+  "license": "Proprietary; unmodified official releases may be used",
+  "compatibility": {
+    "minStudioVersion": "0.45.0",
+    "hostApi": 1,
+    "models": [
+      "CB01"
+    ],
+    "lineosVersions": [
+      "1.0.9"
+    ],
+    "abis": [
+      "armeabi-v7a"
+    ]
+  },
+  "permissions": [
+    "android.permission.INTERNET",
+    "android.permission.FOREGROUND_SERVICE",
+    "android.permission.RECEIVE_BOOT_COMPLETED",
+    "android.permission.WAKE_LOCK",
+    "android.permission.WRITE_SETTINGS"
+  ],
+  "android": {
+    "packageId": "dk.qlerup.corestandby",
+    "versionCode": 100,
+    "minSdk": 26,
+    "signerSha256": "d336c808d454d6d9737e9663a1514da3c21ae572f605916cc3972ce49290c8ea"
+  },
+  "artifact": {
+    "url": "https://github.com/qlerup/ultrabar-store/releases/download/review-pc-standby-1.0.0/app.apk",
+    "size": 21027,
+    "sha256": "682d5e9356e20268fd130804d4df918faa37b521efab4deca30f58c664c6999b"
+  },
+  "icon": {
+    "url": "https://github.com/qlerup/ultrabar-store/releases/download/review-pc-standby-1.0.0/icon.png",
+    "size": 6800,
+    "sha256": "c45249fb83ffdebfef5f71d59970988d40de9776c6bf227ebe20ad1b82050385"
+  }
+}
