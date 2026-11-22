@@ -874,28 +874,15 @@
           "expanded": [
             {
               "op": "text",
-              "text": "{values.title}",
+              "text": "{values.title}  \u00b7  {values.status}",
               "box": [
                 50,
-                60,
-                440,
-                72
+                49,
+                410,
+                75
               ],
               "size": 14,
               "bold": true
-            },
-            {
-              "op": "text",
-              "text": "{values.status}",
-              "box": [
-                690,
-                60,
-                260,
-                72
-              ],
-              "size": 11,
-              "align": "right",
-              "color": "$accent"
             },
             {
               "op": "text",
@@ -977,9 +964,9 @@
               "op": "group",
               "box": [
                 280,
-                150,
+                133,
                 670,
-                750
+                774
               ],
               "children": [
                 {
@@ -1008,11 +995,12 @@
                       "text": "hotend.{item.tool}",
                       "box": [
                         35,
-                        50,
+                        22,
                         930,
-                        215
+                        248
                       ],
-                      "size": 11,
+                      "size": 13,
+                      "bold": true,
                       "lookup": "labels",
                       "fallback": "Hotend {item.tool}",
                       "align": "center",
@@ -1119,11 +1107,12 @@
                       "text": "hotend.{item.tool}",
                       "box": [
                         35,
-                        50,
+                        22,
                         930,
-                        215
+                        248
                       ],
-                      "size": 11,
+                      "size": 13,
+                      "bold": true,
                       "lookup": "labels",
                       "fallback": "Hotend {item.tool}",
                       "align": "center",
@@ -1228,11 +1217,12 @@
                       "text": "hotend.{item.tool}",
                       "box": [
                         35,
-                        50,
+                        22,
                         930,
-                        215
+                        248
                       ],
-                      "size": 11,
+                      "size": 13,
+                      "bold": true,
                       "lookup": "labels",
                       "fallback": "Hotend {item.tool}",
                       "align": "center",
