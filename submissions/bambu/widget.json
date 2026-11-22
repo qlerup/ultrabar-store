@@ -2413,19 +2413,6 @@
             {
               "op": "text",
               "box": [
-                215,
-                11,
-                36,
-                32
-              ],
-              "text": "@live",
-              "font": 11,
-              "color": "$accent",
-              "bold": false
-            },
-            {
-              "op": "text",
-              "box": [
                 18,
                 59,
                 120,
