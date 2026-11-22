@@ -1,11 +1,16 @@
 # Bambu for UltraBar Studio
 
+This release uses Studio 0.52.18 or newer. Install the package in Studio. The
+package supplies its settings panel, including the available choices, colors
+and defaults. Save and Deploy applies each placed card's settings to Core.
+H2C and H3C temperature presets use at least two rows.
+
 Bambu LAN printer widgets for CoreBAR. Set up printers in **UltraBar Studio on
 your PC**, choose a printer for each widget, then Save and Deploy. Studio sends
 live readings to Core through the same channel as CPU, RAM and drive widgets.
 No printer setup or companion app is required on Core.
 
-Requires **Studio 0.52.13+**, root-enabled ARM32 CB01 / LineOS 1.0.9, and compatible
+Requires **Studio 0.52.18+**, root-enabled ARM32 CB01 / LineOS 1.0.9, and compatible
 Bambu LAN firmware. Keep Studio running for live readings and controls.
 
 ## Connect printers

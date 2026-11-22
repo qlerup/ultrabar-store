@@ -21,7 +21,7 @@
       "printAlerts": false,
       "wakeOnAlert": true,
       "studio": {
-        "api": 1,
+        "api": 2,
         "settings": {
           "api": 1,
           "fields": [
@@ -138,6 +138,24 @@
               "label": "Wake screen for print alerts",
               "type": "boolean",
               "default": true
+            },
+            {
+              "key": "background",
+              "type": "color",
+              "label": "Background color",
+              "default": "#14202b"
+            },
+            {
+              "key": "textColor",
+              "type": "color",
+              "label": "Text color",
+              "default": "#eff6fa"
+            },
+            {
+              "key": "accent",
+              "type": "color",
+              "label": "Accent color",
+              "default": "#86e4c3"
             }
           ]
         },
@@ -161,12 +179,8 @@
               "key": "model",
               "label": "Printer model",
               "type": "choice",
-              "required": false,
+              "required": true,
               "options": [
-                {
-                  "value": "generic",
-                  "label": "Other / model not selected"
-                },
                 {
                   "value": "a1",
                   "label": "A1"
@@ -267,11 +281,6 @@
             "key": "model"
           },
           "presets": [
-            {
-              "value": "generic",
-              "artwork": [],
-              "labels": {}
-            },
             {
               "value": "a1",
               "artwork": [
@@ -2178,7 +2187,8 @@
                   "fill": "#bfc6c9"
                 }
               ],
-              "labels": {}
+              "labels": {},
+              "minTemperatureRows": 2
             },
             {
               "value": "h3c",
@@ -2370,7 +2380,177 @@
                   "fill": "#6d8288"
                 }
               ],
-              "labels": {}
+              "labels": {
+                "nozzle.0": "NOZZLE T0",
+                "nozzle.1": "NOZZLE T1",
+                "nozzle.2": "NOZZLE T2",
+                "nozzle.3": "NOZZLE T3",
+                "nozzle.4": "NOZZLE T4",
+                "nozzle.5": "NOZZLE T5",
+                "nozzle.6": "NOZZLE T6",
+                "nozzle.7": "NOZZLE T7",
+                "nozzle.8": "NOZZLE T8"
+              },
+              "minTemperatureRows": 2
+            }
+          ]
+        },
+        "layout": {
+          "large": [
+            {
+              "op": "text",
+              "box": [
+                18,
+                11,
+                169,
+                33
+              ],
+              "text": "@title",
+              "font": 17,
+              "color": "$textColor",
+              "bold": true
+            },
+            {
+              "op": "text",
+              "box": [
+                215,
+                11,
+                36,
+                32
+              ],
+              "text": "@live",
+              "font": 11,
+              "color": "$accent",
+              "bold": false
+            },
+            {
+              "op": "text",
+              "box": [
+                18,
+                59,
+                120,
+                64
+              ],
+              "text": "@primary",
+              "font": 51,
+              "color": "$textColor",
+              "bold": true
+            },
+            {
+              "op": "image",
+              "box": [
+                158,
+                49,
+                87,
+                87
+              ],
+              "value": "printer"
+            },
+            {
+              "op": "text",
+              "box": [
+                19,
+                121,
+                133,
+                22
+              ],
+              "text": "@status",
+              "font": 13,
+              "color": "$accent",
+              "bold": false
+            },
+            {
+              "op": "text",
+              "box": [
+                19,
+                151,
+                223,
+                25
+              ],
+              "text": "@secondary",
+              "font": 16,
+              "color": "$textColor",
+              "bold": false
+            },
+            {
+              "op": "bar",
+              "box": [
+                19,
+                186,
+                222,
+                4
+              ],
+              "value": "progress",
+              "color": "$accent",
+              "track": "#394347",
+              "radius": 3
+            },
+            {
+              "op": "text",
+              "box": [
+                19,
+                202,
+                220,
+                26
+              ],
+              "text": "Tap to unfold",
+              "font": 12,
+              "color": "$accent",
+              "bold": false
+            }
+          ],
+          "small": [
+            {
+              "op": "text",
+              "box": [
+                8,
+                4,
+                114,
+                20
+              ],
+              "text": "@title",
+              "font": 13,
+              "color": "$textColor",
+              "bold": true
+            },
+            {
+              "op": "text",
+              "box": [
+                8,
+                28,
+                112,
+                41
+              ],
+              "text": "@primary",
+              "font": 33,
+              "color": "$textColor",
+              "bold": false
+            },
+            {
+              "op": "text",
+              "box": [
+                8,
+                72,
+                115,
+                19
+              ],
+              "text": "@status",
+              "font": 12,
+              "color": "$accent",
+              "bold": false
+            },
+            {
+              "op": "bar",
+              "box": [
+                8,
+                104,
+                114,
+                4
+              ],
+              "value": "progress",
+              "color": "$accent",
+              "track": "#394347",
+              "radius": 3
             }
           ]
         }
