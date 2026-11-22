@@ -295,7 +295,12 @@
                 {"type": "oval", "points": [42, 1, 60, 19], "fill": "#b7c0c3"},
                 {"type": "oval", "points": [48, 7, 54, 13], "fill": "#46565b"}
               ],
-              "labels": {}
+              "labels": {},
+              "images": {
+                "printer": {
+                  "asset": "printer_thumbnail_n2s_png.png"
+                }
+              }
             },
             {
               "value": "a1-mini",
@@ -310,7 +315,12 @@
                 {"type": "oval", "points": [72, 5, 90, 23], "fill": "#b7c0c3"},
                 {"type": "oval", "points": [78, 11, 84, 17], "fill": "#46565b"}
               ],
-              "labels": {}
+              "labels": {},
+              "images": {
+                "printer": {
+                  "asset": "printer_thumbnail_n1_png.png"
+                }
+              }
             },
             {
               "value": "a2l",
@@ -324,7 +334,12 @@
                 {"type": "rect", "points": [41, 31, 47, 36], "fill": "accent"},
                 {"type": "roundRect", "points": [74, 74, 89, 83, 2, 2], "fill": "#263238"}
               ],
-              "labels": {}
+              "labels": {},
+              "images": {
+                "printer": {
+                  "asset": "printer_preview_N9.png"
+                }
+              }
             },
             {
               "value": "p1p",
@@ -340,7 +355,12 @@
                 {"type": "polygon", "points": [36.0, 75, 36.0, 64, 45.0, 59, 54.0, 64, 54.0, 75], "fill": "#334b42"},
                 {"type": "rect", "points": [21, 13, 33, 18], "fill": "accent"}
               ],
-              "labels": {}
+              "labels": {},
+              "images": {
+                "printer": {
+                  "asset": "printer_thumbnail_p1p_png.png"
+                }
+              }
             },
             {
               "value": "p1s",
@@ -357,7 +377,12 @@
                 {"type": "polygon", "points": [36.0, 75, 36.0, 64, 45.0, 59, 54.0, 64, 54.0, 75], "fill": "#334b42"},
                 {"type": "rect", "points": [21, 13, 33, 18], "fill": "accent"}
               ],
-              "labels": {}
+              "labels": {},
+              "images": {
+                "printer": {
+                  "asset": "printer_thumbnail_p1s_png.png"
+                }
+              }
             },
             {
               "value": "p2s",
@@ -375,7 +400,12 @@
                 {"type": "rect", "points": [21, 13, 33, 18], "fill": "accent"},
                 {"type": "roundRect", "points": [38, 12, 54, 20, 2, 2], "fill": "#172329"}
               ],
-              "labels": {}
+              "labels": {},
+              "images": {
+                "printer": {
+                  "asset": "printer_thumbnail_N7_png.png"
+                }
+              }
             },
             {
               "value": "x1",
@@ -392,7 +422,12 @@
                 {"type": "polygon", "points": [36.0, 75, 36.0, 64, 45.0, 59, 54.0, 64, 54.0, 75], "fill": "#334b42"},
                 {"type": "rect", "points": [21, 13, 33, 18], "fill": "accent"}
               ],
-              "labels": {}
+              "labels": {},
+              "images": {
+                "printer": {
+                  "asset": "printer_thumbnail_png.png"
+                }
+              }
             },
             {
               "value": "x1c",
@@ -409,7 +444,12 @@
                 {"type": "polygon", "points": [36.0, 75, 36.0, 64, 45.0, 59, 54.0, 64, 54.0, 75], "fill": "#334b42"},
                 {"type": "rect", "points": [21, 13, 33, 18], "fill": "accent"}
               ],
-              "labels": {}
+              "labels": {},
+              "images": {
+                "printer": {
+                  "asset": "printer_thumbnail_x1c_png.png"
+                }
+              }
             },
             {
               "value": "x1e",
@@ -427,7 +467,12 @@
                 {"type": "rect", "points": [21, 13, 33, 18], "fill": "accent"},
                 {"type": "oval", "points": [65, 14, 69, 18], "fill": "#d4b166"}
               ],
-              "labels": {}
+              "labels": {},
+              "images": {
+                "printer": {
+                  "asset": "printer_thumbnail_x1e_png.png"
+                }
+              }
             },
             {
               "value": "x2d",
@@ -447,7 +492,12 @@
                 {"type": "rect", "points": [21, 13, 33, 18], "fill": "accent"},
                 {"type": "roundRect", "points": [38, 12, 54, 20, 2, 2], "fill": "#172329"}
               ],
-              "labels": {}
+              "labels": {},
+              "images": {
+                "printer": {
+                  "asset": "printer_thumbnail_N6_png.png"
+                }
+              }
             },
             {
               "value": "h2d",
@@ -469,6 +519,11 @@
               "labels": {
                 "nozzle.0": "LEFT NOZZLE",
                 "nozzle.1": "RIGHT NOZZLE"
+              },
+              "images": {
+                "printer": {
+                  "asset": "printer_thumbnail_h2d_png.png"
+                }
               }
             },
             {
@@ -492,6 +547,11 @@
               "labels": {
                 "nozzle.0": "LEFT NOZZLE",
                 "nozzle.1": "RIGHT NOZZLE"
+              },
+              "images": {
+                "printer": {
+                  "asset": "printer_thumbnail_o1e_png.png"
+                }
               }
             },
             {
@@ -509,7 +569,12 @@
                 {"type": "polygon", "points": [34.0, 75, 34.0, 64, 43.0, 59, 52.0, 64, 52.0, 75], "fill": "#334b42"},
                 {"type": "rect", "points": [10, 13, 22, 18], "fill": "accent"}
               ],
-              "labels": {}
+              "labels": {},
+              "images": {
+                "printer": {
+                  "asset": "printer_thumbnail_o1s_png.png"
+                }
+              }
             },
             {
               "value": "h2c",
@@ -549,6 +614,11 @@
                 "filament.GFB50": "ABS-GF",
                 "filament.GFG50": "PETG-CF",
                 "filament.GFC00": "PC"
+              },
+              "images": {
+                "printer": {
+                  "asset": "printer_thumbnail_o1c_png.png"
+                }
               }
             },
             {
@@ -597,6 +667,17 @@
                 "filament.GFB50": "ABS-GF",
                 "filament.GFG50": "PETG-CF",
                 "filament.GFC00": "PC"
+              },
+              "images": {
+                "printer": {
+                  "asset": "printer_thumbnail_N10_png.png",
+                  "large": [
+                    153,
+                    4,
+                    98,
+                    132
+                  ]
+                }
               }
             }
           ]
@@ -608,7 +689,7 @@
               "box": [
                 18,
                 11,
-                169,
+                132,
                 33
               ],
               "text": "@title",
