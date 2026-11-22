@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "id": "studio.bambu.panel",
+  "name": "Bambu Printer Panel",
+  "description": "Standalone Bambu printer app for CoreBAR. Configure the printer on Core and see live print status and H3C PrintTool temperatures without a PC connection.",
+  "type": "corebar-app",
+  "version": "1.1.0",
+  "publisher": "qlerup",
+  "license": "Proprietary; unmodified official releases may be used",
+  "source": "https://github.com/qlerup/ultrabar-bambu/blob/74e5183f652bd49fbf2af61c0e94c62953efc5ad/AndroidManifest.xml",
+  "compatibility": {
+    "minStudioVersion": "0.52.15",
+    "hostApi": 1,
+    "models": [
+      "CB01"
+    ],
+    "lineosVersions": [
+      "1.0.9"
+    ],
+    "abis": [
+      "armeabi-v7a"
+    ]
+  },
+  "permissions": [
+    "android.permission.INTERNET",
+    "android.permission.FOREGROUND_SERVICE"
+  ],
+  "android": {
+    "packageId": "dk.ultrabar.bambu",
+    "versionCode": 110,
+    "minSdk": 26,
+    "signerSha256": "3421efe203846a4074d48ab0b7f3c7be23784f04eef7914d4b84c943711f2796"
+  },
+  "artifact": {
+    "url": "https://github.com/qlerup/ultrabar-store/releases/download/review-bambu-printer-panel-1.1.0/app.apk",
+    "size": 57887,
+    "sha256": "042c37f1cdfea2408eed69c2c374745cc39a3114c5e3bbe2a8960bedcee7361f"
+  },
+  "icon": {
+    "url": "https://github.com/qlerup/ultrabar-store/releases/download/review-bambu-printer-panel-1.1.0/icon.png",
+    "size": 11485,
+    "sha256": "6c55cb63db1f36c7f58a1e29cbda82cf5d9bfcf8030ce19bdba884a5befa50c2"
+  },
+  "settings": {
+    "api": 1,
+    "fields": [
+      {
+        "key": "printerName",
+        "label": "Panel title",
+        "type": "string",
+        "default": "Bambu Lab",
+        "maxLength": 48
+      },
+      {
+        "key": "allowControls",
+        "label": "Enable printer controls",
+        "help": "Allows pause, resume, stop and chamber light. Requires local setup and compatible printer firmware. Off by default.",
+        "type": "boolean",
+        "default": false
+      },
+      {
+        "key": "showTemperatures",
+        "label": "Show temperatures",
+        "type": "boolean",
+        "default": true
+      },
+      {
+        "key": "keepScreenOn",
+        "label": "Keep screen awake while panel is open",
+        "type": "boolean",
+        "default": false
+      }
+    ]
+  }
+}
