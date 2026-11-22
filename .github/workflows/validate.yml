@@ -37,8 +37,9 @@ jobs:
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
           ref: main
+          fetch-depth: 0
           persist-credentials: false
-      - name: Update the oldest eligible branch that is behind main
+      - name: Select and synchronize the oldest eligible update
         id: sync
         env:
           GH_TOKEN: ${{ github.token }}
@@ -134,12 +135,25 @@ jobs:
             -f name='Validate package' -f head_sha="$REVIEW_SHA" -f status=completed \
             -f conclusion="$VALIDATION" \
             -f details_url="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" --silent
+  request-queue:
+    needs: validate
+    if: >-
+      !cancelled() && needs.validate.result == 'success' &&
+      (github.event_name == 'pull_request_target' || inputs.pr_number != '')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Wake the serial Store update queue
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api --method POST "repos/$GITHUB_REPOSITORY/dispatches" -f event_type=store-update-merged
   auto-update:
     name: Merge eligible package update
     needs: [sync, validate, report-validation]
     if: >-
       !cancelled() && needs.validate.result == 'success' &&
-      (github.event_name == 'pull_request_target' || needs.report-validation.result == 'success')
+      needs.sync.outputs.number != '' && needs.report-validation.result == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 3
     permissions:

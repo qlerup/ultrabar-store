@@ -37,19 +37,13 @@ def eligibility(base, submitted, author, paths):
     if new.get('type')=='corebar-app' and new.get('bundledWidgets'):allowed.add('widget.json')
     if any(p[len(prefix):] not in allowed for p in paths):
         return False, 'Manual approval: unexpected package file.'
-    if old.get('settings')!=new.get('settings'):return False, 'Manual approval: app settings contract changed.'
-    if new.get('type')=='corebar-widget':
-        def panels(root):
-            path=root/prefix/'widget.json'
-            if not path.exists():return {}
-            return {w['id']:w['studio'] for w in json.loads(path.read_text(encoding='utf-8')).get('widgets',[]) if 'studio' in w}
-        try:
-            if panels(base)!=panels(submitted):return False, 'Manual approval: native app Studio panel contract changed.'
-        except (OSError,ValueError,KeyError,TypeError):return False, 'Manual approval: invalid native app Studio panel.'
-
-    if old.get('bundledWidgets')!=new.get('bundledWidgets'):return False,'Manual approval: bundled widget contract changed.'
-    for key in ('id','type','publisher','permissions','compatibility','license'):
+    for key in ('id','type','publisher','permissions','license'):
         if key not in old or old[key]!=new.get(key):return False, 'Manual approval: changed '+key+'.'
+    # An updated UI, settings schema or minimum Studio version is part of a
+    # routine release. The trusted package validator checks the new contract.
+    old_compat=dict(old.get('compatibility',{}));new_compat=dict(new.get('compatibility',{}))
+    old_compat.pop('minStudioVersion',None);new_compat.pop('minStudioVersion',None)
+    if old_compat!=new_compat:return False,'Manual approval: device compatibility changed.'
     repo=previous.get('repository','')
     if not repo or repo.lower()!=link.get('repository','').lower() or author.lower()!=repo.split('/')[0].lower() or author.lower()!=new['publisher'].lower():
         return False, 'Manual approval: owner or repository changed.'
@@ -101,7 +95,7 @@ def main():
         print('Manual approval: a reviewer requested changes.');return
     # Approval is pinned to the exact commit validated by the preceding job.
     if not any(r['user']['login']=='github-actions[bot]' and r['state']=='APPROVED' and r.get('commit_id')==head for r in reviews):
-        api('/pulls/'+number+'/reviews','POST',dict(event='APPROVE',commit_id=head,body='Automatic approval: existing registered-owner update, unchanged identity/permissions/compatibility, and all Store checks passed.'))
+        api('/pulls/'+number+'/reviews','POST',dict(event='APPROVE',commit_id=head,body='Automatic approval: existing registered-owner update, unchanged identity, permissions and device compatibility, and all Store checks passed.'))
     subprocess.run(['gh','pr','merge',number,'--repo',repo,'--auto','--squash','--match-head-commit',head],check=True)
     print('Automatic merge requested; GitHub still requires green checks and an up-to-date branch.')
 

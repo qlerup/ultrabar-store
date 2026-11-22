@@ -22,16 +22,16 @@ class UpdatePolicyTests(unittest.TestCase):
    (root/'catalog.json').write_text(json.dumps(dict(schemaVersion=1,packages=[manifest])))
  def check(self,author='alice',paths=None):return eligibility(self.base,self.head,author,paths or self.paths)[0]
  def test_existing_owner_update_qualifies(self):self.assertTrue(self.check())
- def test_changed_native_panel_contract_requires_manual_review(self):
+ def test_validated_native_panel_change_qualifies(self):
   old=dict(widgetApi=1,runtime='studio-native-v1',widgets=[dict(id='clock',kind='clock')])
   new=copy.deepcopy(old);new['widgets'][0]['studio']=dict(api=1,help='New fields')
   for root,widget in ((self.base,old),(self.head,new)):
    (root/self.prefix/'widget.json').write_text(json.dumps(widget))
-  self.assertFalse(self.check())
+  self.assertTrue(self.check())
   (self.base/self.prefix/'widget.json').write_text(json.dumps(new))
   self.assertTrue(self.check())
- def test_changed_settings_contract_requires_manual_review(self):
-  self.new['settings']=dict(api=1,fields=[]);self.save();self.assertFalse(self.check())
+ def test_validated_settings_contract_change_qualifies(self):
+  self.new['settings']=dict(api=1,fields=[]);self.save();self.assertTrue(self.check())
  def test_new_or_legacy_package_stays_manual(self):
   (self.base/self.prefix/'repository.json').unlink();self.assertFalse(self.check())
  def test_new_package_cannot_use_unapproved_folder_as_history(self):
@@ -39,7 +39,7 @@ class UpdatePolicyTests(unittest.TestCase):
  def test_wrong_author_or_owner_transfer_stays_manual(self):
   self.assertFalse(self.check('bob'));self.save(dict(self.link,repository='alice/another'));self.assertFalse(self.check())
  def test_permission_identity_compatibility_changes_stay_manual(self):
-  for field,value in (('permissions',['INTERNET']),('id','alice.another'),('publisher','bob'),('type','studio-plugin'),('compatibility',{}),('license','Changed'),('version','1.0.0')):
+  for field,value in (('permissions',['INTERNET']),('id','alice.another'),('publisher','bob'),('type','studio-plugin'),('compatibility',{'hostApi':2}),('license','Changed'),('version','1.0.0')):
    self.new=dict(self.old,version='1.0.1');self.new[field]=value;self.save();self.assertFalse(self.check(),field)
  def test_workflow_other_package_and_unknown_files_stay_manual(self):
   for path in ('.github/workflows/validate.yml','submissions/other/widget.json',self.prefix+'script.sh'):

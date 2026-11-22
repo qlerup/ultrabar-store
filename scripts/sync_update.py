@@ -43,13 +43,13 @@ def main():
     repo = os.environ['GITHUB_REPOSITORY']
     root = Path.cwd()
     base = git(root, 'rev-parse', 'HEAD').decode().strip()
-    fields = 'number,isDraft,isCrossRepository,mergeStateStatus,reviewDecision,labels'
+    fields = 'number,isDraft,isCrossRepository,mergeStateStatus,reviewDecision,labels,statusCheckRollup'
     pulls = json.loads(subprocess.check_output([
         'gh', 'pr', 'list', '--repo', repo, '--base', 'main', '--limit', '1000', '--json', fields,
     ]))
     for pull in sorted(pulls, key=lambda item: item['number']):
-        if (pull['isDraft'] or pull['isCrossRepository'] or pull['reviewDecision'] == 'CHANGES_REQUESTED'
-                or pull['mergeStateStatus'] not in ('BEHIND', 'BLOCKED', 'UNSTABLE')
+        if (pull['isDraft'] or pull['reviewDecision'] == 'CHANGES_REQUESTED'
+                or pull['mergeStateStatus'] in ('DIRTY', 'DRAFT')
                 or any(label['name'] == 'store-manual-review' for label in pull['labels'])):
             continue
         number = pull['number']
@@ -63,10 +63,22 @@ def main():
             continue
         git(root, 'fetch', '--quiet', '--no-tags', 'origin', f'refs/pull/{number}/head')
         head = git(root, 'rev-parse', 'FETCH_HEAD').decode().strip()
-        if head != current['head']['sha'] or git(root, 'merge-base', base, head).decode().strip() == base:
+        if head != current['head']['sha']:
             continue
         tree = candidate_tree(root, base, head, current['user']['login'])
         if tree is None:
+            continue
+        if git(root, 'merge-base', base, head).decode().strip() == base:
+            # Skip a known failing head so other verified updates can proceed.
+            checks = pull.get('statusCheckRollup') or []
+            if any(check.get('name') == 'Validate package' and check.get('conclusion') in
+                   ('FAILURE', 'TIMED_OUT', 'ACTION_REQUIRED') for check in checks):
+                continue
+            with open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf-8') as output:
+                print(f"number={number}\nhead={head}\nbase={base}", file=output)
+            print(f'Validating current PR #{number} against main.')
+            return
+        if pull['isCrossRepository'] and not current.get('maintainer_can_modify'):
             continue
         api(repo, f'{path}/update-branch', '--method', 'PUT', '-f', f'expected_head_sha={head}')
         for _ in range(15):
