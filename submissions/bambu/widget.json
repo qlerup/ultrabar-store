@@ -295,7 +295,10 @@
                 {"type": "oval", "points": [42, 1, 60, 19], "fill": "#b7c0c3"},
                 {"type": "oval", "points": [48, 7, 54, 13], "fill": "#46565b"}
               ],
-              "labels": {},
+              "labels": {
+                "hotend.0": "Hotend 1",
+                "hotend.1": "Hotend 2"
+              },
               "images": {
                 "printer": {
                   "asset": "printer_thumbnail_n2s_png.png"
@@ -315,7 +318,10 @@
                 {"type": "oval", "points": [72, 5, 90, 23], "fill": "#b7c0c3"},
                 {"type": "oval", "points": [78, 11, 84, 17], "fill": "#46565b"}
               ],
-              "labels": {},
+              "labels": {
+                "hotend.0": "Hotend 1",
+                "hotend.1": "Hotend 2"
+              },
               "images": {
                 "printer": {
                   "asset": "printer_thumbnail_n1_png.png"
@@ -334,7 +340,10 @@
                 {"type": "rect", "points": [41, 31, 47, 36], "fill": "accent"},
                 {"type": "roundRect", "points": [74, 74, 89, 83, 2, 2], "fill": "#263238"}
               ],
-              "labels": {},
+              "labels": {
+                "hotend.0": "Hotend 1",
+                "hotend.1": "Hotend 2"
+              },
               "images": {
                 "printer": {
                   "asset": "printer_preview_N9.png"
@@ -355,7 +364,10 @@
                 {"type": "polygon", "points": [36.0, 75, 36.0, 64, 45.0, 59, 54.0, 64, 54.0, 75], "fill": "#334b42"},
                 {"type": "rect", "points": [21, 13, 33, 18], "fill": "accent"}
               ],
-              "labels": {},
+              "labels": {
+                "hotend.0": "Hotend 1",
+                "hotend.1": "Hotend 2"
+              },
               "images": {
                 "printer": {
                   "asset": "printer_thumbnail_p1p_png.png"
@@ -377,7 +389,10 @@
                 {"type": "polygon", "points": [36.0, 75, 36.0, 64, 45.0, 59, 54.0, 64, 54.0, 75], "fill": "#334b42"},
                 {"type": "rect", "points": [21, 13, 33, 18], "fill": "accent"}
               ],
-              "labels": {},
+              "labels": {
+                "hotend.0": "Hotend 1",
+                "hotend.1": "Hotend 2"
+              },
               "images": {
                 "printer": {
                   "asset": "printer_thumbnail_p1s_png.png"
@@ -400,7 +415,10 @@
                 {"type": "rect", "points": [21, 13, 33, 18], "fill": "accent"},
                 {"type": "roundRect", "points": [38, 12, 54, 20, 2, 2], "fill": "#172329"}
               ],
-              "labels": {},
+              "labels": {
+                "hotend.0": "Hotend 1",
+                "hotend.1": "Hotend 2"
+              },
               "images": {
                 "printer": {
                   "asset": "printer_thumbnail_N7_png.png"
@@ -422,7 +440,10 @@
                 {"type": "polygon", "points": [36.0, 75, 36.0, 64, 45.0, 59, 54.0, 64, 54.0, 75], "fill": "#334b42"},
                 {"type": "rect", "points": [21, 13, 33, 18], "fill": "accent"}
               ],
-              "labels": {},
+              "labels": {
+                "hotend.0": "Hotend 1",
+                "hotend.1": "Hotend 2"
+              },
               "images": {
                 "printer": {
                   "asset": "printer_thumbnail_png.png"
@@ -444,7 +465,10 @@
                 {"type": "polygon", "points": [36.0, 75, 36.0, 64, 45.0, 59, 54.0, 64, 54.0, 75], "fill": "#334b42"},
                 {"type": "rect", "points": [21, 13, 33, 18], "fill": "accent"}
               ],
-              "labels": {},
+              "labels": {
+                "hotend.0": "Hotend 1",
+                "hotend.1": "Hotend 2"
+              },
               "images": {
                 "printer": {
                   "asset": "printer_thumbnail_x1c_png.png"
@@ -467,7 +491,10 @@
                 {"type": "rect", "points": [21, 13, 33, 18], "fill": "accent"},
                 {"type": "oval", "points": [65, 14, 69, 18], "fill": "#d4b166"}
               ],
-              "labels": {},
+              "labels": {
+                "hotend.0": "Hotend 1",
+                "hotend.1": "Hotend 2"
+              },
               "images": {
                 "printer": {
                   "asset": "printer_thumbnail_x1e_png.png"
@@ -492,7 +519,10 @@
                 {"type": "rect", "points": [21, 13, 33, 18], "fill": "accent"},
                 {"type": "roundRect", "points": [38, 12, 54, 20, 2, 2], "fill": "#172329"}
               ],
-              "labels": {},
+              "labels": {
+                "hotend.0": "Hotend 1",
+                "hotend.1": "Hotend 2"
+              },
               "images": {
                 "printer": {
                   "asset": "printer_thumbnail_N6_png.png"
@@ -518,7 +548,9 @@
               ],
               "labels": {
                 "nozzle.0": "LEFT NOZZLE",
-                "nozzle.1": "RIGHT NOZZLE"
+                "nozzle.1": "RIGHT NOZZLE",
+                "hotend.0": "Hotend 1",
+                "hotend.1": "Hotend 2"
               },
               "images": {
                 "printer": {
@@ -546,7 +578,9 @@
               ],
               "labels": {
                 "nozzle.0": "LEFT NOZZLE",
-                "nozzle.1": "RIGHT NOZZLE"
+                "nozzle.1": "RIGHT NOZZLE",
+                "hotend.0": "Hotend 1",
+                "hotend.1": "Hotend 2"
               },
               "images": {
                 "printer": {
@@ -569,7 +603,10 @@
                 {"type": "polygon", "points": [34.0, 75, 34.0, 64, 43.0, 59, 52.0, 64, 52.0, 75], "fill": "#334b42"},
                 {"type": "rect", "points": [10, 13, 22, 18], "fill": "accent"}
               ],
-              "labels": {},
+              "labels": {
+                "hotend.0": "Hotend 1",
+                "hotend.1": "Hotend 2"
+              },
               "images": {
                 "printer": {
                   "asset": "printer_thumbnail_o1s_png.png"
@@ -599,6 +636,13 @@
                 {"type": "oval", "points": [60, 5, 64, 9], "fill": "#bfc6c9"}
               ],
               "labels": {
+                "hotend.0": "Hotend 1",
+                "hotend.1": "Hotend 2",
+                "hotend.2": "Hotend 3",
+                "hotend.3": "Hotend 4",
+                "hotend.4": "Hotend 5",
+                "hotend.5": "Hotend 6",
+                "hotend.6": "Hotend 7",
                 "chamber_temper": "Chamber",
                 "bed_temper": "Bed",
                 "filament.GFG02": "PETG HF",
@@ -643,15 +687,15 @@
                 {"type": "oval", "points": [55, 0, 65, 10], "fill": "#6d8288"}
               ],
               "labels": {
-                "nozzle.0": "NOZZLE T0",
-                "nozzle.1": "NOZZLE T1",
-                "nozzle.2": "NOZZLE T2",
-                "nozzle.3": "NOZZLE T3",
-                "nozzle.4": "NOZZLE T4",
-                "nozzle.5": "NOZZLE T5",
-                "nozzle.6": "NOZZLE T6",
-                "nozzle.7": "NOZZLE T7",
-                "nozzle.8": "NOZZLE T8",
+                "hotend.0": "Hotend 1",
+                "hotend.1": "Hotend 2",
+                "hotend.2": "Hotend 3",
+                "hotend.3": "Hotend 4",
+                "hotend.4": "Hotend 5",
+                "hotend.5": "Hotend 6",
+                "hotend.6": "Hotend 7",
+                "hotend.7": "Hotend 8",
+                "hotend.8": "Hotend 9",
                 "chamber_temper": "Chamber",
                 "bed_temper": "Bed",
                 "filament.GFG02": "PETG HF",
@@ -832,24 +876,24 @@
               "op": "text",
               "text": "{values.title}",
               "box": [
-                18,
-                4,
-                735,
-                95
+                50,
+                60,
+                440,
+                72
               ],
-              "size": 17,
+              "size": 14,
               "bold": true
             },
             {
               "op": "text",
               "text": "{values.status}",
               "box": [
-                765,
-                4,
-                210,
-                95
+                690,
+                60,
+                260,
+                72
               ],
-              "size": 13,
+              "size": 11,
               "align": "right",
               "color": "$accent"
             },
@@ -857,12 +901,12 @@
               "op": "text",
               "text": "{values.progress}%",
               "box": [
-                18,
-                270,
-                225,
-                240
+                50,
+                285,
+                205,
+                178
               ],
-              "size": 42,
+              "size": 27,
               "bold": true,
               "when": "printer.fresh"
             },
@@ -870,12 +914,12 @@
               "op": "text",
               "text": "\u2014",
               "box": [
-                18,
-                270,
-                225,
-                240
+                50,
+                285,
+                205,
+                178
               ],
-              "size": 42,
+              "size": 27,
               "bold": true,
               "unless": "printer.fresh"
             },
@@ -883,36 +927,36 @@
               "op": "text",
               "text": "{values.job}",
               "box": [
-                18,
-                520,
-                225,
-                95
+                50,
+                475,
+                205,
+                73
               ],
-              "size": 14,
+              "size": 11,
               "when": "settings.showJob"
             },
             {
               "op": "bar",
               "box": [
-                18,
-                635,
-                225,
-                22
+                50,
+                565,
+                205,
+                13
               ],
               "source": "values.progress",
               "color": "$accent",
-              "radius": 3
+              "radius": 2
             },
             {
               "op": "text",
               "text": "{values.remaining}",
               "box": [
-                18,
-                685,
-                225,
-                88
+                50,
+                605,
+                205,
+                70
               ],
-              "size": 13,
+              "size": 10,
               "color": "#a5b9c3",
               "when": "settings.showRemaining"
             },
@@ -920,22 +964,22 @@
               "op": "text",
               "text": "Layer {values.layers}",
               "box": [
-                18,
-                785,
-                225,
-                88
+                50,
+                690,
+                205,
+                70
               ],
-              "size": 13,
+              "size": 10,
               "color": "#a5b9c3",
               "when": "settings.showLayers"
             },
             {
               "op": "group",
               "box": [
-                260,
-                125,
-                725,
-                850
+                280,
+                150,
+                670,
+                750
               ],
               "children": [
                 {
@@ -957,83 +1001,92 @@
                         1000
                       ],
                       "color": "#23333f",
-                      "radius": 14
+                      "radius": 9
                     },
                     {
                       "op": "text",
-                      "text": "nozzle.{item.tool}",
+                      "text": "hotend.{item.tool}",
                       "box": [
-                        15,
+                        35,
                         50,
-                        970,
-                        525
+                        930,
+                        215
                       ],
-                      "size": 22,
-                      "bold": true,
-                      "align": "center",
+                      "size": 11,
                       "lookup": "labels",
-                      "fallback": "T{item.tool}",
-                      "suffix": "   {item.temperature}\u00b0C",
-                      "unless": "narrow"
+                      "fallback": "Hotend {item.tool}",
+                      "align": "center",
+                      "color": "#a5b9c3"
                     },
                     {
                       "op": "text",
-                      "text": "T{item.tool}   {item.temperature}\u00b0C",
+                      "text": "{item.temperature}\u00b0C",
                       "box": [
-                        15,
-                        50,
-                        970,
-                        525
+                        35,
+                        265,
+                        930,
+                        235
                       ],
-                      "size": 21,
+                      "size": 13,
                       "bold": true,
-                      "align": "center",
-                      "when": "narrow"
+                      "align": "center"
                     },
                     {
                       "op": "text",
                       "text": "{item.material}",
                       "box": [
-                        8,
-                        610,
-                        750,
-                        350
+                        35,
+                        500,
+                        930,
+                        215
                       ],
-                      "size": 17,
+                      "size": 10,
                       "when": "item.material",
-                      "align": "center",
-                      "bold": true
+                      "align": "center"
                     },
                     {
                       "op": "text",
                       "text": "filament.{item.filamentProfile}",
                       "box": [
-                        8,
-                        610,
-                        750,
-                        350
+                        35,
+                        500,
+                        930,
+                        215
                       ],
-                      "size": 17,
+                      "size": 10,
                       "unless": "item.material",
                       "lookup": "labels",
-                      "align": "center",
-                      "bold": true
+                      "align": "center"
                     },
                     {
                       "op": "swatch",
                       "box": [
-                        760,
-                        610,
-                        195,
-                        350
+                        35,
+                        730,
+                        930,
+                        230
                       ],
-                      "size": 18,
+                      "size": 10,
                       "color": "@item.color",
                       "radius": 2,
                       "when": "item.color"
+                    },
+                    {
+                      "op": "text",
+                      "text": "\u2014",
+                      "box": [
+                        35,
+                        730,
+                        930,
+                        230
+                      ],
+                      "size": 9,
+                      "unless": "item.color",
+                      "align": "center",
+                      "color": "#a5b9c3"
                     }
                   ],
-                  "gap": 4,
+                  "gap": 5,
                   "columns": 3,
                   "key": "tool",
                   "slots": 9,
@@ -1059,83 +1112,92 @@
                         1000
                       ],
                       "color": "#23333f",
-                      "radius": 14
+                      "radius": 9
                     },
                     {
                       "op": "text",
-                      "text": "nozzle.{item.tool}",
+                      "text": "hotend.{item.tool}",
                       "box": [
-                        15,
+                        35,
                         50,
-                        970,
-                        525
+                        930,
+                        215
                       ],
-                      "size": 22,
-                      "bold": true,
-                      "align": "center",
+                      "size": 11,
                       "lookup": "labels",
-                      "fallback": "T{item.tool}",
-                      "suffix": "   {item.temperature}\u00b0C",
-                      "unless": "narrow"
+                      "fallback": "Hotend {item.tool}",
+                      "align": "center",
+                      "color": "#a5b9c3"
                     },
                     {
                       "op": "text",
-                      "text": "T{item.tool}   {item.temperature}\u00b0C",
+                      "text": "{item.temperature}\u00b0C",
                       "box": [
-                        15,
-                        50,
-                        970,
-                        525
+                        35,
+                        265,
+                        930,
+                        235
                       ],
-                      "size": 21,
+                      "size": 13,
                       "bold": true,
-                      "align": "center",
-                      "when": "narrow"
+                      "align": "center"
                     },
                     {
                       "op": "text",
                       "text": "{item.material}",
                       "box": [
-                        8,
-                        610,
-                        750,
-                        350
+                        35,
+                        500,
+                        930,
+                        215
                       ],
-                      "size": 17,
+                      "size": 10,
                       "when": "item.material",
-                      "align": "center",
-                      "bold": true
+                      "align": "center"
                     },
                     {
                       "op": "text",
                       "text": "filament.{item.filamentProfile}",
                       "box": [
-                        8,
-                        610,
-                        750,
-                        350
+                        35,
+                        500,
+                        930,
+                        215
                       ],
-                      "size": 17,
+                      "size": 10,
                       "unless": "item.material",
                       "lookup": "labels",
-                      "align": "center",
-                      "bold": true
+                      "align": "center"
                     },
                     {
                       "op": "swatch",
                       "box": [
-                        760,
-                        610,
-                        195,
-                        350
+                        35,
+                        730,
+                        930,
+                        230
                       ],
-                      "size": 18,
+                      "size": 10,
                       "color": "@item.color",
                       "radius": 2,
                       "when": "item.color"
+                    },
+                    {
+                      "op": "text",
+                      "text": "\u2014",
+                      "box": [
+                        35,
+                        730,
+                        930,
+                        230
+                      ],
+                      "size": 9,
+                      "unless": "item.color",
+                      "align": "center",
+                      "color": "#a5b9c3"
                     }
                   ],
-                  "gap": 4,
+                  "gap": 5,
                   "rows": 2,
                   "when": "printer.model",
                   "equals": "h2c"
@@ -1159,83 +1221,92 @@
                         1000
                       ],
                       "color": "#23333f",
-                      "radius": 14
+                      "radius": 9
                     },
                     {
                       "op": "text",
-                      "text": "nozzle.{item.tool}",
+                      "text": "hotend.{item.tool}",
                       "box": [
-                        15,
+                        35,
                         50,
-                        970,
-                        525
+                        930,
+                        215
                       ],
-                      "size": 22,
-                      "bold": true,
-                      "align": "center",
+                      "size": 11,
                       "lookup": "labels",
-                      "fallback": "T{item.tool}",
-                      "suffix": "   {item.temperature}\u00b0C",
-                      "unless": "narrow"
+                      "fallback": "Hotend {item.tool}",
+                      "align": "center",
+                      "color": "#a5b9c3"
                     },
                     {
                       "op": "text",
-                      "text": "T{item.tool}   {item.temperature}\u00b0C",
+                      "text": "{item.temperature}\u00b0C",
                       "box": [
-                        15,
-                        50,
-                        970,
-                        525
+                        35,
+                        265,
+                        930,
+                        235
                       ],
-                      "size": 21,
+                      "size": 13,
                       "bold": true,
-                      "align": "center",
-                      "when": "narrow"
+                      "align": "center"
                     },
                     {
                       "op": "text",
                       "text": "{item.material}",
                       "box": [
-                        8,
-                        610,
-                        750,
-                        350
+                        35,
+                        500,
+                        930,
+                        215
                       ],
-                      "size": 17,
+                      "size": 10,
                       "when": "item.material",
-                      "align": "center",
-                      "bold": true
+                      "align": "center"
                     },
                     {
                       "op": "text",
                       "text": "filament.{item.filamentProfile}",
                       "box": [
-                        8,
-                        610,
-                        750,
-                        350
+                        35,
+                        500,
+                        930,
+                        215
                       ],
-                      "size": 17,
+                      "size": 10,
                       "unless": "item.material",
                       "lookup": "labels",
-                      "align": "center",
-                      "bold": true
+                      "align": "center"
                     },
                     {
                       "op": "swatch",
                       "box": [
-                        760,
-                        610,
-                        195,
-                        350
+                        35,
+                        730,
+                        930,
+                        230
                       ],
-                      "size": 18,
+                      "size": 10,
                       "color": "@item.color",
                       "radius": 2,
                       "when": "item.color"
+                    },
+                    {
+                      "op": "text",
+                      "text": "\u2014",
+                      "box": [
+                        35,
+                        730,
+                        930,
+                        230
+                      ],
+                      "size": 9,
+                      "unless": "item.color",
+                      "align": "center",
+                      "color": "#a5b9c3"
                     }
                   ],
-                  "gap": 4,
+                  "gap": 5,
                   "rows": 1,
                   "unless": "printer.model",
                   "oneOf": [
@@ -1246,9 +1317,9 @@
                 {
                   "op": "group",
                   "box": [
-                    795,
+                    803,
                     0,
-                    205,
+                    197,
                     485
                   ],
                   "children": [
@@ -1261,18 +1332,18 @@
                         1000
                       ],
                       "color": "#23333f",
-                      "radius": 14
+                      "radius": 9
                     },
                     {
                       "op": "text",
                       "text": "Chamber",
                       "box": [
-                        10,
-                        90,
-                        980,
-                        310
+                        40,
+                        185,
+                        920,
+                        270
                       ],
-                      "size": 13,
+                      "size": 11,
                       "align": "center",
                       "color": "#a5b9c3"
                     },
@@ -1280,12 +1351,12 @@
                       "op": "text",
                       "text": "{printer.chamber_temper}\u00b0C",
                       "box": [
-                        10,
-                        400,
-                        980,
-                        490
+                        40,
+                        460,
+                        920,
+                        350
                       ],
-                      "size": 26,
+                      "size": 15,
                       "align": "center",
                       "bold": true
                     }
@@ -1294,10 +1365,10 @@
                 {
                   "op": "group",
                   "box": [
-                    795,
-                    510,
-                    205,
-                    490
+                    803,
+                    515,
+                    197,
+                    485
                   ],
                   "children": [
                     {
@@ -1309,18 +1380,18 @@
                         1000
                       ],
                       "color": "#23333f",
-                      "radius": 14
+                      "radius": 9
                     },
                     {
                       "op": "text",
                       "text": "Bed",
                       "box": [
-                        10,
-                        90,
-                        980,
-                        310
+                        40,
+                        185,
+                        920,
+                        270
                       ],
-                      "size": 13,
+                      "size": 11,
                       "align": "center",
                       "color": "#a5b9c3"
                     },
@@ -1328,12 +1399,12 @@
                       "op": "text",
                       "text": "{printer.bed_temper}\u00b0C",
                       "box": [
-                        10,
-                        400,
-                        980,
-                        490
+                        40,
+                        460,
+                        920,
+                        350
                       ],
-                      "size": 26,
+                      "size": 15,
                       "align": "center",
                       "bold": true
                     }
