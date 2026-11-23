@@ -128,10 +128,10 @@
             },
             {
               "key": "printAlerts",
-              "label": "Print alert sounds",
+              "label": "Print notifications and sounds",
               "type": "boolean",
               "default": false,
-              "help": "Play a distinct tone on CoreBAR for a print failure, printer-reported print error, or completed print. Studio must stay connected."
+              "help": "Show a Core banner and play a distinct tone when a print finishes or the printer reports an error. Keep Studio connected."
             },
             {
               "key": "wakeOnAlert",
@@ -1402,56 +1402,46 @@
         "sounds": {
           "success": [
             [
-              523.25,
-              160
+              1046.5,
+              155,
+              "bell"
             ],
             [
               0,
-              30
+              25
             ],
             [
-              659.25,
-              160
-            ],
-            [
-              0,
-              30
-            ],
-            [
-              783.99,
-              160
-            ],
-            [
-              0,
-              30
+              1567.98,
+              355,
+              "bell"
             ]
           ],
           "error": [
             [
-              740,
-              160
+              698.46,
+              135
             ],
             [
               0,
-              30
+              50
             ],
             [
-              440,
-              160
-            ],
-            [
-              0,
-              30
-            ],
-            [
-              440,
-              160
-            ],
-            [
-              0,
-              30
+              392,
+              255
             ]
           ]
+        },
+        "notifications": {
+          "success": {
+            "title": "Bambu print complete",
+            "message": "{source} finished printing.",
+            "kind": "success"
+          },
+          "error": {
+            "title": "Bambu print error",
+            "message": "{source} reported a print error. Check the printer.",
+            "kind": "warning"
+          }
         }
       },
       "sizes": [
