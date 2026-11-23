@@ -1,6 +1,6 @@
 # Bambu for UltraBar Studio
 
-This release uses Studio 0.52.23 or newer. Install the package in Studio. The
+This release uses Studio 0.52.35 or newer. Install the package in Studio. The
 package supplies its settings panel, including the available choices, colors
 and defaults. Save and Deploy applies each placed card's settings to Core.
 H2C and H3C temperature presets use at least two rows.
@@ -10,7 +10,7 @@ your PC**, choose a printer for each widget, then Save and Deploy. Studio sends
 live readings to Core through the same channel as CPU, RAM and drive widgets.
 No printer setup or companion app is required on Core.
 
-Requires **Studio 0.52.23+**, root-enabled ARM32 CB01 / LineOS 1.0.9, and compatible
+Requires **Studio 0.52.35+**, root-enabled ARM32 CB01 / LineOS 1.0.9, and compatible
 Bambu LAN firmware. Keep Studio running for live readings and controls.
 
 ## Connect printers
@@ -34,14 +34,16 @@ A blank code keeps the saved code only for the same address and serial.
 
 ## Print alerts
 
-Enable **Print alert sounds** in the widget settings, then choose **Save** and
-**Deploy**. CoreBAR plays different tones for completed prints and printer-reported
-print failures or errors. Keep Studio running and connected. It sends the audio
-when the printer reports the event. CoreBAR plays it at 80% media volume and
-restores the previous level afterwards.
+Enable **Print notifications and sounds** in the widget settings, then choose
+**Save** and **Deploy**. Bambu sends a Core Notifications banner with the printer
+name when a print finishes or the printer reports a print failure or error.
+A bright bell chime marks completion, and a separate descending tone alerts
+you to an error. Keep Studio running and connected. CoreBAR plays the sound
+at 80% media volume and restores the previous level afterward.
 
-**Wake screen for print alerts** is on by default when sounds are enabled.
-Turn it off to play the sounds while leaving the display asleep.
+**Wake screen for print alerts** is on by default when alerts are enabled.
+Turn it off to keep the display asleep. In that case the sound can still play
+while the display is asleep, and banners appear when Core is already awake.
 
 The PC must reach the printer on TLS MQTT port 8883. Find LAN settings on the
 printer; some firmware requires LAN mode and Developer Mode for controls. Studio
