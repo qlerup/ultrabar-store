@@ -3,10 +3,10 @@
   "id": "qlerup.core.pc-standby",
   "name": "PC Standby",
   "description": "Deploy PC Standby to pair Core with Studio automatically. Core sleeps after three unanswered Studio pings, 30 seconds apart, and wakes when Studio responds again.",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "type": "corebar-app",
   "publisher": "qlerup",
-  "source": "https://github.com/qlerup/ultrabar-core-standby/blob/66a38d51d5ed038e4366ebc9b0ed3b993c88674d/AndroidManifest.xml",
+  "source": "https://github.com/qlerup/ultrabar-core-standby/blob/7c099774569d3c9c45f08a4ce6bbf5ed829d3f47/AndroidManifest.xml",
   "license": "Proprietary; unmodified official releases may be used",
   "compatibility": {
     "minStudioVersion": "0.52.26",
@@ -30,14 +30,14 @@
   ],
   "android": {
     "packageId": "dk.qlerup.corestandby",
-    "versionCode": 110,
+    "versionCode": 111,
     "minSdk": 26,
     "signerSha256": "d336c808d454d6d9737e9663a1514da3c21ae572f605916cc3972ce49290c8ea"
   },
   "artifact": {
-    "url": "https://github.com/qlerup/ultrabar-store/releases/download/review-pc-standby-1.1.0/app.apk",
+    "url": "https://github.com/qlerup/ultrabar-store/releases/download/review-pc-standby-1.1.1/app.apk",
     "size": 25197,
-    "sha256": "a2bb307760f3de2e59071193d18bbdeca437d84f59e85694e86ab3d4e2903168"
+    "sha256": "a54e792c0cd8247d4ad60e5c3f9c014de8dac73b4b217e29c48b5ba63bf89a1b"
   },
   "icon": {
     "url": "https://github.com/qlerup/ultrabar-store/releases/download/review-pc-standby-1.0.0/icon.png",
