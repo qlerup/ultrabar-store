@@ -161,6 +161,14 @@ private signing key for future updates. Choose a unique Android package ID outsi
 reserved system and UltraBar namespaces. Special setup must already be supported
 by Studio or handled by the app; manifests cannot add install scripts.
 
+Panel API 2 supports package-defined Core banners via `studio.notifications`
+on Studio 0.52.35 or newer. The widget package supplies the title, message and
+kind (`info`, `success` or `warning`) for each trusted provider event. Messages
+can include `{source}` for the trusted display name. The Bambu LAN provider emits
+`success` for print completion and `error` for a print failure or print error.
+Declare `studio.sounds` separately to play package-owned tones. On Studio 0.52.35
+or newer a note can include a third value of `"bell"` for a decaying chime.
+
 ## 3. Test and publish an upstream release
 
 1. Test on the hardware and firmware you intend to support.

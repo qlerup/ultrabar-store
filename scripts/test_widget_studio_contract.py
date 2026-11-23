@@ -43,6 +43,23 @@ class PanelTests(unittest.TestCase):
         self.assertEqual(self.parse(descriptor)[0]['studio'],descriptor)
         self.assertEqual(panels.validate(panels.legacy_bambu(),'bambu'),panels.legacy_bambu())
 
+    def test_package_notifications_and_bell_are_bounded(self):
+        descriptor = dict(self.clock(), api=2, notifications={
+            'success': dict(title='Print finished', message='{source} finished.', kind='success')},
+            sounds={'success': [[1046.5, 250, 'bell']]})
+        widgets = self.parse(descriptor)
+        self.assertTrue(panels.requires_notification_runtime(widgets))
+        self.assertEqual(widgets[0]['studio'], descriptor)
+        for invalid in ('{secret}', '{source.name}', '{source'):
+            bad = copy.deepcopy(descriptor)
+            bad['notifications']['success']['message'] = invalid
+            with self.assertRaisesRegex(StoreError, 'placeholder'):
+                self.parse(bad)
+        bad = copy.deepcopy(descriptor)
+        bad['sounds']['success'][0][2] = 'unknown'
+        with self.assertRaisesRegex(StoreError, 'bell timbre'):
+            self.parse(bad)
+
     def test_unsupported_code_runtime_fields_sources_and_provider_are_rejected(self):
         for descriptor in (dict(self.clock(),script='run()'),dict(self.clock(),sources={'showSeconds':'https://example.com'})):
             with self.assertRaises(StoreError):self.parse(descriptor)

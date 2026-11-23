@@ -394,7 +394,26 @@
     },
     "sounds": {
       "type": "object",
-      "description": "Named tone sequences. Each pair is frequency in Hz and duration in milliseconds. Maximum total 580 ms per event."
+      "description": "Named tone sequences. Each note is frequency in Hz and duration in milliseconds, with an optional third value of bell. Maximum total 580 ms per event."
+    },
+    "notifications": {
+      "type": "object",
+      "description": "Core banners for events emitted by the widget's trusted provider. Messages can include the {source} display name.",
+      "minProperties": 1,
+      "maxProperties": 16,
+      "additionalProperties": false,
+      "patternProperties": {
+        "^[a-z][a-z0-9_.]{0,63}$": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["title", "message", "kind"],
+          "properties": {
+            "title": {"type": "string", "minLength": 1, "maxLength": 80},
+            "message": {"type": "string", "minLength": 1, "maxLength": 200},
+            "kind": {"enum": ["info", "success", "warning"]}
+          }
+        }
+      }
     }
   },
   "$defs": {
