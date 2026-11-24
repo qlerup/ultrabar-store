@@ -4,7 +4,7 @@ PC Standby follows the Windows copy of UltraBar Studio that deployed it. Core
 asks Studio for an authenticated reply once every 30 seconds. After three
 consecutive unanswered pings, Core goes to sleep. A valid reply resets the count.
 If a touch wakes the screen while Studio is still unreachable, Core goes back to sleep.
-When Studio answers again, PC Standby wakes Core if it put the screen to sleep.
+When Studio answers again, PC Standby wakes Core if it put the screen to sleep. A pending wake survives a Studio redeploy or service restart. Core retries on authenticated replies until Android reports that the display is interactive.
 
 ## Install
 
