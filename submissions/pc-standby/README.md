@@ -1,5 +1,9 @@
 # PC Standby for UltraBar Core
 
+Version 1.1.3 temporarily disables monitoring, restores the saved screen timeout on upgrade and relinquishes device administrator access. This recovery build has no standby service or boot receiver.
+
+## Previous versions
+
 PC Standby follows the Windows copy of UltraBar Studio that deployed it. Core
 asks Studio for an authenticated reply once every 30 seconds. After three
 consecutive unanswered pings, Core goes to sleep. A valid reply resets the count.
