@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": 1795564650,
+  "generatedAt": 1795564838,
   "packages": {
     "qlerup.core.flip-clock-hd": {
       "repository": "https://github.com/qlerup/ultrabar-flip-clock-hd",
@@ -11,8 +11,8 @@
     },
     "qlerup.core.pc-standby": {
       "repository": "https://github.com/qlerup/ultrabar-core-standby",
-      "artifact": "https://github.com/qlerup/ultrabar-store/releases/download/review-pc-standby-1.1.1/app.apk",
-      "downloads": 12,
+      "artifact": "https://github.com/qlerup/ultrabar-store/releases/download/review-pc-standby-1.1.2/app.apk",
+      "downloads": 0,
       "issues": 0,
       "stale": false
     },
