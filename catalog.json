@@ -113,53 +113,6 @@
     },
     {
       "schemaVersion": 1,
-      "id": "qlerup.core.pc-standby",
-      "name": "PC Standby",
-      "description": "Deploy PC Standby to pair Core with Studio automatically. Core sleeps after three unanswered Studio pings, 30 seconds apart, and wakes when Studio responds again.",
-      "version": "1.1.2",
-      "type": "corebar-app",
-      "publisher": "qlerup",
-      "source": "https://github.com/qlerup/ultrabar-core-standby/blob/f604573cd88931cdf8a2b0b58157b752a23a966a/AndroidManifest.xml",
-      "license": "Proprietary; unmodified official releases may be used",
-      "compatibility": {
-        "minStudioVersion": "0.52.26",
-        "hostApi": 1,
-        "models": [
-          "CB01"
-        ],
-        "lineosVersions": [
-          "1.0.9"
-        ],
-        "abis": [
-          "armeabi-v7a"
-        ]
-      },
-      "permissions": [
-        "android.permission.INTERNET",
-        "android.permission.FOREGROUND_SERVICE",
-        "android.permission.RECEIVE_BOOT_COMPLETED",
-        "android.permission.WAKE_LOCK",
-        "android.permission.WRITE_SETTINGS"
-      ],
-      "android": {
-        "packageId": "dk.qlerup.corestandby",
-        "versionCode": 112,
-        "minSdk": 26,
-        "signerSha256": "d336c808d454d6d9737e9663a1514da3c21ae572f605916cc3972ce49290c8ea"
-      },
-      "artifact": {
-        "url": "https://github.com/qlerup/ultrabar-store/releases/download/review-pc-standby-1.1.2/app.apk",
-        "size": 25197,
-        "sha256": "fdcd7cc14e0bac7a5485be6f4d3c7f6d59ee0bd4dcd6a8a7aae3fe5b348a958b"
-      },
-      "icon": {
-        "url": "https://github.com/qlerup/ultrabar-store/releases/download/review-pc-standby-1.0.0/icon.png",
-        "size": 6800,
-        "sha256": "c45249fb83ffdebfef5f71d59970988d40de9776c6bf227ebe20ad1b82050385"
-      }
-    },
-    {
-      "schemaVersion": 1,
       "id": "studio.bambu",
       "name": "Bambu",
       "description": "Monitor Bambu prints on CoreBAR with live readings, completion and error notifications, and optional screen wake.",
