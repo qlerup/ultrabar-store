@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": 1795632449,
+  "generatedAt": 1795633827,
   "packages": {
     "qlerup.core.flip-clock-hd": {
       "repository": "https://github.com/qlerup/ultrabar-flip-clock-hd",
@@ -19,7 +19,7 @@
     "studio.clock.widget": {
       "repository": "https://github.com/qlerup/studio-clock-widget",
       "artifact": "https://github.com/qlerup/ultrabar-store/releases/download/review-studio-clock-widget-1.4.0/widget.json",
-      "downloads": 84,
+      "downloads": 85,
       "issues": 0,
       "stale": false
     },
