@@ -15,7 +15,7 @@ WiFi ADB and LineOS 1.0.9.
    idle delay. Supported delays are 20, 40, 60, 80 and 100 seconds.
 3. Select **Deploy to Core**. Studio installs the app, applies its settings,
    and selects Flip Clock HD in place of the previous LineOS screensaver.
-4. Tap Core while the clock is showing to dismiss it. Launching the app
+4. Tap Core while the clock is showing to slide it up and reveal the underlying screen. Launching the app
    directly on Core also opens the full-screen clock.
 5. To restore the previous screensaver, remove Flip Clock HD from the layout
    and Background apps and deploy again.
