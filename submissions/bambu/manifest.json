@@ -3,11 +3,11 @@
   "id": "studio.bambu",
   "name": "Bambu",
   "description": "Monitor Bambu prints on CoreBAR with live readings, completion and error notifications, and optional screen wake.",
-  "version": "2.8.7",
+  "version": "2.8.9",
   "type": "corebar-widget",
   "license": "Proprietary; unmodified official releases may be used",
   "publisher": "qlerup",
-  "source": "https://github.com/qlerup/ultrabar-bambu/blob/19e9a64f69c2f80418eed3e58b580d01931cdafc/widget.json",
+  "source": "https://github.com/qlerup/ultrabar-bambu/blob/96a2bcbcc0545f346f4875376a68950f8a5980df/widget.json",
   "compatibility": {
     "minStudioVersion": "0.52.35",
     "hostApi": 1,
@@ -23,9 +23,9 @@
   },
   "permissions": [],
   "artifact": {
-    "url": "https://github.com/qlerup/ultrabar-store/releases/download/review-bambu-2.8.7/widget.json",
-    "size": 51908,
-    "sha256": "ed8649d32a7cc9f2705a5d51f754f9c9e3a100043d9ad7a48ed58d69f2ae5f79"
+    "url": "https://github.com/qlerup/ultrabar-store/releases/download/review-bambu-2.8.9/widget.json",
+    "size": 59038,
+    "sha256": "8c7a3b55938f687b77aee4d9fef7d41e4eb264322b05297c1486532f23b979dd"
   },
   "icon": {
     "url": "https://github.com/qlerup/ultrabar-store/releases/download/review-bambu-2.8.7/icon.png",
