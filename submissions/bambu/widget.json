@@ -26,6 +26,12 @@
           "api": 1,
           "fields": [
             {
+              "key": "hideDisplayName",
+              "type": "boolean",
+              "label": "Hide display name on Core",
+              "default": false
+            },
+            {
               "key": "primary",
               "label": "Main reading",
               "type": "choice",
@@ -284,16 +290,112 @@
             {
               "value": "a1",
               "artwork": [
-                {"type": "roundRect", "points": [8, 82, 92, 93, 4, 4], "fill": "#afb9bc"},
-                {"type": "rect", "points": [18, 70, 70, 82], "fill": "#526166"},
-                {"type": "rect", "points": [73, 10, 80, 85], "fill": "#d5dbdd"},
-                {"type": "rect", "points": [18, 10, 25, 85], "fill": "#d5dbdd"},
-                {"type": "rect", "points": [12, 27, 86, 33], "fill": "#d5dbdd"},
-                {"type": "roundRect", "points": [37, 24, 51, 42, 3, 3], "fill": "#e9edef"},
-                {"type": "rect", "points": [41, 39, 47, 44], "fill": "accent"},
-                {"type": "roundRect", "points": [74, 74, 89, 83, 2, 2], "fill": "#263238"},
-                {"type": "oval", "points": [42, 1, 60, 19], "fill": "#b7c0c3"},
-                {"type": "oval", "points": [48, 7, 54, 13], "fill": "#46565b"}
+                {
+                  "type": "roundRect",
+                  "points": [
+                    8,
+                    82,
+                    92,
+                    93,
+                    4,
+                    4
+                  ],
+                  "fill": "#afb9bc"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    18,
+                    70,
+                    70,
+                    82
+                  ],
+                  "fill": "#526166"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    73,
+                    10,
+                    80,
+                    85
+                  ],
+                  "fill": "#d5dbdd"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    18,
+                    10,
+                    25,
+                    85
+                  ],
+                  "fill": "#d5dbdd"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    12,
+                    27,
+                    86,
+                    33
+                  ],
+                  "fill": "#d5dbdd"
+                },
+                {
+                  "type": "roundRect",
+                  "points": [
+                    37,
+                    24,
+                    51,
+                    42,
+                    3,
+                    3
+                  ],
+                  "fill": "#e9edef"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    41,
+                    39,
+                    47,
+                    44
+                  ],
+                  "fill": "accent"
+                },
+                {
+                  "type": "roundRect",
+                  "points": [
+                    74,
+                    74,
+                    89,
+                    83,
+                    2,
+                    2
+                  ],
+                  "fill": "#263238"
+                },
+                {
+                  "type": "oval",
+                  "points": [
+                    42,
+                    1,
+                    60,
+                    19
+                  ],
+                  "fill": "#b7c0c3"
+                },
+                {
+                  "type": "oval",
+                  "points": [
+                    48,
+                    7,
+                    54,
+                    13
+                  ],
+                  "fill": "#46565b"
+                }
               ],
               "labels": {
                 "hotend.0": "Hotend 1",
@@ -308,15 +410,102 @@
             {
               "value": "a1-mini",
               "artwork": [
-                {"type": "roundRect", "points": [8, 82, 92, 93, 4, 4], "fill": "#afb9bc"},
-                {"type": "rect", "points": [18, 70, 70, 82], "fill": "#526166"},
-                {"type": "rect", "points": [65, 10, 72, 85], "fill": "#d5dbdd"},
-                {"type": "rect", "points": [12, 27, 86, 33], "fill": "#d5dbdd"},
-                {"type": "roundRect", "points": [37, 24, 51, 42, 3, 3], "fill": "#e9edef"},
-                {"type": "rect", "points": [41, 39, 47, 44], "fill": "accent"},
-                {"type": "roundRect", "points": [74, 74, 89, 83, 2, 2], "fill": "#263238"},
-                {"type": "oval", "points": [72, 5, 90, 23], "fill": "#b7c0c3"},
-                {"type": "oval", "points": [78, 11, 84, 17], "fill": "#46565b"}
+                {
+                  "type": "roundRect",
+                  "points": [
+                    8,
+                    82,
+                    92,
+                    93,
+                    4,
+                    4
+                  ],
+                  "fill": "#afb9bc"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    18,
+                    70,
+                    70,
+                    82
+                  ],
+                  "fill": "#526166"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    65,
+                    10,
+                    72,
+                    85
+                  ],
+                  "fill": "#d5dbdd"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    12,
+                    27,
+                    86,
+                    33
+                  ],
+                  "fill": "#d5dbdd"
+                },
+                {
+                  "type": "roundRect",
+                  "points": [
+                    37,
+                    24,
+                    51,
+                    42,
+                    3,
+                    3
+                  ],
+                  "fill": "#e9edef"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    41,
+                    39,
+                    47,
+                    44
+                  ],
+                  "fill": "accent"
+                },
+                {
+                  "type": "roundRect",
+                  "points": [
+                    74,
+                    74,
+                    89,
+                    83,
+                    2,
+                    2
+                  ],
+                  "fill": "#263238"
+                },
+                {
+                  "type": "oval",
+                  "points": [
+                    72,
+                    5,
+                    90,
+                    23
+                  ],
+                  "fill": "#b7c0c3"
+                },
+                {
+                  "type": "oval",
+                  "points": [
+                    78,
+                    11,
+                    84,
+                    17
+                  ],
+                  "fill": "#46565b"
+                }
               ],
               "labels": {
                 "hotend.0": "Hotend 1",
@@ -331,14 +520,92 @@
             {
               "value": "a2l",
               "artwork": [
-                {"type": "roundRect", "points": [8, 82, 92, 93, 4, 4], "fill": "#afb9bc"},
-                {"type": "rect", "points": [18, 70, 70, 82], "fill": "#526166"},
-                {"type": "rect", "points": [73, 10, 80, 85], "fill": "#d5dbdd"},
-                {"type": "rect", "points": [18, 10, 25, 85], "fill": "#d5dbdd"},
-                {"type": "rect", "points": [12, 19, 86, 25], "fill": "#d5dbdd"},
-                {"type": "roundRect", "points": [37, 16, 51, 34, 3, 3], "fill": "#e9edef"},
-                {"type": "rect", "points": [41, 31, 47, 36], "fill": "accent"},
-                {"type": "roundRect", "points": [74, 74, 89, 83, 2, 2], "fill": "#263238"}
+                {
+                  "type": "roundRect",
+                  "points": [
+                    8,
+                    82,
+                    92,
+                    93,
+                    4,
+                    4
+                  ],
+                  "fill": "#afb9bc"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    18,
+                    70,
+                    70,
+                    82
+                  ],
+                  "fill": "#526166"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    73,
+                    10,
+                    80,
+                    85
+                  ],
+                  "fill": "#d5dbdd"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    18,
+                    10,
+                    25,
+                    85
+                  ],
+                  "fill": "#d5dbdd"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    12,
+                    19,
+                    86,
+                    25
+                  ],
+                  "fill": "#d5dbdd"
+                },
+                {
+                  "type": "roundRect",
+                  "points": [
+                    37,
+                    16,
+                    51,
+                    34,
+                    3,
+                    3
+                  ],
+                  "fill": "#e9edef"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    41,
+                    31,
+                    47,
+                    36
+                  ],
+                  "fill": "accent"
+                },
+                {
+                  "type": "roundRect",
+                  "points": [
+                    74,
+                    74,
+                    89,
+                    83,
+                    2,
+                    2
+                  ],
+                  "fill": "#263238"
+                }
               ],
               "labels": {
                 "hotend.0": "Hotend 1",
@@ -353,16 +620,120 @@
             {
               "value": "p1p",
               "artwork": [
-                {"type": "polygon", "points": [74, 10, 96, 19, 96, 85, 74, 94], "fill": "#263238"},
-                {"type": "roundRect", "points": [16, 10, 74, 94, 3, 3], "fill": "#505c61"},
-                {"type": "rect", "points": [21, 22, 69, 84], "fill": "#172329"},
-                {"type": "rect", "points": [23, 16, 28, 83], "fill": "#505c61"},
-                {"type": "rect", "points": [62, 16, 67, 83], "fill": "#505c61"},
-                {"type": "rect", "points": [23, 35, 67, 41], "fill": "#505c61"},
-                {"type": "roundRect", "points": [38.0, 32, 52.0, 48, 2, 2], "fill": "#edf1f2"},
-                {"type": "rect", "points": [27, 76, 63, 80], "fill": "#8b9c9f"},
-                {"type": "polygon", "points": [36.0, 75, 36.0, 64, 45.0, 59, 54.0, 64, 54.0, 75], "fill": "#334b42"},
-                {"type": "rect", "points": [21, 13, 33, 18], "fill": "accent"}
+                {
+                  "type": "polygon",
+                  "points": [
+                    74,
+                    10,
+                    96,
+                    19,
+                    96,
+                    85,
+                    74,
+                    94
+                  ],
+                  "fill": "#263238"
+                },
+                {
+                  "type": "roundRect",
+                  "points": [
+                    16,
+                    10,
+                    74,
+                    94,
+                    3,
+                    3
+                  ],
+                  "fill": "#505c61"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    21,
+                    22,
+                    69,
+                    84
+                  ],
+                  "fill": "#172329"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    23,
+                    16,
+                    28,
+                    83
+                  ],
+                  "fill": "#505c61"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    62,
+                    16,
+                    67,
+                    83
+                  ],
+                  "fill": "#505c61"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    23,
+                    35,
+                    67,
+                    41
+                  ],
+                  "fill": "#505c61"
+                },
+                {
+                  "type": "roundRect",
+                  "points": [
+                    38.0,
+                    32,
+                    52.0,
+                    48,
+                    2,
+                    2
+                  ],
+                  "fill": "#edf1f2"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    27,
+                    76,
+                    63,
+                    80
+                  ],
+                  "fill": "#8b9c9f"
+                },
+                {
+                  "type": "polygon",
+                  "points": [
+                    36.0,
+                    75,
+                    36.0,
+                    64,
+                    45.0,
+                    59,
+                    54.0,
+                    64,
+                    54.0,
+                    75
+                  ],
+                  "fill": "#334b42"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    21,
+                    13,
+                    33,
+                    18
+                  ],
+                  "fill": "accent"
+                }
               ],
               "labels": {
                 "hotend.0": "Hotend 1",
@@ -377,17 +748,130 @@
             {
               "value": "p1s",
               "artwork": [
-                {"type": "polygon", "points": [74, 10, 96, 19, 96, 85, 74, 94], "fill": "#263238"},
-                {"type": "roundRect", "points": [16, 10, 74, 94, 3, 3], "fill": "#505c61"},
-                {"type": "rect", "points": [21, 22, 69, 84], "fill": "#172329"},
-                {"type": "rect", "points": [24, 27, 66, 81], "fill": "#334950"},
-                {"type": "rect", "points": [28, 32, 62, 77], "fill": "#142126"},
-                {"type": "rect", "points": [28, 37, 62, 40], "fill": "#a9b4b8"},
-                {"type": "rect", "points": [38.0, 38, 52.0, 51], "fill": "#69787f"},
-                {"type": "roundRect", "points": [63, 50, 66, 61, 1, 1], "fill": "#a8b8bc"},
-                {"type": "rect", "points": [27, 76, 63, 80], "fill": "#8b9c9f"},
-                {"type": "polygon", "points": [36.0, 75, 36.0, 64, 45.0, 59, 54.0, 64, 54.0, 75], "fill": "#334b42"},
-                {"type": "rect", "points": [21, 13, 33, 18], "fill": "accent"}
+                {
+                  "type": "polygon",
+                  "points": [
+                    74,
+                    10,
+                    96,
+                    19,
+                    96,
+                    85,
+                    74,
+                    94
+                  ],
+                  "fill": "#263238"
+                },
+                {
+                  "type": "roundRect",
+                  "points": [
+                    16,
+                    10,
+                    74,
+                    94,
+                    3,
+                    3
+                  ],
+                  "fill": "#505c61"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    21,
+                    22,
+                    69,
+                    84
+                  ],
+                  "fill": "#172329"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    24,
+                    27,
+                    66,
+                    81
+                  ],
+                  "fill": "#334950"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    28,
+                    32,
+                    62,
+                    77
+                  ],
+                  "fill": "#142126"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    28,
+                    37,
+                    62,
+                    40
+                  ],
+                  "fill": "#a9b4b8"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    38.0,
+                    38,
+                    52.0,
+                    51
+                  ],
+                  "fill": "#69787f"
+                },
+                {
+                  "type": "roundRect",
+                  "points": [
+                    63,
+                    50,
+                    66,
+                    61,
+                    1,
+                    1
+                  ],
+                  "fill": "#a8b8bc"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    27,
+                    76,
+                    63,
+                    80
+                  ],
+                  "fill": "#8b9c9f"
+                },
+                {
+                  "type": "polygon",
+                  "points": [
+                    36.0,
+                    75,
+                    36.0,
+                    64,
+                    45.0,
+                    59,
+                    54.0,
+                    64,
+                    54.0,
+                    75
+                  ],
+                  "fill": "#334b42"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    21,
+                    13,
+                    33,
+                    18
+                  ],
+                  "fill": "accent"
+                }
               ],
               "labels": {
                 "hotend.0": "Hotend 1",
@@ -402,18 +886,142 @@
             {
               "value": "p2s",
               "artwork": [
-                {"type": "polygon", "points": [74, 10, 96, 19, 96, 85, 74, 94], "fill": "#263238"},
-                {"type": "roundRect", "points": [16, 10, 74, 94, 3, 3], "fill": "#69767c"},
-                {"type": "rect", "points": [21, 22, 69, 84], "fill": "#172329"},
-                {"type": "rect", "points": [24, 27, 66, 81], "fill": "#334950"},
-                {"type": "rect", "points": [28, 32, 62, 77], "fill": "#142126"},
-                {"type": "rect", "points": [28, 37, 62, 40], "fill": "#a9b4b8"},
-                {"type": "rect", "points": [38.0, 38, 52.0, 51], "fill": "#69787f"},
-                {"type": "roundRect", "points": [63, 50, 66, 61, 1, 1], "fill": "#a8b8bc"},
-                {"type": "rect", "points": [27, 76, 63, 80], "fill": "#8b9c9f"},
-                {"type": "polygon", "points": [36.0, 75, 36.0, 64, 45.0, 59, 54.0, 64, 54.0, 75], "fill": "#334b42"},
-                {"type": "rect", "points": [21, 13, 33, 18], "fill": "accent"},
-                {"type": "roundRect", "points": [38, 12, 54, 20, 2, 2], "fill": "#172329"}
+                {
+                  "type": "polygon",
+                  "points": [
+                    74,
+                    10,
+                    96,
+                    19,
+                    96,
+                    85,
+                    74,
+                    94
+                  ],
+                  "fill": "#263238"
+                },
+                {
+                  "type": "roundRect",
+                  "points": [
+                    16,
+                    10,
+                    74,
+                    94,
+                    3,
+                    3
+                  ],
+                  "fill": "#69767c"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    21,
+                    22,
+                    69,
+                    84
+                  ],
+                  "fill": "#172329"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    24,
+                    27,
+                    66,
+                    81
+                  ],
+                  "fill": "#334950"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    28,
+                    32,
+                    62,
+                    77
+                  ],
+                  "fill": "#142126"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    28,
+                    37,
+                    62,
+                    40
+                  ],
+                  "fill": "#a9b4b8"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    38.0,
+                    38,
+                    52.0,
+                    51
+                  ],
+                  "fill": "#69787f"
+                },
+                {
+                  "type": "roundRect",
+                  "points": [
+                    63,
+                    50,
+                    66,
+                    61,
+                    1,
+                    1
+                  ],
+                  "fill": "#a8b8bc"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    27,
+                    76,
+                    63,
+                    80
+                  ],
+                  "fill": "#8b9c9f"
+                },
+                {
+                  "type": "polygon",
+                  "points": [
+                    36.0,
+                    75,
+                    36.0,
+                    64,
+                    45.0,
+                    59,
+                    54.0,
+                    64,
+                    54.0,
+                    75
+                  ],
+                  "fill": "#334b42"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    21,
+                    13,
+                    33,
+                    18
+                  ],
+                  "fill": "accent"
+                },
+                {
+                  "type": "roundRect",
+                  "points": [
+                    38,
+                    12,
+                    54,
+                    20,
+                    2,
+                    2
+                  ],
+                  "fill": "#172329"
+                }
               ],
               "labels": {
                 "hotend.0": "Hotend 1",
@@ -428,17 +1036,130 @@
             {
               "value": "x1",
               "artwork": [
-                {"type": "polygon", "points": [74, 10, 96, 19, 96, 85, 74, 94], "fill": "#263238"},
-                {"type": "roundRect", "points": [16, 10, 74, 94, 3, 3], "fill": "#d7dad6"},
-                {"type": "rect", "points": [21, 22, 69, 84], "fill": "#172329"},
-                {"type": "rect", "points": [24, 27, 66, 81], "fill": "#334950"},
-                {"type": "rect", "points": [28, 32, 62, 77], "fill": "#142126"},
-                {"type": "rect", "points": [28, 37, 62, 40], "fill": "#a9b4b8"},
-                {"type": "rect", "points": [38.0, 38, 52.0, 51], "fill": "#69787f"},
-                {"type": "roundRect", "points": [63, 50, 66, 61, 1, 1], "fill": "#a8b8bc"},
-                {"type": "rect", "points": [27, 76, 63, 80], "fill": "#8b9c9f"},
-                {"type": "polygon", "points": [36.0, 75, 36.0, 64, 45.0, 59, 54.0, 64, 54.0, 75], "fill": "#334b42"},
-                {"type": "rect", "points": [21, 13, 33, 18], "fill": "accent"}
+                {
+                  "type": "polygon",
+                  "points": [
+                    74,
+                    10,
+                    96,
+                    19,
+                    96,
+                    85,
+                    74,
+                    94
+                  ],
+                  "fill": "#263238"
+                },
+                {
+                  "type": "roundRect",
+                  "points": [
+                    16,
+                    10,
+                    74,
+                    94,
+                    3,
+                    3
+                  ],
+                  "fill": "#d7dad6"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    21,
+                    22,
+                    69,
+                    84
+                  ],
+                  "fill": "#172329"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    24,
+                    27,
+                    66,
+                    81
+                  ],
+                  "fill": "#334950"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    28,
+                    32,
+                    62,
+                    77
+                  ],
+                  "fill": "#142126"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    28,
+                    37,
+                    62,
+                    40
+                  ],
+                  "fill": "#a9b4b8"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    38.0,
+                    38,
+                    52.0,
+                    51
+                  ],
+                  "fill": "#69787f"
+                },
+                {
+                  "type": "roundRect",
+                  "points": [
+                    63,
+                    50,
+                    66,
+                    61,
+                    1,
+                    1
+                  ],
+                  "fill": "#a8b8bc"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    27,
+                    76,
+                    63,
+                    80
+                  ],
+                  "fill": "#8b9c9f"
+                },
+                {
+                  "type": "polygon",
+                  "points": [
+                    36.0,
+                    75,
+                    36.0,
+                    64,
+                    45.0,
+                    59,
+                    54.0,
+                    64,
+                    54.0,
+                    75
+                  ],
+                  "fill": "#334b42"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    21,
+                    13,
+                    33,
+                    18
+                  ],
+                  "fill": "accent"
+                }
               ],
               "labels": {
                 "hotend.0": "Hotend 1",
@@ -453,17 +1174,130 @@
             {
               "value": "x1c",
               "artwork": [
-                {"type": "polygon", "points": [74, 10, 96, 19, 96, 85, 74, 94], "fill": "#263238"},
-                {"type": "roundRect", "points": [16, 10, 74, 94, 3, 3], "fill": "#bfc6c9"},
-                {"type": "rect", "points": [21, 22, 69, 84], "fill": "#172329"},
-                {"type": "rect", "points": [24, 27, 66, 81], "fill": "#334950"},
-                {"type": "rect", "points": [28, 32, 62, 77], "fill": "#142126"},
-                {"type": "rect", "points": [28, 37, 62, 40], "fill": "#a9b4b8"},
-                {"type": "rect", "points": [38.0, 38, 52.0, 51], "fill": "#69787f"},
-                {"type": "roundRect", "points": [63, 50, 66, 61, 1, 1], "fill": "#a8b8bc"},
-                {"type": "rect", "points": [27, 76, 63, 80], "fill": "#8b9c9f"},
-                {"type": "polygon", "points": [36.0, 75, 36.0, 64, 45.0, 59, 54.0, 64, 54.0, 75], "fill": "#334b42"},
-                {"type": "rect", "points": [21, 13, 33, 18], "fill": "accent"}
+                {
+                  "type": "polygon",
+                  "points": [
+                    74,
+                    10,
+                    96,
+                    19,
+                    96,
+                    85,
+                    74,
+                    94
+                  ],
+                  "fill": "#263238"
+                },
+                {
+                  "type": "roundRect",
+                  "points": [
+                    16,
+                    10,
+                    74,
+                    94,
+                    3,
+                    3
+                  ],
+                  "fill": "#bfc6c9"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    21,
+                    22,
+                    69,
+                    84
+                  ],
+                  "fill": "#172329"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    24,
+                    27,
+                    66,
+                    81
+                  ],
+                  "fill": "#334950"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    28,
+                    32,
+                    62,
+                    77
+                  ],
+                  "fill": "#142126"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    28,
+                    37,
+                    62,
+                    40
+                  ],
+                  "fill": "#a9b4b8"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    38.0,
+                    38,
+                    52.0,
+                    51
+                  ],
+                  "fill": "#69787f"
+                },
+                {
+                  "type": "roundRect",
+                  "points": [
+                    63,
+                    50,
+                    66,
+                    61,
+                    1,
+                    1
+                  ],
+                  "fill": "#a8b8bc"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    27,
+                    76,
+                    63,
+                    80
+                  ],
+                  "fill": "#8b9c9f"
+                },
+                {
+                  "type": "polygon",
+                  "points": [
+                    36.0,
+                    75,
+                    36.0,
+                    64,
+                    45.0,
+                    59,
+                    54.0,
+                    64,
+                    54.0,
+                    75
+                  ],
+                  "fill": "#334b42"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    21,
+                    13,
+                    33,
+                    18
+                  ],
+                  "fill": "accent"
+                }
               ],
               "labels": {
                 "hotend.0": "Hotend 1",
@@ -478,18 +1312,140 @@
             {
               "value": "x1e",
               "artwork": [
-                {"type": "polygon", "points": [74, 10, 96, 19, 96, 85, 74, 94], "fill": "#263238"},
-                {"type": "roundRect", "points": [16, 10, 74, 94, 3, 3], "fill": "#bfc6c9"},
-                {"type": "rect", "points": [21, 22, 69, 84], "fill": "#172329"},
-                {"type": "rect", "points": [24, 27, 66, 81], "fill": "#334950"},
-                {"type": "rect", "points": [28, 32, 62, 77], "fill": "#142126"},
-                {"type": "rect", "points": [28, 37, 62, 40], "fill": "#a9b4b8"},
-                {"type": "rect", "points": [38.0, 38, 52.0, 51], "fill": "#69787f"},
-                {"type": "roundRect", "points": [63, 50, 66, 61, 1, 1], "fill": "#a8b8bc"},
-                {"type": "rect", "points": [27, 76, 63, 80], "fill": "#8b9c9f"},
-                {"type": "polygon", "points": [36.0, 75, 36.0, 64, 45.0, 59, 54.0, 64, 54.0, 75], "fill": "#334b42"},
-                {"type": "rect", "points": [21, 13, 33, 18], "fill": "accent"},
-                {"type": "oval", "points": [65, 14, 69, 18], "fill": "#d4b166"}
+                {
+                  "type": "polygon",
+                  "points": [
+                    74,
+                    10,
+                    96,
+                    19,
+                    96,
+                    85,
+                    74,
+                    94
+                  ],
+                  "fill": "#263238"
+                },
+                {
+                  "type": "roundRect",
+                  "points": [
+                    16,
+                    10,
+                    74,
+                    94,
+                    3,
+                    3
+                  ],
+                  "fill": "#bfc6c9"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    21,
+                    22,
+                    69,
+                    84
+                  ],
+                  "fill": "#172329"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    24,
+                    27,
+                    66,
+                    81
+                  ],
+                  "fill": "#334950"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    28,
+                    32,
+                    62,
+                    77
+                  ],
+                  "fill": "#142126"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    28,
+                    37,
+                    62,
+                    40
+                  ],
+                  "fill": "#a9b4b8"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    38.0,
+                    38,
+                    52.0,
+                    51
+                  ],
+                  "fill": "#69787f"
+                },
+                {
+                  "type": "roundRect",
+                  "points": [
+                    63,
+                    50,
+                    66,
+                    61,
+                    1,
+                    1
+                  ],
+                  "fill": "#a8b8bc"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    27,
+                    76,
+                    63,
+                    80
+                  ],
+                  "fill": "#8b9c9f"
+                },
+                {
+                  "type": "polygon",
+                  "points": [
+                    36.0,
+                    75,
+                    36.0,
+                    64,
+                    45.0,
+                    59,
+                    54.0,
+                    64,
+                    54.0,
+                    75
+                  ],
+                  "fill": "#334b42"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    21,
+                    13,
+                    33,
+                    18
+                  ],
+                  "fill": "accent"
+                },
+                {
+                  "type": "oval",
+                  "points": [
+                    65,
+                    14,
+                    69,
+                    18
+                  ],
+                  "fill": "#d4b166"
+                }
               ],
               "labels": {
                 "hotend.0": "Hotend 1",
@@ -504,20 +1460,162 @@
             {
               "value": "x2d",
               "artwork": [
-                {"type": "polygon", "points": [74, 10, 96, 19, 96, 85, 74, 94], "fill": "#263238"},
-                {"type": "roundRect", "points": [16, 10, 74, 94, 3, 3], "fill": "#9ca4a6"},
-                {"type": "rect", "points": [21, 22, 69, 84], "fill": "#172329"},
-                {"type": "rect", "points": [24, 27, 66, 81], "fill": "#334950"},
-                {"type": "rect", "points": [28, 32, 62, 77], "fill": "#142126"},
-                {"type": "rect", "points": [28, 37, 62, 40], "fill": "#a9b4b8"},
-                {"type": "rect", "points": [38.0, 38, 52.0, 51], "fill": "#69787f"},
-                {"type": "rect", "points": [39.0, 50, 43.0, 54], "fill": "accent"},
-                {"type": "rect", "points": [47.0, 50, 51.0, 54], "fill": "accent"},
-                {"type": "roundRect", "points": [63, 50, 66, 61, 1, 1], "fill": "#a8b8bc"},
-                {"type": "rect", "points": [27, 76, 63, 80], "fill": "#8b9c9f"},
-                {"type": "polygon", "points": [36.0, 75, 36.0, 64, 45.0, 59, 54.0, 64, 54.0, 75], "fill": "#334b42"},
-                {"type": "rect", "points": [21, 13, 33, 18], "fill": "accent"},
-                {"type": "roundRect", "points": [38, 12, 54, 20, 2, 2], "fill": "#172329"}
+                {
+                  "type": "polygon",
+                  "points": [
+                    74,
+                    10,
+                    96,
+                    19,
+                    96,
+                    85,
+                    74,
+                    94
+                  ],
+                  "fill": "#263238"
+                },
+                {
+                  "type": "roundRect",
+                  "points": [
+                    16,
+                    10,
+                    74,
+                    94,
+                    3,
+                    3
+                  ],
+                  "fill": "#9ca4a6"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    21,
+                    22,
+                    69,
+                    84
+                  ],
+                  "fill": "#172329"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    24,
+                    27,
+                    66,
+                    81
+                  ],
+                  "fill": "#334950"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    28,
+                    32,
+                    62,
+                    77
+                  ],
+                  "fill": "#142126"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    28,
+                    37,
+                    62,
+                    40
+                  ],
+                  "fill": "#a9b4b8"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    38.0,
+                    38,
+                    52.0,
+                    51
+                  ],
+                  "fill": "#69787f"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    39.0,
+                    50,
+                    43.0,
+                    54
+                  ],
+                  "fill": "accent"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    47.0,
+                    50,
+                    51.0,
+                    54
+                  ],
+                  "fill": "accent"
+                },
+                {
+                  "type": "roundRect",
+                  "points": [
+                    63,
+                    50,
+                    66,
+                    61,
+                    1,
+                    1
+                  ],
+                  "fill": "#a8b8bc"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    27,
+                    76,
+                    63,
+                    80
+                  ],
+                  "fill": "#8b9c9f"
+                },
+                {
+                  "type": "polygon",
+                  "points": [
+                    36.0,
+                    75,
+                    36.0,
+                    64,
+                    45.0,
+                    59,
+                    54.0,
+                    64,
+                    54.0,
+                    75
+                  ],
+                  "fill": "#334b42"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    21,
+                    13,
+                    33,
+                    18
+                  ],
+                  "fill": "accent"
+                },
+                {
+                  "type": "roundRect",
+                  "points": [
+                    38,
+                    12,
+                    54,
+                    20,
+                    2,
+                    2
+                  ],
+                  "fill": "#172329"
+                }
               ],
               "labels": {
                 "hotend.0": "Hotend 1",
@@ -532,19 +1630,150 @@
             {
               "value": "h2d",
               "artwork": [
-                {"type": "polygon", "points": [81, 10, 96, 19, 96, 85, 81, 94], "fill": "#263238"},
-                {"type": "roundRect", "points": [5, 10, 81, 94, 3, 3], "fill": "#505c61"},
-                {"type": "rect", "points": [10, 22, 76, 84], "fill": "#172329"},
-                {"type": "rect", "points": [13, 27, 73, 81], "fill": "#334950"},
-                {"type": "rect", "points": [17, 32, 69, 77], "fill": "#142126"},
-                {"type": "rect", "points": [17, 37, 69, 40], "fill": "#a9b4b8"},
-                {"type": "rect", "points": [36.0, 38, 50.0, 51], "fill": "#69787f"},
-                {"type": "rect", "points": [37.0, 50, 41.0, 54], "fill": "accent"},
-                {"type": "rect", "points": [45.0, 50, 49.0, 54], "fill": "accent"},
-                {"type": "roundRect", "points": [70, 50, 73, 61, 1, 1], "fill": "#a8b8bc"},
-                {"type": "rect", "points": [16, 76, 70, 80], "fill": "#8b9c9f"},
-                {"type": "polygon", "points": [34.0, 75, 34.0, 64, 43.0, 59, 52.0, 64, 52.0, 75], "fill": "#334b42"},
-                {"type": "rect", "points": [10, 13, 22, 18], "fill": "accent"}
+                {
+                  "type": "polygon",
+                  "points": [
+                    81,
+                    10,
+                    96,
+                    19,
+                    96,
+                    85,
+                    81,
+                    94
+                  ],
+                  "fill": "#263238"
+                },
+                {
+                  "type": "roundRect",
+                  "points": [
+                    5,
+                    10,
+                    81,
+                    94,
+                    3,
+                    3
+                  ],
+                  "fill": "#505c61"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    10,
+                    22,
+                    76,
+                    84
+                  ],
+                  "fill": "#172329"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    13,
+                    27,
+                    73,
+                    81
+                  ],
+                  "fill": "#334950"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    17,
+                    32,
+                    69,
+                    77
+                  ],
+                  "fill": "#142126"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    17,
+                    37,
+                    69,
+                    40
+                  ],
+                  "fill": "#a9b4b8"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    36.0,
+                    38,
+                    50.0,
+                    51
+                  ],
+                  "fill": "#69787f"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    37.0,
+                    50,
+                    41.0,
+                    54
+                  ],
+                  "fill": "accent"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    45.0,
+                    50,
+                    49.0,
+                    54
+                  ],
+                  "fill": "accent"
+                },
+                {
+                  "type": "roundRect",
+                  "points": [
+                    70,
+                    50,
+                    73,
+                    61,
+                    1,
+                    1
+                  ],
+                  "fill": "#a8b8bc"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    16,
+                    76,
+                    70,
+                    80
+                  ],
+                  "fill": "#8b9c9f"
+                },
+                {
+                  "type": "polygon",
+                  "points": [
+                    34.0,
+                    75,
+                    34.0,
+                    64,
+                    43.0,
+                    59,
+                    52.0,
+                    64,
+                    52.0,
+                    75
+                  ],
+                  "fill": "#334b42"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    10,
+                    13,
+                    22,
+                    18
+                  ],
+                  "fill": "accent"
+                }
               ],
               "labels": {
                 "nozzle.0": "LEFT NOZZLE",
@@ -561,20 +1790,162 @@
             {
               "value": "h2d-pro",
               "artwork": [
-                {"type": "polygon", "points": [81, 10, 96, 19, 96, 85, 81, 94], "fill": "#263238"},
-                {"type": "roundRect", "points": [5, 10, 81, 94, 3, 3], "fill": "#747c82"},
-                {"type": "rect", "points": [10, 22, 76, 84], "fill": "#172329"},
-                {"type": "rect", "points": [13, 27, 73, 81], "fill": "#334950"},
-                {"type": "rect", "points": [17, 32, 69, 77], "fill": "#142126"},
-                {"type": "rect", "points": [17, 37, 69, 40], "fill": "#a9b4b8"},
-                {"type": "rect", "points": [36.0, 38, 50.0, 51], "fill": "#69787f"},
-                {"type": "rect", "points": [37.0, 50, 41.0, 54], "fill": "accent"},
-                {"type": "rect", "points": [45.0, 50, 49.0, 54], "fill": "accent"},
-                {"type": "roundRect", "points": [70, 50, 73, 61, 1, 1], "fill": "#a8b8bc"},
-                {"type": "rect", "points": [16, 76, 70, 80], "fill": "#8b9c9f"},
-                {"type": "polygon", "points": [34.0, 75, 34.0, 64, 43.0, 59, 52.0, 64, 52.0, 75], "fill": "#334b42"},
-                {"type": "rect", "points": [10, 13, 22, 18], "fill": "accent"},
-                {"type": "roundRect", "points": [27, 12, 43, 20, 2, 2], "fill": "#172329"}
+                {
+                  "type": "polygon",
+                  "points": [
+                    81,
+                    10,
+                    96,
+                    19,
+                    96,
+                    85,
+                    81,
+                    94
+                  ],
+                  "fill": "#263238"
+                },
+                {
+                  "type": "roundRect",
+                  "points": [
+                    5,
+                    10,
+                    81,
+                    94,
+                    3,
+                    3
+                  ],
+                  "fill": "#747c82"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    10,
+                    22,
+                    76,
+                    84
+                  ],
+                  "fill": "#172329"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    13,
+                    27,
+                    73,
+                    81
+                  ],
+                  "fill": "#334950"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    17,
+                    32,
+                    69,
+                    77
+                  ],
+                  "fill": "#142126"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    17,
+                    37,
+                    69,
+                    40
+                  ],
+                  "fill": "#a9b4b8"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    36.0,
+                    38,
+                    50.0,
+                    51
+                  ],
+                  "fill": "#69787f"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    37.0,
+                    50,
+                    41.0,
+                    54
+                  ],
+                  "fill": "accent"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    45.0,
+                    50,
+                    49.0,
+                    54
+                  ],
+                  "fill": "accent"
+                },
+                {
+                  "type": "roundRect",
+                  "points": [
+                    70,
+                    50,
+                    73,
+                    61,
+                    1,
+                    1
+                  ],
+                  "fill": "#a8b8bc"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    16,
+                    76,
+                    70,
+                    80
+                  ],
+                  "fill": "#8b9c9f"
+                },
+                {
+                  "type": "polygon",
+                  "points": [
+                    34.0,
+                    75,
+                    34.0,
+                    64,
+                    43.0,
+                    59,
+                    52.0,
+                    64,
+                    52.0,
+                    75
+                  ],
+                  "fill": "#334b42"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    10,
+                    13,
+                    22,
+                    18
+                  ],
+                  "fill": "accent"
+                },
+                {
+                  "type": "roundRect",
+                  "points": [
+                    27,
+                    12,
+                    43,
+                    20,
+                    2,
+                    2
+                  ],
+                  "fill": "#172329"
+                }
               ],
               "labels": {
                 "nozzle.0": "LEFT NOZZLE",
@@ -591,17 +1962,130 @@
             {
               "value": "h2s",
               "artwork": [
-                {"type": "polygon", "points": [81, 10, 96, 19, 96, 85, 81, 94], "fill": "#263238"},
-                {"type": "roundRect", "points": [5, 10, 81, 94, 3, 3], "fill": "#505c61"},
-                {"type": "rect", "points": [10, 22, 76, 84], "fill": "#172329"},
-                {"type": "rect", "points": [13, 27, 73, 81], "fill": "#334950"},
-                {"type": "rect", "points": [17, 32, 69, 77], "fill": "#142126"},
-                {"type": "rect", "points": [17, 37, 69, 40], "fill": "#a9b4b8"},
-                {"type": "rect", "points": [36.0, 38, 50.0, 51], "fill": "#69787f"},
-                {"type": "roundRect", "points": [70, 50, 73, 61, 1, 1], "fill": "#a8b8bc"},
-                {"type": "rect", "points": [16, 76, 70, 80], "fill": "#8b9c9f"},
-                {"type": "polygon", "points": [34.0, 75, 34.0, 64, 43.0, 59, 52.0, 64, 52.0, 75], "fill": "#334b42"},
-                {"type": "rect", "points": [10, 13, 22, 18], "fill": "accent"}
+                {
+                  "type": "polygon",
+                  "points": [
+                    81,
+                    10,
+                    96,
+                    19,
+                    96,
+                    85,
+                    81,
+                    94
+                  ],
+                  "fill": "#263238"
+                },
+                {
+                  "type": "roundRect",
+                  "points": [
+                    5,
+                    10,
+                    81,
+                    94,
+                    3,
+                    3
+                  ],
+                  "fill": "#505c61"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    10,
+                    22,
+                    76,
+                    84
+                  ],
+                  "fill": "#172329"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    13,
+                    27,
+                    73,
+                    81
+                  ],
+                  "fill": "#334950"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    17,
+                    32,
+                    69,
+                    77
+                  ],
+                  "fill": "#142126"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    17,
+                    37,
+                    69,
+                    40
+                  ],
+                  "fill": "#a9b4b8"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    36.0,
+                    38,
+                    50.0,
+                    51
+                  ],
+                  "fill": "#69787f"
+                },
+                {
+                  "type": "roundRect",
+                  "points": [
+                    70,
+                    50,
+                    73,
+                    61,
+                    1,
+                    1
+                  ],
+                  "fill": "#a8b8bc"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    16,
+                    76,
+                    70,
+                    80
+                  ],
+                  "fill": "#8b9c9f"
+                },
+                {
+                  "type": "polygon",
+                  "points": [
+                    34.0,
+                    75,
+                    34.0,
+                    64,
+                    43.0,
+                    59,
+                    52.0,
+                    64,
+                    52.0,
+                    75
+                  ],
+                  "fill": "#334b42"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    10,
+                    13,
+                    22,
+                    18
+                  ],
+                  "fill": "accent"
+                }
               ],
               "labels": {
                 "hotend.0": "Hotend 1",
@@ -616,24 +2100,200 @@
             {
               "value": "h2c",
               "artwork": [
-                {"type": "polygon", "points": [81, 10, 96, 19, 96, 85, 81, 94], "fill": "#263238"},
-                {"type": "roundRect", "points": [5, 10, 81, 94, 3, 3], "fill": "#505c61"},
-                {"type": "rect", "points": [10, 22, 76, 84], "fill": "#172329"},
-                {"type": "rect", "points": [13, 27, 73, 81], "fill": "#334950"},
-                {"type": "rect", "points": [17, 32, 69, 77], "fill": "#142126"},
-                {"type": "rect", "points": [17, 37, 69, 40], "fill": "#a9b4b8"},
-                {"type": "rect", "points": [36.0, 38, 50.0, 51], "fill": "#69787f"},
-                {"type": "roundRect", "points": [70, 50, 73, 61, 1, 1], "fill": "#a8b8bc"},
-                {"type": "rect", "points": [16, 76, 70, 80], "fill": "#8b9c9f"},
-                {"type": "polygon", "points": [34.0, 75, 34.0, 64, 43.0, 59, 52.0, 64, 52.0, 75], "fill": "#334b42"},
-                {"type": "rect", "points": [10, 13, 22, 18], "fill": "accent"},
-                {"type": "rect", "points": [16, 5, 71, 10], "fill": "#7b898f"},
-                {"type": "oval", "points": [20, 5, 24, 9], "fill": "accent"},
-                {"type": "oval", "points": [28, 5, 32, 9], "fill": "#bfc6c9"},
-                {"type": "oval", "points": [36, 5, 40, 9], "fill": "accent"},
-                {"type": "oval", "points": [44, 5, 48, 9], "fill": "#bfc6c9"},
-                {"type": "oval", "points": [52, 5, 56, 9], "fill": "accent"},
-                {"type": "oval", "points": [60, 5, 64, 9], "fill": "#bfc6c9"}
+                {
+                  "type": "polygon",
+                  "points": [
+                    81,
+                    10,
+                    96,
+                    19,
+                    96,
+                    85,
+                    81,
+                    94
+                  ],
+                  "fill": "#263238"
+                },
+                {
+                  "type": "roundRect",
+                  "points": [
+                    5,
+                    10,
+                    81,
+                    94,
+                    3,
+                    3
+                  ],
+                  "fill": "#505c61"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    10,
+                    22,
+                    76,
+                    84
+                  ],
+                  "fill": "#172329"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    13,
+                    27,
+                    73,
+                    81
+                  ],
+                  "fill": "#334950"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    17,
+                    32,
+                    69,
+                    77
+                  ],
+                  "fill": "#142126"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    17,
+                    37,
+                    69,
+                    40
+                  ],
+                  "fill": "#a9b4b8"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    36.0,
+                    38,
+                    50.0,
+                    51
+                  ],
+                  "fill": "#69787f"
+                },
+                {
+                  "type": "roundRect",
+                  "points": [
+                    70,
+                    50,
+                    73,
+                    61,
+                    1,
+                    1
+                  ],
+                  "fill": "#a8b8bc"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    16,
+                    76,
+                    70,
+                    80
+                  ],
+                  "fill": "#8b9c9f"
+                },
+                {
+                  "type": "polygon",
+                  "points": [
+                    34.0,
+                    75,
+                    34.0,
+                    64,
+                    43.0,
+                    59,
+                    52.0,
+                    64,
+                    52.0,
+                    75
+                  ],
+                  "fill": "#334b42"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    10,
+                    13,
+                    22,
+                    18
+                  ],
+                  "fill": "accent"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    16,
+                    5,
+                    71,
+                    10
+                  ],
+                  "fill": "#7b898f"
+                },
+                {
+                  "type": "oval",
+                  "points": [
+                    20,
+                    5,
+                    24,
+                    9
+                  ],
+                  "fill": "accent"
+                },
+                {
+                  "type": "oval",
+                  "points": [
+                    28,
+                    5,
+                    32,
+                    9
+                  ],
+                  "fill": "#bfc6c9"
+                },
+                {
+                  "type": "oval",
+                  "points": [
+                    36,
+                    5,
+                    40,
+                    9
+                  ],
+                  "fill": "accent"
+                },
+                {
+                  "type": "oval",
+                  "points": [
+                    44,
+                    5,
+                    48,
+                    9
+                  ],
+                  "fill": "#bfc6c9"
+                },
+                {
+                  "type": "oval",
+                  "points": [
+                    52,
+                    5,
+                    56,
+                    9
+                  ],
+                  "fill": "accent"
+                },
+                {
+                  "type": "oval",
+                  "points": [
+                    60,
+                    5,
+                    64,
+                    9
+                  ],
+                  "fill": "#bfc6c9"
+                }
               ],
               "labels": {
                 "hotend.0": "Hotend 1",
@@ -668,23 +2328,192 @@
             {
               "value": "h3c",
               "artwork": [
-                {"type": "polygon", "points": [81, 10, 96, 19, 96, 85, 81, 94], "fill": "#263238"},
-                {"type": "roundRect", "points": [5, 10, 81, 94, 3, 3], "fill": "#505c61"},
-                {"type": "rect", "points": [10, 22, 76, 84], "fill": "#172329"},
-                {"type": "rect", "points": [13, 27, 73, 81], "fill": "#334950"},
-                {"type": "rect", "points": [17, 32, 69, 77], "fill": "#142126"},
-                {"type": "rect", "points": [17, 37, 69, 40], "fill": "#a9b4b8"},
-                {"type": "rect", "points": [36.0, 38, 50.0, 51], "fill": "#69787f"},
-                {"type": "roundRect", "points": [70, 50, 73, 61, 1, 1], "fill": "#a8b8bc"},
-                {"type": "rect", "points": [16, 76, 70, 80], "fill": "#8b9c9f"},
-                {"type": "polygon", "points": [34.0, 75, 34.0, 64, 43.0, 59, 52.0, 64, 52.0, 75], "fill": "#334b42"},
-                {"type": "rect", "points": [10, 13, 22, 18], "fill": "accent"},
-                {"type": "rect", "points": [5, 10, 81, 22], "fill": "#bfc6c9"},
-                {"type": "roundRect", "points": [7, 0, 88, 17, 3, 3], "fill": "#202f34"},
-                {"type": "oval", "points": [13, 0, 23, 10], "fill": "#6d8288"},
-                {"type": "oval", "points": [27, 0, 37, 10], "fill": "#6d8288"},
-                {"type": "oval", "points": [41, 0, 51, 10], "fill": "#6d8288"},
-                {"type": "oval", "points": [55, 0, 65, 10], "fill": "#6d8288"}
+                {
+                  "type": "polygon",
+                  "points": [
+                    81,
+                    10,
+                    96,
+                    19,
+                    96,
+                    85,
+                    81,
+                    94
+                  ],
+                  "fill": "#263238"
+                },
+                {
+                  "type": "roundRect",
+                  "points": [
+                    5,
+                    10,
+                    81,
+                    94,
+                    3,
+                    3
+                  ],
+                  "fill": "#505c61"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    10,
+                    22,
+                    76,
+                    84
+                  ],
+                  "fill": "#172329"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    13,
+                    27,
+                    73,
+                    81
+                  ],
+                  "fill": "#334950"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    17,
+                    32,
+                    69,
+                    77
+                  ],
+                  "fill": "#142126"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    17,
+                    37,
+                    69,
+                    40
+                  ],
+                  "fill": "#a9b4b8"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    36.0,
+                    38,
+                    50.0,
+                    51
+                  ],
+                  "fill": "#69787f"
+                },
+                {
+                  "type": "roundRect",
+                  "points": [
+                    70,
+                    50,
+                    73,
+                    61,
+                    1,
+                    1
+                  ],
+                  "fill": "#a8b8bc"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    16,
+                    76,
+                    70,
+                    80
+                  ],
+                  "fill": "#8b9c9f"
+                },
+                {
+                  "type": "polygon",
+                  "points": [
+                    34.0,
+                    75,
+                    34.0,
+                    64,
+                    43.0,
+                    59,
+                    52.0,
+                    64,
+                    52.0,
+                    75
+                  ],
+                  "fill": "#334b42"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    10,
+                    13,
+                    22,
+                    18
+                  ],
+                  "fill": "accent"
+                },
+                {
+                  "type": "rect",
+                  "points": [
+                    5,
+                    10,
+                    81,
+                    22
+                  ],
+                  "fill": "#bfc6c9"
+                },
+                {
+                  "type": "roundRect",
+                  "points": [
+                    7,
+                    0,
+                    88,
+                    17,
+                    3,
+                    3
+                  ],
+                  "fill": "#202f34"
+                },
+                {
+                  "type": "oval",
+                  "points": [
+                    13,
+                    0,
+                    23,
+                    10
+                  ],
+                  "fill": "#6d8288"
+                },
+                {
+                  "type": "oval",
+                  "points": [
+                    27,
+                    0,
+                    37,
+                    10
+                  ],
+                  "fill": "#6d8288"
+                },
+                {
+                  "type": "oval",
+                  "points": [
+                    41,
+                    0,
+                    51,
+                    10
+                  ],
+                  "fill": "#6d8288"
+                },
+                {
+                  "type": "oval",
+                  "points": [
+                    55,
+                    0,
+                    65,
+                    10
+                  ],
+                  "fill": "#6d8288"
+                }
               ],
               "labels": {
                 "hotend.0": "Hotend 1",
@@ -739,7 +2568,8 @@
               "text": "@title",
               "font": 17,
               "color": "$textColor",
-              "bold": true
+              "bold": true,
+              "when": "!hideDisplayName"
             },
             {
               "op": "text",
@@ -829,7 +2659,8 @@
               "text": "@title",
               "font": 13,
               "color": "$textColor",
-              "bold": true
+              "bold": true,
+              "when": "!hideDisplayName"
             },
             {
               "op": "text",
@@ -874,7 +2705,7 @@
           "expanded": [
             {
               "op": "text",
-              "text": "{values.title}  \u00b7  {values.status}",
+              "text": "{values.title}  ·  {values.status}",
               "box": [
                 50,
                 52,
@@ -882,7 +2713,8 @@
                 85
               ],
               "size": 14,
-              "bold": true
+              "bold": true,
+              "unless": "settings.hideDisplayName"
             },
             {
               "op": "text",
@@ -899,7 +2731,7 @@
             },
             {
               "op": "text",
-              "text": "\u2014",
+              "text": "—",
               "box": [
                 50,
                 285,
@@ -1007,7 +2839,7 @@
                     },
                     {
                       "op": "text",
-                      "text": "{item.temperature}\u00b0C",
+                      "text": "{item.temperature}°C",
                       "box": [
                         65,
                         480,
@@ -1059,7 +2891,7 @@
                     },
                     {
                       "op": "text",
-                      "text": "\u2014",
+                      "text": "—",
                       "box": [
                         550,
                         480,
@@ -1117,7 +2949,7 @@
                     },
                     {
                       "op": "text",
-                      "text": "{item.temperature}\u00b0C",
+                      "text": "{item.temperature}°C",
                       "box": [
                         65,
                         480,
@@ -1169,7 +3001,7 @@
                     },
                     {
                       "op": "text",
-                      "text": "\u2014",
+                      "text": "—",
                       "box": [
                         550,
                         480,
@@ -1225,7 +3057,7 @@
                     },
                     {
                       "op": "text",
-                      "text": "{item.temperature}\u00b0C",
+                      "text": "{item.temperature}°C",
                       "box": [
                         65,
                         480,
@@ -1277,7 +3109,7 @@
                     },
                     {
                       "op": "text",
-                      "text": "\u2014",
+                      "text": "—",
                       "box": [
                         550,
                         480,
@@ -1333,7 +3165,7 @@
                     },
                     {
                       "op": "text",
-                      "text": "{printer.chamber_temper}\u00b0C",
+                      "text": "{printer.chamber_temper}°C",
                       "box": [
                         40,
                         460,
@@ -1381,7 +3213,7 @@
                     },
                     {
                       "op": "text",
-                      "text": "{printer.bed_temper}\u00b0C",
+                      "text": "{printer.bed_temper}°C",
                       "box": [
                         40,
                         460,
@@ -1396,6 +3228,19 @@
                 }
               ],
               "when": "settings.showTemperatures"
+            },
+            {
+              "op": "text",
+              "text": "{values.status}",
+              "box": [
+                50,
+                52,
+                205,
+                85
+              ],
+              "size": 14,
+              "bold": true,
+              "when": "settings.hideDisplayName"
             }
           ]
         },
