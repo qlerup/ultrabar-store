@@ -3,10 +3,10 @@
   "id": "studio.clock.widget",
   "name": "Studio Clock & Date",
   "description": "A split-flap clock with hinged hour and minute plates, optional seconds and a local date. Available in Large and Small.",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "type": "corebar-widget",
   "license": "Proprietary; unmodified official releases may be used",
-  "source": "https://github.com/qlerup/studio-clock-widget/blob/e58a6d839191f2ed6e9b0d4a136eea0c63261870/widget.json",
+  "source": "https://github.com/qlerup/studio-clock-widget/blob/e21c45aab17e73dfb0043f33c4ba3b48444ced6c/widget.json",
   "compatibility": {
     "minStudioVersion": "0.52.18",
     "hostApi": 1,
@@ -23,9 +23,9 @@
   },
   "permissions": [],
   "artifact": {
-    "url": "https://github.com/qlerup/ultrabar-store/releases/download/review-studio-clock-widget-1.4.0/widget.json",
-    "size": 4165,
-    "sha256": "fabed7ebe8aecba9f316ae950d993a92f103c2f9290b0aaa64bf4f4cf7476081"
+    "url": "https://github.com/qlerup/ultrabar-store/releases/download/review-studio-clock-widget-1.4.1/widget.json",
+    "size": 6594,
+    "sha256": "591b224510524f5d919085fe4ee358d71044afb7f0b8ed0452d2d51508d5cdcb"
   },
   "icon": {
     "url": "https://github.com/qlerup/ultrabar-store/releases/download/review-studio-clock-widget-1.4.0/icon.png",
