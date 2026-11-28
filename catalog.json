@@ -7,9 +7,9 @@
       "name": "Flip Clock HD",
       "type": "corebar-app",
       "description": "A fullscreen photographic flip-clock screensaver that runs on Core even when Studio is closed. Deploy once and choose the theme, date, seconds and idle delay in Studio.",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "publisher": "qlerup",
-      "source": "https://github.com/qlerup/ultrabar-flip-clock-hd/blob/5c9f1dca204f5179e49cbfb26b1a8f3aefe69f2c/AndroidManifest.xml",
+      "source": "https://github.com/qlerup/ultrabar-flip-clock-hd/blob/78c643f45ac7cc070e3e93bac66ad91d6e730b35/AndroidManifest.xml",
       "license": "Proprietary; unmodified official releases may be used",
       "compatibility": {
         "minStudioVersion": "0.52.30",
@@ -27,7 +27,7 @@
       "permissions": [],
       "android": {
         "packageId": "dk.qlerup.flipclock",
-        "versionCode": 110,
+        "versionCode": 111,
         "minSdk": 26,
         "signerSha256": "a2ffc4fd3545404750bd482b0332a30727e581dc70fd4f0cc6d34b22837f1fc8"
       },
@@ -101,9 +101,9 @@
         ]
       },
       "artifact": {
-        "url": "https://github.com/qlerup/ultrabar-store/releases/download/review-flip-clock-hd-1.1.0/app.apk",
-        "size": 1098879,
-        "sha256": "efdcb9b39863ce4ea945634b7f04589bd81bef6397431ea0038f8cd339bd1f27"
+        "url": "https://github.com/qlerup/ultrabar-store/releases/download/review-flip-clock-hd-1.1.1/app.apk",
+        "size": 1098952,
+        "sha256": "340cbb67d67187df1efa55e2e23b93e1976889e5b096179b0f2f07c93589e5cc"
       },
       "icon": {
         "url": "https://github.com/qlerup/ultrabar-store/releases/download/review-flip-clock-hd-1.0.0/icon.png",
