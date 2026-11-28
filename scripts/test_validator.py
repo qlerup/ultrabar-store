@@ -26,6 +26,17 @@ class Checks(unittest.TestCase):
   self.assertEqual(validate_tree(self.root)[0],[])
   (self.folder/'widget.json').write_bytes(self.raw+b' ')
   self.assertTrue(validate_tree(self.root)[0])
+ def test_widget_payload_size_limit(self):
+  payload=self.raw.ljust(128*1024)
+  path=self.folder/'widget.json'
+  path.write_bytes(payload)
+  self.manifest['compatibility']['minStudioVersion']='0.52.47'
+  self.manifest['artifact']=dict(url='https://github.com/qlerup/ultrabar-store/releases/download/v1/widget.json',size=len(payload),sha256=hashlib.sha256(payload).hexdigest())
+  self.save()
+  self.assertEqual(validate_tree(self.root,generated_catalog=True)[0],[])
+  path.write_bytes(payload+b' ')
+  errors,_=validate_tree(self.root,generated_catalog=True)
+  self.assertTrue(any('oversized' in e for e in errors))
  def test_generated_catalog_uses_manifests_without_editing_shared_file(self):
   self.manifest['artifact']=dict(url='https://github.com/qlerup/ultrabar-store/releases/download/v1/widget.json',size=len(self.raw),sha256=hashlib.sha256(self.raw).hexdigest());self.save()
   # Stale legacy snapshots are deliberately excluded from the new live list.

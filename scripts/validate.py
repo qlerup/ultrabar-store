@@ -182,7 +182,7 @@ def validate_tree(root,verify_assets=False,generated_catalog=False):
             kind=manifest['type'];widgets=[]
             filename={'corebar-widget':'widget.json','studio-plugin':'plugin.json','corebar-app':'app.apk'}.get(kind)
             if not filename:raise ValueError('Unknown package type')
-            raw=read(folder/filename,MAX_SIZE if kind=='corebar-app' else 65536)
+            raw=read(folder/filename,MAX_SIZE if kind=='corebar-app' else 128*1024)
             if kind=='corebar-widget':
                 widgets=widget_package(raw)
                 if any(w['kind']=='androidWidget' for w in widgets):raise ValueError('An Android widget requires its signed app package.')
@@ -195,7 +195,7 @@ def validate_tree(root,verify_assets=False,generated_catalog=False):
                 embedded=inspector.inspect(folder/filename,manifest)
                 if embedded is not None:
                     bundle_contract.validate(dict(manifest,bundledWidgets=embedded),widget_package)
-                    if json.loads(read(folder/'widget.json'))!=embedded:raise ValueError('Root widget.json differs from the embedded APK descriptor.')
+                    if json.loads(read(folder/'widget.json',128*1024))!=embedded:raise ValueError('Root widget.json differs from the embedded APK descriptor.')
                 if 'settings' in manifest:
                     schema=json.loads(read(folder/'studio-settings.json',32768))
                     if schema!=manifest['settings']:raise ValueError('studio-settings.json differs from manifest.settings. Fix: use the same reviewed settings schema in both files and APK assets.')

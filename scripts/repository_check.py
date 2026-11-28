@@ -3,7 +3,7 @@ import json,os,re,sys,hashlib,io,zipfile
 from pathlib import Path
 from urllib.request import Request,urlopen
 
-FILES={'widget.json':65536,'icon.png':262144,'README.md':65536,'LICENSE':65536}
+FILES={'widget.json':128*1024,'icon.png':262144,'README.md':65536,'LICENSE':65536}
 
 def validate_type_update(prior,manifest,pr):
  # Type changes are manual maintainer migrations, never ordinary owner updates.
@@ -108,9 +108,9 @@ def run(root,trusted,pr):
    if ref['type']!='commit' or ref['sha']!=commit:raise ValueError('Release tag must point to the reviewed commit.')
    kind=manifest['type']
    files={k:v for k,v in FILES.items() if k!='widget.json'}
-   if kind!='corebar-app':files['widget.json' if kind=='corebar-widget' else 'plugin.json']=65536
+   if kind!='corebar-app':files['widget.json' if kind=='corebar-widget' else 'plugin.json']=128*1024
    if manifest.get('settings'):files['studio-settings.json']=32768
-   if manifest.get('bundledWidgets'):files['widget.json']=65536
+   if manifest.get('bundledWidgets'):files['widget.json']=128*1024
    for name,limit in files.items():
     file=folder/name
     if file.is_symlink() or not file.is_file() or file.stat().st_size>limit:raise ValueError('Missing or invalid '+name)

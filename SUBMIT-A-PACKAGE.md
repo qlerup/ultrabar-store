@@ -169,6 +169,8 @@ can include `{source}` for the trusted display name. The Bambu LAN provider emit
 Declare `studio.sounds` separately to play package-owned tones. On Studio 0.52.35
 or newer a note can include a third value of `"bell"` for a decaying chime.
 
+Standalone widget.json and plugin.json files and embedded widget descriptors may contain up to 128 KiB (131,072 bytes). Packages exceeding 64 KiB require Studio 0.52.47 or newer.
+
 ## 3. Test and publish an upstream release
 
 1. Test on the hardware and firmware you intend to support.
