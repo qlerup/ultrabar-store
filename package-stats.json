@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": 1795829903,
+  "generatedAt": 1795831007,
   "packages": {
     "qlerup.core.flip-clock-hd": {
       "repository": "https://github.com/qlerup/ultrabar-flip-clock-hd",
@@ -19,7 +19,7 @@
     "studio.bambu": {
       "repository": "https://github.com/qlerup/ultrabar-bambu",
       "artifact": "https://github.com/qlerup/ultrabar-store/releases/download/review-bambu-2.8.9/widget.json",
-      "downloads": 5,
+      "downloads": 6,
       "issues": 0,
       "stale": false
     },
