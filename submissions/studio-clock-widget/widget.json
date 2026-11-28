@@ -19,6 +19,12 @@
           "api": 1,
           "fields": [
             {
+              "key": "hideDisplayName",
+              "type": "boolean",
+              "label": "Hide display name on Core",
+              "default": false
+            },
+            {
               "key": "hourFormat",
               "label": "Time format",
               "type": "choice",
@@ -99,18 +105,155 @@
         },
         "layout": {
           "large": [
-            {"op":"text","box":[18,19,180,31],"text":"@title","font":16,"color":"$textColor","bold":true},
-            {"op":"time","box":[216,22,32,24],"value":"period","font":12,"color":"$textColor"},
-            {"op":"time","box":[18,76,79,92],"value":"hours","font":63,"color":"$textColor","plate":"$plateColor","radius":6,"bold":true,"duration":360},
-            {"op":"time","box":[103,76,79,92],"value":"minutes","font":63,"color":"$textColor","plate":"$plateColor","radius":6,"bold":true,"duration":360},
-            {"op":"time","box":[189,101,53,67],"value":"seconds","font":44,"color":"$textColor","plate":"$plateColor","radius":6,"bold":true,"duration":360,"when":"showSeconds"},
-            {"op":"time","box":[18,187,230,30],"value":"date","font":16,"color":"$textColor","when":"showDate"}
+            {
+              "op": "text",
+              "box": [
+                18,
+                19,
+                180,
+                31
+              ],
+              "text": "@title",
+              "font": 16,
+              "color": "$textColor",
+              "bold": true,
+              "when": "!hideDisplayName"
+            },
+            {
+              "op": "time",
+              "box": [
+                216,
+                22,
+                32,
+                24
+              ],
+              "value": "period",
+              "font": 12,
+              "color": "$textColor"
+            },
+            {
+              "op": "time",
+              "box": [
+                18,
+                76,
+                79,
+                92
+              ],
+              "value": "hours",
+              "font": 63,
+              "color": "$textColor",
+              "plate": "$plateColor",
+              "radius": 6,
+              "bold": true,
+              "duration": 360
+            },
+            {
+              "op": "time",
+              "box": [
+                103,
+                76,
+                79,
+                92
+              ],
+              "value": "minutes",
+              "font": 63,
+              "color": "$textColor",
+              "plate": "$plateColor",
+              "radius": 6,
+              "bold": true,
+              "duration": 360
+            },
+            {
+              "op": "time",
+              "box": [
+                189,
+                101,
+                53,
+                67
+              ],
+              "value": "seconds",
+              "font": 44,
+              "color": "$textColor",
+              "plate": "$plateColor",
+              "radius": 6,
+              "bold": true,
+              "duration": 360,
+              "when": "showSeconds"
+            },
+            {
+              "op": "time",
+              "box": [
+                18,
+                187,
+                230,
+                30
+              ],
+              "value": "date",
+              "font": 16,
+              "color": "$textColor",
+              "when": "showDate"
+            }
           ],
           "small": [
-            {"op":"text","box":[8,4,115,23],"text":"@title","font":13,"color":"$textColor","bold":false},
-            {"op":"time","box":[8,35,54,48],"value":"hours","font":36,"color":"$textColor","plate":"$plateColor","radius":6,"bold":true,"duration":360},
-            {"op":"time","box":[67,35,54,48],"value":"minutes","font":36,"color":"$textColor","plate":"$plateColor","radius":6,"bold":true,"duration":360},
-            {"op":"time","box":[8,90,112,20],"value":"shortDate","font":12,"color":"$textColor","when":"showDate"}
+            {
+              "op": "text",
+              "box": [
+                8,
+                4,
+                115,
+                23
+              ],
+              "text": "@title",
+              "font": 13,
+              "color": "$textColor",
+              "bold": false,
+              "when": "!hideDisplayName"
+            },
+            {
+              "op": "time",
+              "box": [
+                8,
+                35,
+                54,
+                48
+              ],
+              "value": "hours",
+              "font": 36,
+              "color": "$textColor",
+              "plate": "$plateColor",
+              "radius": 6,
+              "bold": true,
+              "duration": 360
+            },
+            {
+              "op": "time",
+              "box": [
+                67,
+                35,
+                54,
+                48
+              ],
+              "value": "minutes",
+              "font": 36,
+              "color": "$textColor",
+              "plate": "$plateColor",
+              "radius": 6,
+              "bold": true,
+              "duration": 360
+            },
+            {
+              "op": "time",
+              "box": [
+                8,
+                90,
+                112,
+                20
+              ],
+              "value": "shortDate",
+              "font": 12,
+              "color": "$textColor",
+              "when": "showDate"
+            }
           ]
         }
       },
