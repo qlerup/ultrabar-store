@@ -1,6 +1,6 @@
 {
   "repository": "qlerup/studio-system-monitor",
-  "commit": "96f46affe1a87d1e62af90f500bfb78892ad4587",
-  "release": "v1.3.0",
+  "commit": "61e7fb8a13446b0b65be4bb05f0593d00a2b3787",
+  "release": "v1.3.1",
   "type": "corebar-widget"
 }
