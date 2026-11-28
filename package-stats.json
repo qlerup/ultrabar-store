@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
-  "generatedAt": 1795828335,
+  "generatedAt": 1795828514,
   "packages": {
     "qlerup.core.flip-clock-hd": {
       "repository": "https://github.com/qlerup/ultrabar-flip-clock-hd",
-      "artifact": "https://github.com/qlerup/ultrabar-store/releases/download/review-flip-clock-hd-1.1.0/app.apk",
-      "downloads": 29,
+      "artifact": "https://github.com/qlerup/ultrabar-store/releases/download/review-flip-clock-hd-1.1.1/app.apk",
+      "downloads": 0,
       "issues": 0,
       "stale": false
     },
